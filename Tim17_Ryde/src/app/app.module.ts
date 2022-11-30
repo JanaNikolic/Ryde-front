@@ -6,9 +6,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
+
     AppComponent,
     LoginComponent,
     RegisterComponent,
@@ -16,7 +18,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
