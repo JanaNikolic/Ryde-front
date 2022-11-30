@@ -1,11 +1,21 @@
 .center{
+    margin: auto;
     width: 35%;
-  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 #login{
     background-color: #000000;
     background:rgba(0, 0, 0, 0.25)
    
+}
+.container{
+    height: 900px;
+  position: relative;
+  border: 3px solid green;
 }
 .infoInput{
     padding: 12px;
