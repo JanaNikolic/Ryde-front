@@ -1,0 +1,73 @@
+.center{
+    margin: auto;
+    width: 35%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+#login{
+    background-color: #000000;
+    background:rgba(0, 0, 0, 0.25)
+   
+}
+.container{
+    height: 900px;
+  position: relative;
+  border: 3px solid green;
+}
+.infoInput{
+    padding: 12px;
+    border-radius: 25px;
+    background-color: #AFBAA3;
+    width: 50%;
+}
+h1{
+    padding-top: 15%;
+    text-align: center;
+    color:white;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 42px;
+}
+.whiteBtn{
+    padding: 12px;
+    border-radius: 25px;
+    background-color: #D9D9D9;
+    width: 30%;
+    margin-top: 20px;
+}
+#forgotPass{
+    text-align: right;
+    margin-right: 25%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+
+}
+
+p{
+    color: #D9D9D9;
+    text-align: center;
+}
+hr{
+    width: 50%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+#noAccount{
+    font-size:large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    
+    background:linear-gradient(0deg, black, #0A3932 50%, black);
+}
+#regBtn{
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 650px) {
+    .center{
+        width: 100%;
+    }
+}
