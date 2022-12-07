@@ -14,8 +14,8 @@
 }
 .container{
     height: 900px;
-  position: relative;
-  border: 3px solid green;
+    position: relative;
+    left:0;
 }
 .infoInput{
     padding: 12px;

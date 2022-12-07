@@ -1,1 +1,12 @@
-<p>navbar works!</p>
+<div id = "navbar">
+    <span [routerLink]="['/home']" id = "name">
+      <img title="RYDE" src="assets/images/RYDE.png" class="img-fluid">
+    </span>
+    <span id="navigation">
+      <ul>
+        <li><a id = "loginButton" [routerLink]="['/login']">LOGIN</a></li>
+        <li><a id = "registerButton" [routerLink]="['/register']">REGISTER</a></li>
+      </ul>
+    </span>
+</div>
+  
