@@ -1,1 +1,43 @@
-<p>register works!</p>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <div class="form">
+            <form [formGroup]="RegisterForm">
+                <p class="textLabel"><label class="right-margin">First Name</label>
+                    <label>Last Name</label>
+                </p>
+                <p>
+                    <input type="text" class="shortInfoInput" name="firstName" id="firstName"
+                        placeholder="First name:">
+                    <input type="text" class="shortInfoInput left-margin" name="lastName" id="lastName"
+                        placeholder="Last name:">
+                </p>
+                <p class="textLabel"><label>Email</label></p>
+                <p>
+                    <input type="email" class="infoInput" name="email" id="email" placeholder="Email:">
+                </p>
+                <p class="textLabel"><label>Phone Number</label></p>
+                <p>
+                    <input type="tel" class="infoInput" name="phoneNumber" id="phoneNumber" placeholder="Phone number:">
+                </p>
+                <p class="textLabel"><label>Address</label></p>
+                <p>
+                    <input type="text" class="infoInput" name="address" id="address" placeholder="Address:">
+                </p>
+                <hr>
+                <p class="textLabel"><label>Password</label></p>
+                <p>
+                    <input type="password" class="infoInput" name="password" id="password" placeholder="Password:">
+                </p>
+                <p class="textLabel"><label>Confirm password</label></p>
+                <p>
+                    <input type="password" class="infoInput" name="confirmPassword" id="confirmPassword"
+                        placeholder="Confirm password:">
+                </p>
+                <p>
+                    <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn">REGISTER</button>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
