@@ -8,10 +8,8 @@
   transform: translate(-50%, -50%);
 }
 #login{
-    background-color: #000000;
     background:rgba(0, 0, 0, 0.4);
     border-radius: 30px;
-   
 }
 .container{
     height: 900px;
@@ -53,7 +51,7 @@ h1{
 #forgotPass{
     text-align: right;
     margin-right: 25%;
-    font-family: Ro, sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: small;
     cursor: pointer;
 }
