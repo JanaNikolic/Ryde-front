@@ -2,7 +2,6 @@ body {
     box-sizing: border-box;
     margin: 0;
     height: 100%;
-    position: relative;
 
     background: linear-gradient(180deg, #161619 0%, rgba(10, 57, 50, 0.83) 52.08%, #161619 100%);
     mix-blend-mode: normal;
@@ -12,8 +11,7 @@ body {
 
 .container {
     box-sizing: border-box;
-    margin-top: 3%;
-    /* margin: auto; */
+    margin: auto;
     position: absolute;
     width: 35%;
     height: 82%;
@@ -43,9 +41,6 @@ h1 {
 
 input {
     padding: 12px;
-    /* padding-left: 12px;
-    padding-top: 8px;
-    padding-bottom: 8px; */
     font-family: 'Outfit', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -67,7 +62,7 @@ p{
 }
 
 hr{
-    width: 35%;
+    width: 50%;
     margin-top: 5%;
     margin-bottom: 0;
 }
@@ -85,15 +80,11 @@ label {
     margin-top: 8px;
     margin-bottom: 8px;
 }
-/* form {
-    height: 80%;
-} */
 
 .shortInfoInput {
     position: relative;
     width: 35%;
     height: 5%;
-    /* margin-left: 1%; */
     background: #AFBAA3;
     border-radius: 25px;
     transform: matrix(1, -0.01, 0.01, 1, 0, 0);
@@ -125,7 +116,7 @@ input:hover {
     padding: 12px;
     border-radius: 25px;
     background-color: #D9D9D9;
-    width: 40%;
+    width: 50%;
     margin-top: 20px;
 
     font-family: 'Roboto';
@@ -139,4 +130,5 @@ input:hover {
     text-transform: uppercase;
 
     color: #000000;
+    cursor: pointer;
 }
