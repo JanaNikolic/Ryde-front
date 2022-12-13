@@ -46,5 +46,5 @@ button {
 div {
     padding-top: 10vw;
     position: relative;
-    height: 100%;
+    height: fit-content;
 }
