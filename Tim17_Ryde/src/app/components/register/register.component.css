@@ -39,6 +39,7 @@ input {
     font-size: 16px;
     line-height: 18px;
     letter-spacing: 0.05em;
+    border-width: 0;
 }
 
 p {
@@ -103,6 +104,7 @@ input:hover {
 .whiteBtn {
     padding: 12px;
     border-radius: 25px;
+    border-width: 0;
     background-color: #D9D9D9;
     width: 50%;
     margin-top: 20px;
