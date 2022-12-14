@@ -7,6 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { RegisteredUserNavbarComponent } from './components/registered-user-navbar/registered-user-navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    RegisteredUserNavbarComponent,
+    FooterComponent,
+    AdminNavbarComponent
   ],
   imports: [
     BrowserModule,
