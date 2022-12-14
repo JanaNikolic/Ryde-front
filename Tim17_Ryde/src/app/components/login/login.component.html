@@ -1,21 +1,26 @@
 <body>
     <div class="container">
         <div id="login" class="center">
-            <h1>Login</h1>>
-            <form [formGroup]="LoginForm">
-                <p>
-                    <input type="text" class="infoInput" name="Email" id="Email" placeholder="Email:">
+            <h1>Login</h1>
+            <form [formGroup]="LoginForm"
+             (ngSubmit)="login()">
+                <div *ngIf="invalidInput" class="text-danger">
+                <p >
+                    <input  type="text" formControlName="Email" class="infoInput" name="Email" id="Email" placeholder="Email:">
                 </p>
+            </div>
 
                 <p>
-                    <input type="Password" class="infoInput" name="Password" id="password" placeholder="Password:">
+                    <input type="Password" formControlName="Password" class="infoInput" name="Password" id="password" placeholder="Password:">
+
                 </p>
+                <p id="forgotPass">Forgot password?</p>
+            <p>
+                <button type="submit" value="LOGIN" class="whiteBtn">LOGIN</button>
+            </p>
             </form>
 
-            <p id="forgotPass">Forgot password?</p>
-            <p>
-                <input type="submit" value="LOGIN" class="whiteBtn">
-            </p>
+            
             <hr>
             <p id="noAccount">Don't Have An Account?</p>
             <p>

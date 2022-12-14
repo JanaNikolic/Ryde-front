@@ -9,14 +9,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent {
 
   RegisterForm = new FormGroup({
-    FirstName: new FormControl('', Validators.minLength(1)),
-    LastName: new FormControl('', Validators.minLength(1)),
-    Email: new FormControl('', Validators.minLength(1)),
-    Phone: new FormControl('', Validators.minLength(1)),
-    Address: new FormControl('', Validators.minLength(1)),
-    Password: new FormControl('', Validators.minLength(8)),
-    ConfurmPassword: new FormControl('', Validators.minLength(8)),
+    FirstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    LastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    Email: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    Phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    Address: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    ConfirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
   })
 
   ngOnInit(): void {}
+
+  register(){
+    if (!this.RegisterForm.valid){
+      alert("invalidForm")
+      
+
+    }
+
+  }
 }

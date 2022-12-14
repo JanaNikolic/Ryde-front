@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { CreateDriverComponent } from './components/create-driver/create-driver.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    CreateDriverComponent
   ],
   imports: [
     BrowserModule,
