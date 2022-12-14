@@ -9,6 +9,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { MainComponent } from './components/main/main.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from 'src/app/material.module';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { MainComponent } from './components/main/main.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
