@@ -1,0 +1,50 @@
+p {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 600%;
+    line-height: 126px;
+
+    text-transform: uppercase;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+button {
+    position: relative;
+    margin: 0;
+    padding: 18px;
+    border-radius: 20px;
+    background-color: #D9D9D9;
+    border-width: 0;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    color: #000000;
+    cursor: pointer;
+
+    
+}
+
+.vertical-center {
+    margin: 0;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+div {
+    padding-top: 10vw;
+    position: relative;
+    height: fit-content;
+}
