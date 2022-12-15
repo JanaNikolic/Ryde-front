@@ -34,9 +34,7 @@
     line-height: 18px;
     letter-spacing: 0.05em;
 }
-.name{
-    width: 23%;
-}
+
 input:hover {
     background: #D9D9D9;
 }
@@ -44,12 +42,7 @@ input:hover {
     width: 40%;
     float: left;
 }
-.left-margin {
-    margin-left: 2%;
-}
-.right-margin{
-    margin-right: 2%;
-}
+
 
 p {
     color: #D9D9D9;
@@ -94,13 +87,7 @@ h1 {
     color: #FFFFFF;
 }
 
-.radioBtn{
-    margin-left: 10%;
-}
-.radioLabel{
-    margin: auto;
-    
-}
+
 .checkBox{
     display:inline-block;
     
@@ -111,14 +98,7 @@ h1 {
     text-align: center;
     display:inline-block
 }
-.left{
-    float: left;
-    text-align: center;
-}
-.right{
-    float: right;
-    text-align: center;
-}
+
 input[type='radio'] {
     box-sizing: border-box;
     appearance: none;
@@ -153,7 +133,6 @@ input[type='checkbox']:checked {
 .checkBoxLabel{
     display:block;
     margin: auto;
-    
 }
 .inline{
     display: block;
@@ -178,8 +157,6 @@ input[type='checkbox']:checked {
     float: left;
     width: 40%;
     text-align: center;
-    
-
 }
 
 
@@ -255,4 +232,12 @@ input {
     background: #AFBAA3;
     border-radius: 25px;
     transform: matrix(1, -0.01, 0.01, 1, 0, 0);
+}
+
+@media only screen and (max-width: 800px) {
+    .createDriver{
+        width: 100%;
+        
+    }
+    
 }
