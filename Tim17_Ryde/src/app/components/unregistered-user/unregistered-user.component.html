@@ -1,19 +1,27 @@
 <div class="container">
     <div class="left-container">
-        <div class="form">
-            <form [formGroup]="createCalculateForm" fxLayout="colums">
-                <mat-form-field appearance="fill">
-                    <mat-label>From</mat-label>
-                    <input matInput type="text" name="from" formControlName="from">
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>To</mat-label>
-                    <input matInput type="text" name="to" formControlName="to">
-                </mat-form-field>
-                <div class="vertical-center" fxLayout="row" fxLayoutAlign="space-between end">
-                    <button type="submit" mat-raised-button>Calculate</button>
-                </div>
-            </form>
+        <div class="form-container">
+            <div class="ping left-container">
+                <span class="bigElipse"></span>
+                <span class="smallElipse"></span>
+                <span class="smallElipse"></span>
+                <img class="pin" src="assets/images/pin.png" alt="pin">
+            </div>
+            <div class="form">
+                <form [formGroup]="createCalculateForm" fxLayout="colums">
+                    <mat-form-field appearance="fill">
+                        <mat-label>From</mat-label>
+                        <input matInput type="text" name="from" formControlName="from">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>To</mat-label>
+                        <input matInput type="text" name="to" formControlName="to">
+                    </mat-form-field>
+                    <div class="vertical-center" fxLayout="row" fxLayoutAlign="space-between end">
+                        <button type="submit" mat-raised-button>Calculate</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="details-container">
@@ -25,7 +33,7 @@
                     <li>Distance</li>
                 </ul>
                 <div class="right-details">
-                    <p id="duration">15:00 minutes</p>
+                    <p id="duration">15:00</p>
                     <p id="price">300 RSD</p>
                     <p id="distance">2.5 km</p>
                 </div>
