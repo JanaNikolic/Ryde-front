@@ -1,0 +1,118 @@
+<body>
+    <div class="container">
+        <div class="createDriver">
+            <form [formGroup]="CreateDriverForm"
+            (ngSubmit)="create()">
+                <div class="driverInfoContainer form">
+                    <h1>Driver info</h1>
+
+
+
+                    <p>
+                        <input type="text" formControlName="FirstName" class="shortInfoInput" name="firstName" id="firstName"
+                            placeholder="First name:">
+                        <input type="text" formControlName="LastName" class="shortInfoInput left-margin" name="lastName" id="lastName"
+                            placeholder="Last name:">
+                    </p>
+
+
+                    <p>
+                        <input type="email" formControlName="Email" class="infoInput" name="email" id="email" placeholder="Email:">
+                    </p>
+
+                    <p>
+                        <input type="tel" formControlName="Phone" class="infoInput" name="phoneNumber" id="phoneNumber"
+                            placeholder="Phone number:">
+                    </p>
+
+                    <p>
+                        <input type="text" formControlName="Address"class="infoInput" name="address" id="address" placeholder="Address:">
+                    </p>
+                    <hr>
+
+                    <p>
+                        <input type="text" formControlName="Licence" class="infoInput" name="licence" id="licence"
+                            placeholder="Driver's licence:">
+                    </p>
+
+                    <p>
+                        <input type="text" formControlName="VehicleRegistraion" class="infoInput" name="vehicleRegistraion" id="vehicleRegistraion"
+                            placeholder="Vehicle registraion:">
+                    </p>
+                    <hr>
+
+                    <p>
+                        <input type="password" formControlName="Password" class="infoInput" name="password" id="password" placeholder="Password:">
+                    </p>
+
+                    <p>
+                        <input type="password" formControlName="ConfirmPassword" class="infoInput" name="confirmPassword" id="confirmPassword"
+                            placeholder="Confirm password:">
+                    </p>
+
+                </div>
+
+
+
+
+
+                <div class="vehicleInfoContainer form">
+                    <h1>Vehicle info</h1>
+
+                    <p>
+                        <input type="text"  formControlName="Model" class="infoInput" name="Model" id="Model" placeholder="Model:">
+                    </p>
+
+
+                    <p>
+                        <input type="text" formControlName="LicencePlate" class="infoInput" name="licencePlate" id="licencePlate"
+                            placeholder="Licence plate:">
+                    </p>
+                    <div class="seatNumbers">
+                        <p class="textLabel" id="seatLabel"><label>Number of seats: </label></p>
+                        <input type="number" formControlName="SeatsNumver" class="infoInput" id="numberOfSeats" name="numberOfSeats" placeholder="0"
+                            min="1" max="4">
+                    </div>
+                    <hr id="hrNumSeats">
+                    <h3>Type Of Car</h3>
+                    <div>
+                        <div class="inline">
+                            <input type="radio" formControlName="VehicleType" class="radioBtn" id="standard" name="vehicleType" value="standard" checked="checked">
+                            <label class="checkBoxLabel">Standard </label>
+                        </div>
+                        <div class="inline">
+
+                            <input type="radio" formControlName="VehicleType" class="radioBtn" id="lux" name="vehicleType" value="lux">
+                            <label class="checkBoxLabel">Lux </label>
+
+                        </div>
+                        <div class="inline">
+                            <input type="radio" formControlName="VehicleType" class="radioBtn" id="van" name="vehicleType" value="van">
+                            <label class="checkBoxLabel">Van </label>
+
+                        </div>
+                    </div>
+                    <hr id="hrCheckBox">
+                    <div>
+                        <div class="inline5">
+                            <input type="checkbox" class="checkBox" id="babyFriendly" name="babyFriendly"
+                                value="standard">
+                            <label class="checkBoxLabel">Baby friendly </label>
+
+                        </div>
+                        <div class="inline4">
+                            <input type="checkbox" class="checkBox" id="petFriendly" name="petFriendly" value="lux">
+                            <label class="checkBoxLabel">Pet friendly </label>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <p>
+                    <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>

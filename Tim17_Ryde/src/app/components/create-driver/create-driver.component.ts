@@ -2,30 +2,39 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-create-driver',
+  templateUrl: './create-driver.component.html',
+  styleUrls: ['./create-driver.component.css']
 })
-export class RegisterComponent {
+export class CreateDriverComponent {
 
-  RegisterForm = new FormGroup({
+  CreateDriverForm = new FormGroup({
     FirstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
     LastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
     Email: new FormControl('', [Validators.required, Validators.minLength(1)]),
     Phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
     Address: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    Licence: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    VehicleRegistration: new FormControl('', [Validators.required, Validators.minLength(1)]),
     Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     ConfirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  })
+    Model: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    LicencePlate: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    
+    
 
+  })
   ngOnInit(): void {}
 
-  register(){
-    if (!this.RegisterForm.valid){
+  create(){
+    if (!this.CreateDriverForm.valid){
       alert("invalidForm")
       
 
     }
 
   }
+  
+ 
+
 }
