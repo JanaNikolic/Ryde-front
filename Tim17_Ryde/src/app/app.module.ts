@@ -7,10 +7,13 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { CreateDriverComponent } from './components/create-driver/create-driver.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { MainComponent } from './components/main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material.module';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -20,8 +23,10 @@ import { MaterialModule } from 'src/app/material.module';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    CreateDriverComponent,
     UnregisteredUserComponent,
     MainComponent
+
   ],
   imports: [
     BrowserModule,
@@ -31,6 +36,7 @@ import { MaterialModule } from 'src/app/material.module';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
