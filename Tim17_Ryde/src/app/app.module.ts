@@ -12,6 +12,7 @@ import { UnregisteredUserComponent } from './components/unregistered-user/unregi
 import { MainComponent } from './components/main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -22,7 +23,7 @@ import { MaterialModule } from 'src/app/material.module';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    CreateDriverComponent
+    CreateDriverComponent,
     UnregisteredUserComponent,
     MainComponent
 
@@ -35,6 +36,7 @@ import { MaterialModule } from 'src/app/material.module';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
