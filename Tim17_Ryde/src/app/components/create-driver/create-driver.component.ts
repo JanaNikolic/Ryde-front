@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DriverService } from 'src/app/services/driver/driver.service';
+import { VehicleService } from 'src/app/services/vehicle/vehicle.service';
 
 @Component({
   selector: 'app-create-driver',
@@ -9,30 +12,44 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class CreateDriverComponent {
 
   CreateDriverForm = new FormGroup({
-    FirstName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    LastName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    Email: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    Phone: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    Address: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    Licence: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    VehicleRegistration: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    surname: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    email: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    telephoneNumber: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    address: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     ConfirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    Model: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    LicencePlate: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    model: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    licenceNumber: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    passengerSeats: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    vehicleType: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    babyTransport: new FormControl('', []),
+    petTransport: new FormControl('', []),
     
     
 
   })
   ngOnInit(): void {}
+  constructor(private driverService: DriverService, private vehicleService: VehicleService, private router: Router) {}
+
+ 
 
   create(){
-    if (!this.CreateDriverForm.valid){
-      alert("invalidForm")
-      
+    if (this.CreateDriverForm.valid) {
+      console.log(this.CreateDriverForm.value)
+      this.driverService.
+        add(this.CreateDriverForm.value)
+        .subscribe((res: any) => {
+          console.log(this.CreateDriverForm.value);
+        });
 
+        /*this.vehicleService.
+        add(1,this.CreateDriverForm.value)
+        .subscribe((res: any) => {
+          console.log(this.CreateDriverForm.value);
+        });*/
     }
-
   }
   
  

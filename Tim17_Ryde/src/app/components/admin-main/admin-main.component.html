@@ -1,9 +1,9 @@
 <div class="container">
     <div class="leftContainer driverContainer">
-        
-            <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn">Add Driver</button>
 
-            <div class="driver">
+        <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn">{{drivers}}</button>
+        <div *ngFor="let driver of drivers">
+            <div class="driverInfo">
                 <img id="avatar" src="assets/images/avatar.png">
                 <span class="dot"></span>
                 <p> Marko Markovic</p>
@@ -12,35 +12,10 @@
                     <button class="blockBtn">Block</button>
                 </div>
             </div>
-            <div class="driver">
-                <img id="avatar" src="assets/images/avatar.png">
-                <span class="dot"></span>
-                <p> Marko Markovic</p>
-                <div class="buttons">
-                    <button class="detailBtn">Details</button>
-                    <button class="blockBtn">Block</button>
-                </div>
-            </div>
-            <div class="driver">
-                <img id="avatar" src="assets/images/avatar.png">
-                <span class="dot"></span>
-                <p> Marko Markovic</p>
-                <div class="buttons">
-                    <button class="detailBtn">Details</button>
-                    <button class="blockBtn">Block</button>
-                </div>
-            </div>
-            <div class="driver">
-                <img id="avatar" src="assets/images/avatar.png">
-                <span class="dot"></span>
-                <p> Marko Markovic</p>
-                <div class="buttons">
-                    <button class="detailBtn">Details</button>
-                    <button class="blockBtn">Block</button>
-                </div>
-            </div>
-            
-        
+        </div>
+
+
+
 
     </div>
 

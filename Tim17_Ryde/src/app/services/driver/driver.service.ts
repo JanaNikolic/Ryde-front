@@ -13,16 +13,21 @@ import { Driver } from 'src/app/model/Driver';
   
   
     get(driverId:number):Observable<Driver>{
-      return this.http.get<Driver>(environment.apiHost+'api/driver/' + driverId);
+      console.log((environment.apiHost+'/api/driver/' + driverId));
+      return this.http.get<Driver>(environment.apiHost+'/api/driver/' + driverId);
+      
       
     }
 
-    add(): Observable<any> {
-        const options: any = {
-          responseType: 'text',
-        };
-        return this.http.post<string>(environment.apiHost + '/api/driver', options);
-      }
+    add(driver: any): Observable<any> {
+      const options: any = {
+        responseType: 'text',
+      };
+      return this.http.post<Driver>(environment.apiHost + '/api/driver',driver, options);
+    }
+
+
+      
   
     getAll():Observable<Driver[]>{
       return this.http.get<Driver[]>(environment.apiHost + '/api/driver');
