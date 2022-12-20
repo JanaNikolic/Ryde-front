@@ -1,8 +1,8 @@
 <div class="container">
     <div class="leftContainer driverContainer">
 
-        <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn">{{drivers}}</button>
-        <div *ngFor="let driver of drivers">
+        <button type="submit" value="REGISTER" class="whiteBtn"  [routerLink]="['/createDriver']" id="regBtn">{{drivers1}}</button>
+        <div *ngFor="let driver of drivers1">
             <div class="driverInfo">
                 <img id="avatar" src="assets/images/avatar.png">
                 <span class="dot"></span>

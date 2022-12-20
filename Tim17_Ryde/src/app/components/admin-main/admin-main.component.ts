@@ -16,19 +16,21 @@ export class AdminMainComponent implements OnInit{
   email: '',
   password: '',
   address: ''};
-  drivers: Driver[] = [];
+  drivers1: Driver[] = [this.driver1, this.driver1];
+  
 
   constructor(private driverService: DriverService) {}
   ngOnInit(): void {
+    
     this.driverService.getAll()
     .subscribe(
-      (drivers) => (this.drivers = drivers)
+      (drivers) => (this.drivers1 = drivers)
     );
 
 
-    console.log(this.driver1);
-    console.log(this.drivers);
-    console.log(this.drivers);
+    console.log(typeof this.driver1);
+    console.log(this.drivers1);
+    console.log(this.drivers1);
     
     
 
