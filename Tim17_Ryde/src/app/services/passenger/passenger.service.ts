@@ -13,7 +13,7 @@ export class PassengerService {
 
 
   get(passengerId:number):Observable<Passenger>{
-    return this.http.get<Passenger>(environment.apiHost+'api/passenger/' + passengerId);
+    return this.http.get<Passenger>(environment.apiHost+'/api/passenger/' + passengerId);
     
   }
 

@@ -42,12 +42,23 @@ input:hover {
     width: 40%;
     float: left;
 }
-
+.noMargin{
+    margin: auto;
+    text-align: left;
+}
 
 p {
     color: #D9D9D9;
     text-align: center;
+    margin-top: 1%;
     
+    
+}
+.right-margin{
+    margin-right: 12%;
+}
+#lastNameLabel{
+   margin-left: 15%;
 }
 label{
     margin: 0;
@@ -55,8 +66,9 @@ label{
 }
 
 .textLabel {
-    text-align: center;
+    text-align: left;
     margin-left: 10%;
+    
     
 }
 
@@ -70,7 +82,7 @@ label{
 hr {
     
     width: 50%;
-    margin-top: 6%;
+    margin-top: 10%;
     margin-bottom: 6%;
 }
 h1 {
@@ -156,6 +168,7 @@ input[type='checkbox']:checked {
 .inline4{
     float: left;
     width: 40%;
+    margin-bottom: 1%;
     text-align: center;
 }
 
@@ -201,13 +214,14 @@ h3 {
 }
 
 #hrNumSeats{
-    margin-top: 6%;
+    margin-bottom: 4%;
+    margin-top: 5%;
     width: 90%;
 }
 
 #hrCheckBox{
-    margin-bottom: 12%;
-    margin-top: 20%;
+    margin-bottom: 9%;
+    margin-top: 18%;
     width: 90%;
 }
 
