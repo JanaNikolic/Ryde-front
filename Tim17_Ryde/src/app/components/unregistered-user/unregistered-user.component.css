@@ -85,6 +85,8 @@ button {
     height: 80%;
     width: 60%;
     float: right;
+
+    border-radius: 5px;
 }
 
 img {

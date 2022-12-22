@@ -14,7 +14,7 @@ export class UnregisteredUserComponent implements OnInit {
   });
 
   constructor(private renderer: Renderer2, private router: Router) {
-    this.renderer.addClass(document.body, 'black');
+    // this.renderer.addClass(document.body, 'black');
 
   }
 
