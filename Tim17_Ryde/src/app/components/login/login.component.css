@@ -57,7 +57,11 @@ h1{
     font-size: small;
     cursor: pointer;
 }
-
+.text-danger{
+    color: aquamarine;
+    border: #0A3932;
+    margin-top: 10px;
+}
 p{
     color: #D9D9D9;
     text-align: center;

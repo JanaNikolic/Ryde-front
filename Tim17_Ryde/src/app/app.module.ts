@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from './auth/interceptor/interceptor.interceptor';
+import { CommonModule } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,11 +10,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { CreateDriverComponent } from './components/create-driver/create-driver.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { MainComponent } from './components/main/main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material.module';
 import { MapComponent } from './components/map/map/map.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminMainComponent } from './components/admin-main/admin-main.component';
+
 
 
 @NgModule({
@@ -23,11 +28,14 @@ import { MapComponent } from './components/map/map/map.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    CreateDriverComponent,
     UnregisteredUserComponent,
     MainComponent,
-    MapComponent
+    MapComponent,
+    AdminMainComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -35,6 +43,7 @@ import { MapComponent } from './components/map/map/map.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
+    HttpClientModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS,
