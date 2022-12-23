@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="leftContainer driverContainer">
+
+        <button type="submit" value="REGISTER" class="whiteBtn"  [routerLink]="['/createDriver']" id="regBtn">{{drivers1}}</button>
+        <div *ngFor="let driver of drivers1">
+            <div class="driverInfo">
+                <img id="avatar" src="assets/images/avatar.png">
+                <span class="dot"></span>
+                <p> Marko Markovic</p>
+                <div class="buttons">
+                    <button class="detailBtn">Details</button>
+                    <button class="blockBtn">Block</button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="map">
+        <img id="map" src="assets/images/map.png">
+
+    </div>
+</div>
