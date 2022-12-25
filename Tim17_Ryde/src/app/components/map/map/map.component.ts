@@ -2,6 +2,9 @@ import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import { MapService } from '../map.service';
+import { Driver } from 'src/app/model/Driver';
+import { Vehicle } from 'src/app/model/Vehicle';
+import { DriverService } from 'src/app/services/driver/driver.service';
 
 @Component({
   selector: 'app-map',
@@ -10,8 +13,32 @@ import { MapService } from '../map.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
+  drivers:Driver[] = [];
+  vehicle:Vehicle = {
+    vehicleType: '',
+    model: '',
+    licenseNumber: '',
+    passengerSeats: 0,
+    petTransport: false,
+    babyTransport: false
+  };
+  greenCarIcon = L.icon({
+    iconUrl: "assets/images/greenCar.png",
+    iconSize: [30, 30],
+    popupAnchor:  [-3, -76],
+    iconAnchor:   [30, 30]
 
-  constructor(private mapService: MapService) {}
+  })
+
+  redCarIcon = L.icon({
+    iconUrl: "assets/images/redCar.png",
+    iconSize: [30, 30],
+    popupAnchor:  [-3, -76],
+    iconAnchor:   [30, 30]
+
+  })
+
+  constructor(private mapService: MapService, private driverService: DriverService) {}
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -88,6 +115,38 @@ export class MapComponent implements AfterViewInit {
 
     L.Marker.prototype.options.icon = DefaultIcon;
     this.initMap();
+
+    this.driverService.getAllDrivers()
+    .subscribe(
+      
+      (pageDriver) => {
+        
+        this.drivers = pageDriver.drivers;
+        for(let driver of this.drivers){
+          
+            if (driver.blocked === false){
+              
+              this.driverService.getVehicle(driver.id as number).
+              subscribe(
+                (vehicle) =>{
+                  
+                  this.vehicle = vehicle
+                  if (driver.active== true){
+                  L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                     {icon: this.greenCarIcon}).addTo(this.map);
+                  }
+                  else{
+                    L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                      {icon: this.redCarIcon}).addTo(this.map);
+                  }
+                
+                }
+                );
+            }
+        }
+      }
+    
+      );
   }
 
 }

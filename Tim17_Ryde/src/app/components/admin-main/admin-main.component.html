@@ -5,8 +5,8 @@
         <div class=leftContainer >
         <div  *ngFor="let driver of drivers1">
             <div class="driverInfo">
-                <img id="avatar" [src]="driver.profilePicture">
-                <span [ngClass]="driver.blocked ? 'greenDot' : 'redDot'" class="dot"></span>
+                <img id="image" [src]="driver.profilePicture">
+                <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
                 <p> {{driver.name}}</p>
                 <div class="buttons">
                     <button class="detailBtn">Details</button>
@@ -22,7 +22,6 @@
     </div>
 
     <div class="map">
-        <img id="map" src="assets/images/map.png">
-
+        <app-map></app-map>
     </div>
 </div>

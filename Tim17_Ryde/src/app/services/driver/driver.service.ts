@@ -25,6 +25,10 @@ import { Vehicle } from 'src/app/model/Vehicle';
       
       return this.http.post<Driver>(environment.apiHost + '/api/driver',driver);
     }
+    
+    getVehicle(driverId:number):Observable<Vehicle>{
+      return this.http.get<Vehicle>(environment.apiHost+'/api/driver/' + driverId + '/vehicle')
+    }
 
 
       
