@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import { MapService } from '../map.service';
+import { MapService } from '../../../services/map/map.service';
 
 @Component({
   selector: 'app-map',
@@ -10,13 +10,24 @@ import { MapService } from '../map.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
+  fromAddress = '';
+  toAddress = '';
 
-  constructor(private mapService: MapService) {}
+  // fromLat!: number;
+  // fromLng!: number;
+  // toLat!: number;
+  // toLng!: number;
+  fromLat: number = 0;
+  fromLng: number = 0;
+  toLat: number = 0;
+  toLng: number = 0;
+
+  constructor(private mapService: MapService) { }
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [45.2396, 19.8227],
-      zoom: 13,
+      center: [45.249734, 19.832662],
+      zoom: 14,
     });
 
     const tiles = L.tileLayer(
@@ -30,23 +41,62 @@ export class MapComponent implements AfterViewInit {
     );
     tiles.addTo(this.map);
 
-    // this.search();
-    this.addMarker();
-    // this.registerOnClick();
+    // this.addCurrentLocation();
+
+    // this.mapService.selectedFromAddress$.subscribe((from) => {
+    //   this.search(from);
+    // });
+
+    this.setFromAddress();
+    // this.setToAddress();
+
+    // this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
+
+    // console.log("L1: " + this.fromLat + " lng: " + this.fromLng);
+    // console.log("L2: " + this.toLat + " lng: " + this.toLng);
+
+    // this.route();
+
+    // L.control.locate().addTo(this.map);
+
+  }
+
+  private setFromAddress() {
+    this.mapService.getFromAddress().subscribe({
+      next: (address) => {
+        console.log(address);
+        this.search(address);
+        this.fromAddress = address;
+
+        this.setToAddress();
+        // this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
+
+      },
+      error: () => { },
+    });
     // this.route();
   }
 
-  search(): void {
-    // this.mapService.search('Strazilovska 19').subscribe({
-    //   next: (result) => {
-    //     console.log(result);
-    //     L.marker([result[0].lat, result[0].lon])
-    //       .addTo(this.map)
-    //       .bindPopup('Pozdrav iz Strazilovske 19.')
-    //       .openPopup();
-    //   },
-    //   error: () => {},
-    // });
+  private setToAddress() {
+    this.mapService.getToAddress().subscribe({
+      next: (address) => {
+        this.search(address);
+        this.toAddress = address;
+        this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
+      },
+      error: () => { },
+    });
+  }
+
+  search(address: string): void {
+    this.mapService.search(address).subscribe({
+      next: (result) => {
+        L.marker([result[0].lat, result[0].lon])
+          .addTo(this.map)
+          .openPopup();
+      },
+      error: () => { },
+    });
   }
 
   registerOnClick(): void {
@@ -54,9 +104,9 @@ export class MapComponent implements AfterViewInit {
       const coord = e.latlng;
       const lat = coord.lat;
       const lng = coord.lng;
-      // this.mapService.reverseSearch(lat, lng).subscribe((res) => {
-      //   console.log(res.display_name);
-      // });
+      this.mapService.reverseSearch(lat, lng).subscribe((res) => {
+        console.log(res.display_name);
+      });
       console.log(
         'You clicked the map at latitude: ' + lat + ' and longitude: ' + lng
       );
@@ -67,18 +117,65 @@ export class MapComponent implements AfterViewInit {
 
   route(): void {
     L.Routing.control({
-      waypoints: [L.latLng(57.74, 11.94), L.latLng(57.6792, 11.949)],
+      waypoints: [L.latLng(this.fromLat, this.fromLng), L.latLng(this.toLat, this.toLng)],
     }).addTo(this.map);
+    console.log("Ruuuuun");
   }
 
-  private addMarker(): void {
-    const lat: number = 45.25;
-    const lon: number = 19.8228;
+  private setFromAndToLatLngFromAddress(from: string, to: string): void {
 
-    L.marker([lat, lon])
-      .addTo(this.map)
-      .bindPopup('Trenutno se nalazite ovde.')
-      .openPopup();
+    this.mapService.search(from).subscribe({
+      next: (result1) => {
+        if (this.fromLat != result1[0].lat && this.fromLng != result1[0].lon) {
+          this.fromLat = result1[0].lat;
+          this.fromLng = result1[0].lon;
+        }        
+      },
+      error: () => { },
+    });
+    this.mapService.search(to).subscribe({
+      next: (result2) => {
+        if (this.toLat != result2[0].lat && this.toLng != result2[0].lon) {
+          this.toLat = result2[0].lat;
+          this.toLng = result2[0].lon;
+        }
+
+        this.route();
+      },
+      error: () => { },
+    });
+
+  }
+
+  private addCurrentLocation(): void {
+    this.map.locate({ setView: true, maxZoom: 25, minZoom: 15, enableHighAccuracy: true }).on('locationerror', function () {
+      alert("Location access has been denied.");
+    }).on('locationfound', (e: { latlng: L.LatLng; }) => {
+      this.fromLat = e.latlng.lat;
+      this.fromLng = e.latlng.lng;
+
+      L.marker([this.fromLat, this.fromLng]).addTo(this.map)
+        .bindPopup('Trenutno se nalazite ovde.').openPopup();
+
+      this.mapService.reverseSearch(e.latlng.lat, e.latlng.lng).subscribe(result => {
+        this.mapService.setFromAddress(result);
+      });
+
+
+
+    });
+
+    // this.map.addControl(
+    //   L.control.locate({
+    //     locateOptions: {
+    //       enableHighAccuracy: true
+    //     }
+    //   })
+    // );
+
+    // const lc: any = L.control.locate().addTo(this.map);
+    // L.Control.Locate().addTo(this.map);
+    // L.control.Locate.addTo(this.map);
   }
 
   ngAfterViewInit(): void {

@@ -1,6 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MapService } from '../../services/map/map.service';
 
 @Component({
   selector: 'app-unregistered-user',
@@ -8,22 +9,58 @@ import { Router } from '@angular/router';
   styleUrls: ['./unregistered-user.component.css']
 })
 export class UnregisteredUserComponent implements OnInit {
-  createCalculateForm = new FormGroup({
-    from: new FormControl(''),
-    to: new FormControl(''),
+  CalculateForm = new FormGroup({
+    from: new FormControl('', {validators : [Validators.required, Validators.minLength(5)], nonNullable: true}),
+    to: new FormControl('', {validators: [Validators.required, Validators.minLength(5)], nonNullable: true}),
   });
 
-  constructor(private renderer: Renderer2, private router: Router) {
+  @Output() newItemEvent = new EventEmitter<string>();
+
+  selectedFromAddress = '';
+  selectedToAddress = '';
+
+  constructor(private renderer: Renderer2, private router: Router, private mapService: MapService) {
+    
     // this.renderer.addClass(document.body, 'black');
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { 
 
-  create() {
-    if (this.createCalculateForm.valid) {
-      // TODO
+    // this.mapService.getFromAddress().subscribe(data =>{
+    //   console.log(data);
+    //   this.selectedFromAddress = data.display_name;
+    // })
+
+   }
+
+  calculate() {
+
+    if (this.CalculateForm.valid) {
+
+      this.mapService.setFromAddress(this.selectedFromAddress);
+
+      this.mapService.setToAddress(this.selectedToAddress);
+
+      // let formVal = {
+      //   from: this.CalculateForm.value.from,
+      //   to: this.CalculateForm.value.to,
+      // };
+
+
+
+      // console.log(this.CalculateForm.value);
+      //   this.mapService.setFromAddress(from)
+      //   .subscribe({
+      //     next: (result) => {
+
+      //     },
+      // error: () => {},
+      //   });
     }
   }
+  sendToMap() {
+    //TODO
+    this.newItemEvent.emit(this.selectedToAddress);
+  }
 }
-Validators.required;
