@@ -21,10 +21,5 @@ export class VehicleService {
   }
 
 
-  add(driverId:number, vehicle: any): Observable<any> {
-    const options: any = {
-      responseType: 'text',
-    };
-    return this.http.post<Vehicle>(environment.apiHost + '/api/driver/' + driverId + '/vehicle',vehicle, options);
-  }
+  
 }

@@ -13,23 +13,16 @@ import { Driver } from 'src/app/model/Driver';
   styleUrls: ['./create-driver.component.css']
 })
 export class CreateDriverComponent {
-  validDriver: Boolean = false;
-  driver1: Driver = {
-    id: 1,
-    name: '',
-    surname: '',
-    telephoneNumber: '',
-    email: '',
-    password: '',
-    address: ''
-  };
+
+
   location: Locations = {
 
     address: "",
     latitude: 0,
     longitude: 0,
-  
+
   }
+  image: string = "";
 
 
   CreateDriverForm = new FormGroup({
@@ -60,9 +53,22 @@ export class CreateDriverComponent {
     babyTransport: Boolean(this.CreateDriverForm.value.babyTransport),
     petTransport: Boolean(this.CreateDriverForm.value.petTransport),
     currentLocation: this.location,
-
-
   };
+
+  driver: Driver = {
+    id: 1,
+    name: '',
+    surname: '',
+    telephoneNumber: '',
+    email: '',
+    password: '',
+    profilePicture: '',
+    address: '',
+    blocked: false,
+    active: false
+  };
+
+
   ngOnInit(): void { }
   constructor(private driverService: DriverService, private vehicleService: VehicleService, private router: Router) { }
 
@@ -70,7 +76,7 @@ export class CreateDriverComponent {
 
   create() {
 
-    if (this.CreateDriverForm.valid) {
+    if (this.CreateDriverForm.valid && this.CreateDriverForm.value.password == this.CreateDriverForm.value.ConfirmPassword) {
 
       this.vehicle = {
         vehicleType: this.CreateDriverForm.value.vehicleType as string,
@@ -80,34 +86,51 @@ export class CreateDriverComponent {
         babyTransport: Boolean(this.CreateDriverForm.value.babyTransport),
         petTransport: Boolean(this.CreateDriverForm.value.petTransport),
         currentLocation: this.location,
-
-
       };
+      this.driver = {
+        name: this.CreateDriverForm.value.name as string,
+        surname: this.CreateDriverForm.value.surname as string,
+        telephoneNumber: this.CreateDriverForm.value.telephoneNumber as string,
+        profilePicture: this.image,
+        email: this.CreateDriverForm.value.email as string,
+        password: this.CreateDriverForm.value.email as string,
+        address: this.CreateDriverForm.value.address as string,
+        blocked: false,
+        active: false
+      }
 
       this.driverService.
-        add(this.CreateDriverForm.value)
+        addDriver(this.driver)
         .subscribe(
           {
             next:
-          (driver) => {this.driver1 = driver;
-            this.vehicleService.
-              add(Number(String(this.driver1).split(",")[0].split(":")[1]), this.vehicle)
-              .subscribe((res: any) => {
-              });
-          
-        }
-          
-        }
-          
+              (driver) => {
+                this.driver = driver;
+                this.driverService.
+                  addVehicle(Number(this.driver.id), this.vehicle)
+                  .subscribe((res: any) => {
+                  });
+
+              }
+
+          }
+
         )
         ;
+      alert("Driver succesfully created");
     }
+    else {
+      alert("Invalid form");
+    }
+  }
 
-    
-    
-
-
-
+  inputImage(image: any) {
+    const file = image.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this.image = reader.result!.toString();
+    };
   }
 
 
