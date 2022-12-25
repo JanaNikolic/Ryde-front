@@ -13,10 +13,6 @@ export class MapComponent implements AfterViewInit {
   fromAddress = '';
   toAddress = '';
 
-  // fromLat!: number;
-  // fromLng!: number;
-  // toLat!: number;
-  // toLng!: number;
   fromLat: number = 0;
   fromLng: number = 0;
   toLat: number = 0;
@@ -48,7 +44,7 @@ export class MapComponent implements AfterViewInit {
     // });
 
     this.setFromAddress();
-    // this.setToAddress();
+    this.setToAddress();
 
     // this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
 
@@ -64,17 +60,11 @@ export class MapComponent implements AfterViewInit {
   private setFromAddress() {
     this.mapService.getFromAddress().subscribe({
       next: (address) => {
-        console.log(address);
         this.search(address);
-        this.fromAddress = address;
-
-        this.setToAddress();
-        // this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
-
+        this.fromAddress = address;        
       },
       error: () => { },
     });
-    // this.route();
   }
 
   private setToAddress() {
@@ -160,9 +150,6 @@ export class MapComponent implements AfterViewInit {
       this.mapService.reverseSearch(e.latlng.lat, e.latlng.lng).subscribe(result => {
         this.mapService.setFromAddress(result);
       });
-
-
-
     });
 
     // this.map.addControl(
