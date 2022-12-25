@@ -3,7 +3,10 @@ export interface Passenger{
     name:string;
     surname:string;
     telephoneNumber:string;
+    profilePicture: string;
     email:string;
     address:string;
     password:string;
+    blocked: Boolean;
+    active: Boolean;
 }
