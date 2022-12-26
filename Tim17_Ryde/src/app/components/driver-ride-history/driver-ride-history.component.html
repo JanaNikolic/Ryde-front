@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="left-container">
+        <h1>History</h1>
+        <div *ngFor="let ride of rides">
+            <div class="all-rides">
+                <div top-div>
+                    <div class="inlineTop1">
+                        <h3>{{rideDate}}</h3>
+                    </div>
+                    <div class="line"></div>
+                    <div class="inlineTop2">
+                        <p>{{ride.locations[0].departure.address}}</p>
+                        <p class="center">To</p>
+                        <p>{{ride.locations[0].destination.address}}</p>
+                    </div>
+                </div>
+                <div class="bottom-div">
+                    <div class="inline">
+                        <p>Start</p>
+                        <p>{{rideStartMinutesHours}}</p>
+                    </div>
+                    <div class="inline">
+                        <p>End</p>
+                        <p>{{rideEndMinutesHours}}</p>
+                    </div>
+
+                    <div class="inline">
+                        <p>Duration</p>
+                        <p>{{ride.estimatedTimeInMinutes}}</p>
+                    </div>
+                    <div class="inline">
+                        <p>Price</p>
+                        <p>{{ride.totalCost}}rsd</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="right-container">
+        <p>njigaomi</p>
+
+
+    </div>
+</div>

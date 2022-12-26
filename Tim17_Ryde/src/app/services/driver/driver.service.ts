@@ -6,6 +6,7 @@ import { environment } from 'src/app/environment/environment';
 import { Driver } from 'src/app/model/Driver';
 import { pageDriver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
+import { pageRide } from 'src/app/model/Ride';
 @Injectable({
     providedIn: 'root'
   })
@@ -25,7 +26,7 @@ import { Vehicle } from 'src/app/model/Vehicle';
       
       return this.http.post<Driver>(environment.apiHost + '/api/driver',driver);
     }
-    
+
     getVehicle(driverId:number):Observable<Vehicle>{
       return this.http.get<Vehicle>(environment.apiHost+'/api/driver/' + driverId + '/vehicle')
     }
@@ -42,5 +43,11 @@ import { Vehicle } from 'src/app/model/Vehicle';
         responseType: 'text',
       };
       return this.http.post<Vehicle>(environment.apiHost + '/api/driver/' + driverId + '/vehicle',vehicle, options);
+    }
+
+
+    getDriverRides(driverId:number):Observable<pageRide>{
+      return this.http.get<pageRide>(environment.apiHost + '/api/driver/' + driverId + '/ride')
+
     }
   }

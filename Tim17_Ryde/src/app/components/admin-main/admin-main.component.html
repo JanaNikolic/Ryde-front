@@ -9,7 +9,7 @@
                 <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
                 <p> {{driver.name}}</p>
                 <div class="buttons">
-                    <button class="detailBtn">Details</button>
+                    <button class="detailBtn" [routerLink]="['/driver-ride-history/' + driver.id]">Details</button>
                     <button class="blockBtn">Block</button>
                 </div>
             </div>
