@@ -10,6 +10,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { RegisteredUserNavbarComponent } from './components/registered-user-navbar/registered-user-navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { CreateDriverComponent } from './components/create-driver/create-driver.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { MainComponent } from './components/main/main.component';
@@ -20,8 +23,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 
-
-
 @NgModule({
   declarations: [
 
@@ -29,6 +30,8 @@ import { DriverRideHistoryComponent } from './components/driver-ride-history/dri
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    RegisteredUserNavbarComponent,
+    FooterComponent,
     CreateDriverComponent,
     UnregisteredUserComponent,
     MainComponent,
