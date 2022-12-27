@@ -10,6 +10,10 @@ export class RegisteredUserNavbarComponent {
     
   }
 
+  logout() {
+    localStorage.removeItem("user");
+  }
+  
   openMenu() {
     let element = document.getElementById('navigation');
     if (element != undefined) {

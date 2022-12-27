@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,35 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Tim17_Ryde';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() : void {}
+
+
+  isAdmin() {
+    if (this.authService.isLoggedIn()) {
+      if (this.authService.getRole()["name"]=="ROLE_ADMIN")
+      return true;
+    }
+    return false;
+  }
+
+  isRegisteredUser() {
+    console.log(this.authService.getRole());
+    if (this.authService.isLoggedIn()) {
+      if (this.authService.getRole()["name"]=="ROLE_PASSENGER" || this.authService.getRole()["name"]=="ROLE_DRIVER") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isUnregistered() {
+    if (this.authService.isLoggedIn()) {
+      return false;
+    }
+    return true
+  }
+  
 }

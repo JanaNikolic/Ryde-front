@@ -6,10 +6,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { MainComponent } from './components/main/main.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
+import { LoginGuard } from './guard/login.guard';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
-  {path: 'login', component:LoginComponent},
+  {path: 'login', component:LoginComponent}
   {path: 'register', component:RegisterComponent},
   {path: 'createDriver', component:CreateDriverComponent},
   {path: 'get-started', component:UnregisteredUserComponent},

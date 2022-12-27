@@ -8,7 +8,7 @@
         <li><a id = "homeButton" [routerLink]="['/home']">HOME</a></li>
         <li><a id = "historyButton" [routerLink]="['/history']">HISTORY</a></li>
         <li><a id = "profileButton" [routerLink]="['/profile']">STATISTICS</a></li>
-        <li><a id = "logoutButton" [routerLink]="['/login']">LOGOUT</a></li>
+        <li><a id = "logoutButton" [routerLink]="['/login']" (click)="logout()">LOGOUT</a></li>
       </ul>
     </span>
 </div>

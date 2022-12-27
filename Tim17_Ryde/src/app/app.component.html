@@ -1,3 +1,5 @@
-<app-navbar *ngIf="true"></app-navbar>
+    <app-registered-user-navbar *ngIf="isRegisteredUser()"></app-registered-user-navbar>
+    <app-admin-navbar *ngIf="isAdmin()"></app-admin-navbar>
+    <app-navbar *ngIf="isUnregistered()"></app-navbar>
 
 <router-outlet></router-outlet>

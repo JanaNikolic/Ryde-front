@@ -24,7 +24,6 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
 
 @NgModule({
   declarations: [
-
     AppComponent,
     LoginComponent,
     RegisterComponent,
@@ -35,12 +34,13 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
     UnregisteredUserComponent,
     MainComponent,
     MapComponent,
+    AdminNavbarComponent,
     AdminMainComponent
   ],
   imports: [
+    AppRoutingModule,
     CommonModule,
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -55,4 +55,4 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
