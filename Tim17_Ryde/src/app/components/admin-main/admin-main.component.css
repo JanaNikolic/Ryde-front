@@ -13,6 +13,9 @@
     font-family: 'Roboto';
     font-style: normal;
 }
+button{
+    cursor: pointer;
+}
 p{
     display:inline-block; /* added */
     vertical-align:middle;

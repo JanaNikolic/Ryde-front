@@ -1,4 +1,5 @@
 import { Locations } from "./Locations";
+import { Passenger } from "./Passenger";
 
 export interface Ride{
     id:number;
@@ -6,8 +7,8 @@ export interface Ride{
     endTime: string,
     totalCost: number,
     estimatedTimeInMinutes: number,
-    locations:LocationDTO[];
-    
+    locations:LocationDTO[],
+    passengers:Passenger[];
 }
 export interface pageRide{
     count:number

@@ -3,6 +3,10 @@ import { Ride } from 'src/app/model/Ride';
 import { LocationDTO } from 'src/app/model/Ride';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { ActivatedRoute } from '@angular/router';
+import { RideService } from 'src/app/services/ride/ride.service';
+import { Locations } from 'src/app/model/Locations';
+import { Passenger } from 'src/app/model/Passenger';
+import { PassengerService } from 'src/app/services/passenger/passenger.service';
 
 @Component({
   selector: 'app-driver-ride-history',
@@ -11,11 +15,35 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DriverRideHistoryComponent {
 
-  constructor(private driverService: DriverService, private route: ActivatedRoute) {}
+  constructor(private driverService: DriverService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute) {}
   rides: Ride[] = [];
-  rideStartMinutesHours:string = '';
-  rideEndMinutesHours:string = '';
-  rideDate:string = '';
+
+  passengers: Passenger[] = [];
+
+  loc: Locations = {
+    address: '',
+    latitude: 10,
+    longitude: 10
+  }
+
+  location: LocationDTO = {
+    departure:this.loc,
+    destination:this.loc
+    
+  }
+  locc: LocationDTO[] = [this.location];
+  
+  singleRide: Ride = {
+    id: 1,
+    startTime: '',
+    endTime: '',
+    totalCost: 0,
+    estimatedTimeInMinutes: 0,
+    locations: this.locc,
+    passengers: this.passengers
+
+  }
+ 
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -24,15 +52,29 @@ export class DriverRideHistoryComponent {
       (pageRide) => {
         console.log(this.rides);
         this.rides = pageRide.rides;
-        for( let ride of this.rides){
-           this.rideStartMinutesHours = ride.startTime.split("T")[1].split(":")[0] +':'+ ride.startTime.split("T")[1].split(":")[1];
-           this.rideEndMinutesHours = ride.endTime.split("T")[1].split(":")[0] +':'+ ride.endTime.split("T")[1].split(":")[1];
-           this.rideDate = ride.startTime.split("T")[0];
-        }
+        
         console.log(this.rides[1].locations[0].departure);
       }
     );
   
 });
   }
+  
+
+
+  showHistoryDetails(rideId:number){
+    this.rideService.getRide(rideId)
+    .subscribe(
+      (ride) => {
+        this.singleRide = ride;
+        this.passengers = this.singleRide.passengers;
+        console.log(this.passengers);
+      }
+    )
+
+
+  }
+  showPassengerInfo(passengerId:number){
+    
+}
 }
