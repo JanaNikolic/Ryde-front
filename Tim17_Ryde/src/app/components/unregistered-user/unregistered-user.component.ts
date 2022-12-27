@@ -10,8 +10,8 @@ import { MapService } from '../../services/map/map.service';
 })
 export class UnregisteredUserComponent implements OnInit {
   CalculateForm = new FormGroup({
-    from: new FormControl('', {validators : [Validators.required, Validators.minLength(5)], nonNullable: true}),
-    to: new FormControl('', {validators: [Validators.required, Validators.minLength(5)], nonNullable: true}),
+    from: new FormControl('', { validators: [Validators.required, Validators.minLength(5)], nonNullable: true }),
+    to: new FormControl('', { validators: [Validators.required, Validators.minLength(5)], nonNullable: true }),
   });
 
   @Output() newItemEvent = new EventEmitter<string>();
@@ -20,28 +20,31 @@ export class UnregisteredUserComponent implements OnInit {
   selectedToAddress = '';
 
   constructor(private renderer: Renderer2, private router: Router, private mapService: MapService) {
-    
+
     // this.renderer.addClass(document.body, 'black');
 
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
 
-    // this.mapService.getFromAddress().subscribe(data =>{
-    //   console.log(data);
-    //   this.selectedFromAddress = data.display_name;
-    // })
+    this.mapService.getFromAddress().subscribe(data => {
+      this.selectedFromAddress = data.display_name;
+    })
 
-   }
+    this.mapService.getToAddress().subscribe(data => {
+      this.selectedToAddress = data.display_name;
+    })
+  }
 
   calculate() {
 
     if (this.CalculateForm.valid) {
 
-      this.mapService.setFromAddress(this.selectedFromAddress);
+      this.mapService.setFromAddress(this.selectedFromAddress + ", Novi Sad");
 
-      this.mapService.setToAddress(this.selectedToAddress);
+      this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");
 
+      this.CalculateForm.reset(this.CalculateForm.value);
       // let formVal = {
       //   from: this.CalculateForm.value.from,
       //   to: this.CalculateForm.value.to,

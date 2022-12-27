@@ -46,9 +46,7 @@ export class MapComponent implements AfterViewInit {
 
     // this.addCurrentLocation();
 
-    // this.mapService.selectedFromAddress$.subscribe((from) => {
-    //   this.search(from);
-    // });
+    
     this.currentLayerGroup = this.currentLayerGroup.addTo(this.map);
 
     this.currentLayerGroup = this.currentLayerGroup.clearLayers();
@@ -84,7 +82,10 @@ export class MapComponent implements AfterViewInit {
         } else {
           this.currentRoute.spliceWaypoints(0, 1, e.latlng);
         }
-
+        this.mapService.reverseSearch(this.fromLat, this.fromLng).subscribe((address) => {
+          this.fromAddress = address;
+          this.mapService.setFromAddress(address);
+        });
         this.map.closePopup();
 
       });
@@ -103,23 +104,20 @@ export class MapComponent implements AfterViewInit {
         } else {
           this.currentRoute.spliceWaypoints(this.currentRoute.getWaypoints().length - 1, 1, e.latlng);
         }
+        this.mapService.reverseSearch(this.toLat, this.toLng).subscribe((address) => {
+          this.toAddress = address;
+          this.mapService.setToAddress(address);
+        });
         this.map.closePopup();
       });
     });
-
-
-    // this.currentLayerGroup = L.layerGroup([this.fromMarker, this.toMarker]).addTo(this.map).openPopup();
-
     // L.control.locate().addTo(this.map);
-
   }
 
   private setFromAddress(): void {
     this.mapService.getFromAddress().subscribe({
       next: (address) => {
         this.currentLayerGroup = this.currentLayerGroup.clearLayers();
-
-        // this.search(address);
         this.fromAddress = address;
       },
       error: () => { },
@@ -129,10 +127,7 @@ export class MapComponent implements AfterViewInit {
   private setToAddress(): void {
     this.mapService.getToAddress().subscribe({
       next: (address) => {
-
         this.currentLayerGroup = this.currentLayerGroup.clearLayers();
-
-        // this.search(address);
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
       },
@@ -168,6 +163,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   route(): void {
+    // this.currentLocation.remove();
     this.map.eachLayer((layer: any) => {
       if (layer.options.waypoints && layer.options.waypoints.length) {
         this.map.removeLayer(layer);
