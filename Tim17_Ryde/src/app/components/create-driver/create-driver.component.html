@@ -43,6 +43,10 @@
                         <input type="password" formControlName="ConfirmPassword" class="infoInput" name="confirmPassword" id="confirmPassword"
                             placeholder="Confirm password:">
                     </p>
+                    <p class="textLabel noMargin"><label>Insert picture</label></p>
+                    <p>
+                        <input type="file" class="infoInput" name="inputImage" id="inputImage" (change)="inputImage($event)">
+                    </p>
 
                 </div>
 
@@ -81,7 +85,7 @@
                             <label class="checkBoxLabel">Lux </label>
 
                         </div>
-                        <p>{{driver1}}</p>
+                        
                         <div class="inline">
                             <input type="radio" formControlName="vehicleType" class="radioBtn" id="van" name="vehicleType" value="VAN">
                             <label class="checkBoxLabel">Van </label>

@@ -9,28 +9,41 @@ import { DriverService } from 'src/app/services/driver/driver.service';
 })
 export class AdminMainComponent implements OnInit{
 
-  
+  mapa: Map<String, Object> = new Map<String,Object>();
+
   driver1: Driver = {name: '',
   surname: '',
   telephoneNumber: '',
   email: '',
+  profilePicture: '',
   password: '',
-  address: ''};
-  drivers1: Driver[] = [this.driver1, this.driver1];
+  address: '',
+  blocked: false,
+  active: false};
+  drivers1: Driver[] = [];
   
 
   constructor(private driverService: DriverService) {}
   ngOnInit(): void {
     
-    this.driverService.getAll()
+    this.driverService.getAllDrivers()
     .subscribe(
-      (drivers) => (this.drivers1 = drivers)
+      
+      (pageDriver) => {
+        console.log(this.driver1.blocked);
+        this.drivers1 = pageDriver.drivers; console.log(this.drivers1[0].blocked);
+        /*this.drivers1.forEach(function(driver){
+            driver.blocked = false;
+            driver.active = false;
+            //TODO TREBA DA VRATI I DA LI JE VOZAC ACTIVE I BLOKIRAN DA ZNA DA LI DA BUDE CRVEN ILI ZELEN
+        })*/
+      
+      }
+    
     );
 
+    
 
-    console.log(typeof this.driver1);
-    console.log(this.drivers1);
-    console.log(this.drivers1);
     
     
 
