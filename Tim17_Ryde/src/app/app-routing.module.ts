@@ -10,7 +10,10 @@ import { LoginGuard } from './guard/login.guard';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
-  {path: 'login', component:LoginComponent}
+  {path: 'login', component:LoginComponent,
+  canActivate: [LoginGuard],
+  loadChildren: () =>
+    import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
   {path: 'register', component:RegisterComponent},
   {path: 'createDriver', component:CreateDriverComponent},
   {path: 'get-started', component:UnregisteredUserComponent},

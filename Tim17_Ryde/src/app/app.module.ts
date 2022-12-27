@@ -25,7 +25,6 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterComponent,
     NavbarComponent,
     RegisteredUserNavbarComponent,

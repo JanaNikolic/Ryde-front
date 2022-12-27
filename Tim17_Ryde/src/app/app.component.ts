@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from './services/login/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent {
 
   isAdmin() {
     if (this.authService.isLoggedIn()) {
-      if (this.authService.getRole()["name"]=="ROLE_ADMIN")
+      if (this.authService.getRole()=="ROLE_ADMIN")
       return true;
     }
     return false;
@@ -25,7 +25,7 @@ export class AppComponent {
   isRegisteredUser() {
     console.log(this.authService.getRole());
     if (this.authService.isLoggedIn()) {
-      if (this.authService.getRole()["name"]=="ROLE_PASSENGER" || this.authService.getRole()["name"]=="ROLE_DRIVER") {
+      if (this.authService.getRole()=="ROLE_PASSENGER" || this.authService.getRole()=="ROLE_DRIVER") {
         return true;
       }
     }
