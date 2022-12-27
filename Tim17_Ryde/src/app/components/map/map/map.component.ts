@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
@@ -17,6 +18,12 @@ export class MapComponent implements AfterViewInit {
   fromLng: number = 0;
   toLat: number = 0;
   toLng: number = 0;
+
+  currentLocation: any;
+
+  currentLayerGroup: L.LayerGroup = L.layerGroup();
+
+  currentRoute: any;
 
   constructor(private mapService: MapService) { }
 
@@ -42,35 +49,39 @@ export class MapComponent implements AfterViewInit {
     // this.mapService.selectedFromAddress$.subscribe((from) => {
     //   this.search(from);
     // });
+    this.currentLayerGroup = this.currentLayerGroup.addTo(this.map);
+
+    this.currentLayerGroup = this.currentLayerGroup.clearLayers();
 
     this.setFromAddress();
     this.setToAddress();
 
-    // this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
 
-    // console.log("L1: " + this.fromLat + " lng: " + this.fromLng);
-    // console.log("L2: " + this.toLat + " lng: " + this.toLng);
-
-    // this.route();
+    // this.currentLayerGroup = L.layerGroup([this.fromMarker, this.toMarker]).addTo(this.map).openPopup();
 
     // L.control.locate().addTo(this.map);
 
   }
 
-  private setFromAddress() {
+  private setFromAddress(): void {
     this.mapService.getFromAddress().subscribe({
       next: (address) => {
-        this.search(address);
-        this.fromAddress = address;        
+        this.currentLayerGroup = this.currentLayerGroup.clearLayers();
+
+        // this.search(address);
+        this.fromAddress = address;
       },
       error: () => { },
     });
   }
 
-  private setToAddress() {
+  private setToAddress(): void {
     this.mapService.getToAddress().subscribe({
       next: (address) => {
-        this.search(address);
+
+        this.currentLayerGroup = this.currentLayerGroup.clearLayers();
+
+        // this.search(address);
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
       },
@@ -81,8 +92,8 @@ export class MapComponent implements AfterViewInit {
   search(address: string): void {
     this.mapService.search(address).subscribe({
       next: (result) => {
-        L.marker([result[0].lat, result[0].lon])
-          .addTo(this.map)
+        L.marker([result[0].lat, result[0].lon], { draggable: false })
+          .addTo(this.currentLayerGroup)
           .openPopup();
       },
       error: () => { },
@@ -106,10 +117,21 @@ export class MapComponent implements AfterViewInit {
   }
 
   route(): void {
-    L.Routing.control({
+    this.map.eachLayer((layer: any) => {
+      if (layer.options.waypoints && layer.options.waypoints.length) {
+        this.map.removeLayer(layer);
+        if (this.currentRoute != null) {
+          this.map.removeControl(this.currentRoute);
+          this.currentRoute = null;
+        }
+      }
+    });
+
+    this.currentRoute = L.Routing.control({
       waypoints: [L.latLng(this.fromLat, this.fromLng), L.latLng(this.toLat, this.toLng)],
+      addWaypoints: false,
+      // routeWhileDragging: false,  add later
     }).addTo(this.map);
-    console.log("Ruuuuun");
   }
 
   private setFromAndToLatLngFromAddress(from: string, to: string): void {
@@ -119,7 +141,7 @@ export class MapComponent implements AfterViewInit {
         if (this.fromLat != result1[0].lat && this.fromLng != result1[0].lon) {
           this.fromLat = result1[0].lat;
           this.fromLng = result1[0].lon;
-        }        
+        }
       },
       error: () => { },
     });
@@ -131,6 +153,7 @@ export class MapComponent implements AfterViewInit {
         }
 
         this.route();
+        this.map.setView([this.fromLat, this.fromLng], 15);
       },
       error: () => { },
     });
@@ -144,8 +167,11 @@ export class MapComponent implements AfterViewInit {
       this.fromLat = e.latlng.lat;
       this.fromLng = e.latlng.lng;
 
-      L.marker([this.fromLat, this.fromLng]).addTo(this.map)
-        .bindPopup('Trenutno se nalazite ovde.').openPopup();
+      this.currentLocation = L.marker([this.fromLat, this.fromLng]);
+
+      this.map.addLayer(this.currentLocation);
+      this.currentLocation.bindPopup('Trenutno se nalazite ovde.').openPopup();
+
 
       this.mapService.reverseSearch(e.latlng.lat, e.latlng.lng).subscribe(result => {
         this.mapService.setFromAddress(result);
