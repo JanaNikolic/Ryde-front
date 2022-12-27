@@ -4,7 +4,9 @@
             <h1>Login</h1>
             <form [formGroup]="LoginForm"
              (ngSubmit)="login()">
-                <div *ngIf="invalidInput" class="text-danger">
+             <div *ngIf="hasError"
+             >Korisničko ime ili lozinka nisu ispravni.</div>
+                <div  class="text-danger">
                 <p >
                     <input  type="text" formControlName="Email" class="infoInput" name="Email" id="Email" placeholder="Email:">
                 </p>
@@ -24,7 +26,7 @@
             <hr>
             <p id="noAccount">Don't Have An Account?</p>
             <p>
-                <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn"
+                <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
 
                     [routerLink]="['/admin-main']">REGISTER</button>
 

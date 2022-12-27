@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/login/auth.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { JwtAuthenticationRequest } from 'src/app/model/JwtAuthenticationRequest';
 
 @Component({
   selector: 'app-login',
@@ -13,24 +17,37 @@ export class LoginComponent {
     Password: new FormControl('',[Validators.required, Validators.minLength(8)]),
     
   });
-  invalidInput:boolean = true;
+  hasError: boolean = false;
 
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
+
   login(){
-    if(this.LoginForm.valid){
 
-    }
-    if (!this.LoginForm.valid){
-      alert("invalidForm")
-      this.invalidInput = true;
-      
+    let loginVal: JwtAuthenticationRequest = {
+      email: this.LoginForm.value.Email!,
+      password: this.LoginForm.value.Password!,
+    };
+    
+    console.log("loginVal");
 
+    console.log(this.LoginForm.valid);
+
+    if (this.LoginForm.valid) {
+      this.authService.login(loginVal).subscribe({
+        next: (result) => {
+          localStorage.setItem('user', JSON.stringify(result));
+          this.authService.setUser();
+          this.router.navigate(['/admin-main']);
+        },
+        error: (error) => {
+          if (error instanceof HttpErrorResponse) {
+            this.hasError = true;
+          }
+        },
+      });
     }
-    else{
-      this.invalidInput = false;
     }
 
   }
-
-}
