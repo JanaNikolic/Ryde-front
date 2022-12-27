@@ -56,6 +56,57 @@ export class MapComponent implements AfterViewInit {
     this.setFromAddress();
     this.setToAddress();
 
+    this.map.on('click', (e: any) => {
+      const container = L.DomUtil.create('div');
+      const startBtn = this.createButton('Departure', container);
+      const destBtn = this.createButton('Destination', container);
+
+      const coord = e.latlng;
+      const lat = coord.lat;
+      const lng = coord.lng;
+
+      L.popup()
+        .setContent(container)
+        .setLatLng(coord)
+        .openOn(this.map);
+
+
+      L.DomEvent.on(startBtn, 'click', () => {
+        this.fromLat = lat;
+        this.fromLng = lng;
+        if (this.currentRoute == null) {
+          this.currentRoute = L.Routing.control({
+            waypoints: [L.latLng(this.fromLat, this.fromLng)],
+            addWaypoints: false,
+            // routeWhileDragging: false,  add later
+          }).addTo(this.map);
+
+        } else {
+          this.currentRoute.spliceWaypoints(0, 1, e.latlng);
+        }
+
+        this.map.closePopup();
+
+      });
+
+      L.DomEvent.on(destBtn, 'click', () => {
+        this.toLat = lat;
+        this.toLng = lng;
+
+        if (this.currentRoute == null) {
+          this.currentRoute = L.Routing.control({
+            waypoints: [L.latLng(this.toLat, this.toLng)],
+            addWaypoints: false,
+            // routeWhileDragging: false,  add later
+          }).addTo(this.map);
+
+        } else {
+          this.currentRoute.spliceWaypoints(this.currentRoute.getWaypoints().length - 1, 1, e.latlng);
+        }
+        this.map.closePopup();
+      });
+    });
+
 
     // this.currentLayerGroup = L.layerGroup([this.fromMarker, this.toMarker]).addTo(this.map).openPopup();
 
@@ -189,6 +240,14 @@ export class MapComponent implements AfterViewInit {
     // const lc: any = L.control.locate().addTo(this.map);
     // L.Control.Locate().addTo(this.map);
     // L.control.Locate.addTo(this.map);
+  }
+
+  private createButton(label: string, container: HTMLElement): HTMLButtonElement {
+    const btn = L.DomUtil.create('button', 'button-popup', container);
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('style', "margin: 5px 0;padding: 8px 0;width: 100%;font-family: Verdana, Geneva, Tahoma, sans-serif;font-style: normal;font-weight: 400;font-size: 12px;line-height: 12px;letter-spacing: .1rem;text-transform: uppercase;text-decoration: none;white-space: nowrap;background-color: transparent;border-radius: 4px;border: 1px solid #bbb;cursor: pointer;");
+    btn.innerHTML = label;
+    return btn;
   }
 
   ngAfterViewInit(): void {
