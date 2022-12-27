@@ -14,6 +14,7 @@ export class UnregisteredUserComponent implements OnInit {
     to: new FormControl('', {validators: [Validators.required, Validators.minLength(5)], nonNullable: true}),
   });
 
+
   @Output() newItemEvent = new EventEmitter<string>();
 
   selectedFromAddress = '';

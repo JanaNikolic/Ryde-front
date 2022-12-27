@@ -11,6 +11,7 @@ import { MapService } from '../../../services/map/map.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
+
   fromAddress = '';
   toAddress = '';
 
@@ -258,5 +259,4 @@ export class MapComponent implements AfterViewInit {
     L.Marker.prototype.options.icon = DefaultIcon;
     this.initMap();
   }
-
 }
