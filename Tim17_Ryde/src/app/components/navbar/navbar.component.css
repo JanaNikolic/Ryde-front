@@ -60,6 +60,9 @@ a {
     padding-right: 10%;
 }
 
+.img-fluid {
+    cursor: pointer;
+}
 
 @media screen and (max-width: 600px) {
     #navbar {
