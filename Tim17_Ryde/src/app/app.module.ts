@@ -21,6 +21,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { MapComponent } from './components/map/map/map.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
+import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
     UnregisteredUserComponent,
     MainComponent,
     MapComponent,
-    AdminMainComponent
+    AdminMainComponent,
+    DriverRideHistoryComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="left-container">
+        <h1>History</h1>
+        <div class="scrollable">
+            <div *ngFor="let ride of rides">
+                <div (click)="showHistoryDetails(ride.id!)" class="all-rides">
+                    <div top-div>
+                        <div class="inlineTop1">
+                            <h3>{{ride.startTime.split("T")[0]}}</h3>
+                        </div>
+                        <div class="line"></div>
+                        <div class="inlineTop2">
+                            <p>{{ride.locations[0].departure.address}}</p>
+                            <p class="center">To</p>
+                            <p>{{ride.locations[0].destination.address}}</p>
+                        </div>
+                    </div>
+                    <div class="bottom-div">
+                        <div class="inline">
+                            <p>Start</p>
+                            <p>{{ride.startTime.split("T")[1].split(":")[0] +':'+
+                                ride.startTime.split("T")[1].split(":")[1]}}</p>
+                        </div>
+                        <div class="inline">
+                            <p>End</p>
+                            <p>{{ride.endTime.split("T")[1].split(":")[0] +':'+
+                                ride.endTime.split("T")[1].split(":")[1]}}</p>
+                        </div>
+
+                        <div class="inline">
+                            <p>Duration</p>
+                            <p>{{ride.estimatedTimeInMinutes}}</p>
+                        </div>
+                        <div class="inline">
+                            <p>Price</p>
+                            <p>{{ride.totalCost}}rsd</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="right-container">
+        <div class="map">
+            <img src="assets/images/map.png">
+        </div>
+        <h3>Ride information</h3>
+        <div class="left-side-info">
+            <p class="margin-top">From: </p>
+            <p class="margin-top">To: </p>
+            <p class="margin-top">Start time: </p>
+            <p class="margin-top">End time: </p>
+            <p class="margin-top">Duration: </p>
+            <p class="margin-top">Price: </p>
+        </div>
+        <div class="right-side-info">
+            <p class="margin-top">{{singleRide.locations[0].departure.address}} </p>
+            <p class="margin-top">{{singleRide.locations[0].destination.address}}</p>
+            <p class="margin-top">{{singleRide.startTime}}</p>
+            <p class="margin-top">{{singleRide.endTime}}</p>
+            <p class="margin-top">{{singleRide.estimatedTimeInMinutes}}</p>
+            <p class="margin-top">{{singleRide.totalCost}}</p>
+        </div>
+        <hr>
+        <h3>Passengers</h3>
+        <div *ngFor="let passenger of passengers">
+            <div class="left-side-info">
+                <p class="margin-top">email: </p>
+            </div>
+            <div class="right-side-info">
+                <p class="margin-top">{{passenger.email}}</p>
+            </div>
+        </div>
+        <hr>
+        <h3>Review</h3>
+
+
+    </div>
+</div>
