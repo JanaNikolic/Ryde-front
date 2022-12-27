@@ -24,6 +24,7 @@ export class LoginComponent {
   ngOnInit(): void {}
 
   login(){
+    this.hasError = false;
 
     let loginVal: JwtAuthenticationRequest = {
       email: this.LoginForm.value.Email!,

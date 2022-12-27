@@ -4,11 +4,11 @@
             <h1>Login</h1>
             <form [formGroup]="LoginForm"
              (ngSubmit)="login()">
-             <div *ngIf="hasError"
-             >Korisničko ime ili lozinka nisu ispravni.</div>
+             <div *ngIf="hasError" id="login-warning"
+             >Login credentials are not correct!</div>
                 <div  class="text-danger">
                 <p >
-                    <input  type="text" formControlName="Email" class="infoInput" name="Email" id="Email" placeholder="Email:">
+                    <input  type="text" formControlName="Email" [ngClass]="hasError? 'invalid infoInput' : 'infoInput'" class="infoInput" name="Email" id="Email" placeholder="Email:">
                 </p>
             </div>
 
