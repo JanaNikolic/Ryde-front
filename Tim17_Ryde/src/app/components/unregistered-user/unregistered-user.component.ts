@@ -27,11 +27,11 @@ export class UnregisteredUserComponent implements OnInit {
   price: string = '';
   distance: string = '';
 
-  departureLat!: number;
-  departureLng!: number;
+  departureLat: number = 0;
+  departureLng: number = 0;
 
-  destinationLat!: number;
-  destinationLng!: number;
+  destinationLat: number = 0;
+  destinationLng: number = 0;
 
 
 
@@ -45,12 +45,28 @@ export class UnregisteredUserComponent implements OnInit {
 
     this.mapService.getFromAddress().subscribe(data => {
       this.selectedFromAddress = data.display_name;
+      this.mapService.search(this.selectedFromAddress + ", Novi Sad").subscribe({
+        next: (result) => {
+          this.departureLat = result[0].lat;
+          this.departureLng = result[0].lon;
+          
+        },
+        error: () => { },
+      });
     });
 
     this.mapService.getToAddress().subscribe(data => {
       this.selectedToAddress = data.display_name;
-    });
 
+      this.mapService.search(this.selectedToAddress + ", Novi Sad").subscribe({
+        next: (result) => {
+          this.destinationLat = result[0].lat;
+          this.destinationLng = result[0].lon;
+          
+        },
+        error: () => { },
+      });
+    });   
 
   }
 
@@ -59,26 +75,10 @@ export class UnregisteredUserComponent implements OnInit {
     if (this.CalculateForm.valid) {
 
       this.mapService.setFromAddress(this.selectedFromAddress + ", Novi Sad");
-
-      this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");
+      
+      this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");      
 
       this.CalculateForm.reset(this.CalculateForm.value);
-
-      this.mapService.getDistance().subscribe(data => {
-        if (Object.keys(data).length === 0) {
-          this.distance = '...';
-        } else {
-          this.distance = (Math.round((data / 1000) * 100) / 100) + ' km';  
-        }
-      });
-
-      this.mapService.getDuration().subscribe(data => {
-        if (Object.keys(data).length === 0) {
-          this.duration = '...';
-        } else {
-          this.duration = Math.floor(data / 60) + ' min ' + (Math.round(data - Math.floor(data / 60) * 60)) + ' s';
-        }
-      });
 
       let departure: Locations = {
         address: '',
@@ -91,8 +91,8 @@ export class UnregisteredUserComponent implements OnInit {
         latitude: 0,
         longitude: 0
       }
-      /**
-       *
+
+
       this.mapService.getDeparture().subscribe(data => {
         console.log(data);
         this.departureLat = data.lat;
@@ -119,6 +119,24 @@ export class UnregisteredUserComponent implements OnInit {
           }
         });
 
+        const location: LocationDTO = {
+          departure: departure,
+          destination: destination
+        };
+
+        const locations: LocationDTO[] = [location];
+
+        const ride: Ride = {
+          id: 0,
+          startTime: '',
+          endTime: '',
+          totalCost: 0,
+          estimatedTimeInMinutes: 0,
+          locations: locations,
+          passengers: []
+
+        };
+
         this.unregisteredUserSerivce
           .calculatePrice(ride)
           .subscribe({
@@ -128,65 +146,79 @@ export class UnregisteredUserComponent implements OnInit {
             }
           });
 
-      }); 
-       */
+        this.mapService.getDistance().subscribe(data => {
+          if (Object.keys(data).length === 0) {
+            this.distance = '';
+          }
+          this.distance = (Math.round((data / 1000) * 100) / 100) + ' km';
+        });
 
-      this.mapService.getDeparture().subscribe(data => {
-        console.log(data);
-        this.departureLat = data.lat;
-        this.departureLng = data.lng;
+        this.mapService.getDuration().subscribe(data => {
+          if (Object.keys(data).length === 0) {
+            this.duration = '';
+          }
+          this.duration = Math.floor(data / 60) + ' min ' + (Math.round(data - Math.floor(data / 60) * 60)) + ' s';
+        });
 
-        console.log("Flat " + this.departureLat + " Flng " + this.departureLng);
-      }); 
-
-      this.mapService.getDestination().subscribe(data => {
-        console.log(data);
-        this.destinationLat = data.lat;
-        this.destinationLng = data.lng;
-
-        console.log("Tlat " + this.destinationLat + " Tlng " + this.destinationLng);
-
-        
       });
 
-      departure = {
-        address: this.selectedFromAddress,
-        latitude: this.departureLat,
-        longitude: this.departureLng
-      };
+      
+      // this.mapService.getDeparture().subscribe(data => {
+      //   console.log(data);
+      //   this.departureLat = data.lat;
+      //   this.departureLng = data.lng;
 
-      destination = {
-        address: this.selectedToAddress,
-        latitude: this.destinationLat,
-        longitude: this.destinationLng
-      };
+      //   console.log("Flat " + this.departureLat + " Flng " + this.departureLng);
+      // });
 
-      const location: LocationDTO = {
-        departure: departure,
-        destination: destination
-      };
+      // this.mapService.getDestination().subscribe(data => {
+      //   console.log(data);
+      //   this.destinationLat = data.lat;
+      //   this.destinationLng = data.lng;
 
-      const locations: LocationDTO[] = [location];
+      //   console.log("Tlat " + this.destinationLat + " Tlng " + this.destinationLng);
 
-      const ride: Ride = {
-        id: 0,
-        startTime: '',
-        endTime: '',
-        totalCost: 0,
-        estimatedTimeInMinutes: 0,
-        locations: locations,
-        passengers: []
 
-      };
+      // });
 
-      this.unregisteredUserSerivce
-          .calculatePrice(ride)
-          .subscribe({
-            next: (res) => {
-              console.log(res);
-              this.price = Math.round(res.estimatedCost) + " RSD";
-            }
-          });
+      // departure = {
+      //   address: this.selectedFromAddress,
+      //   latitude: this.departureLat,
+      //   longitude: this.departureLng
+      // };
+
+      // destination = {
+      //   address: this.selectedToAddress,
+      //   latitude: this.destinationLat,
+      //   longitude: this.destinationLng
+      // };
+
+      // const location: LocationDTO = {
+      //   departure: departure,
+      //   destination: destination
+      // };
+
+      // const locations: LocationDTO[] = [location];
+
+      // const ride: Ride = {
+      //   id: 0,
+      //   startTime: '',
+      //   endTime: '',
+      //   totalCost: 0,
+      //   estimatedTimeInMinutes: 0,
+      //   locations: locations,
+      //   passengers: []
+
+      // };
+
+      // this.unregisteredUserSerivce
+      //   .calculatePrice(ride)
+      //   .subscribe({
+      //     next: (res) => {
+      //       console.log(res);
+      //       this.price = Math.round(res.estimatedCost) + " RSD";
+      //     }
+      //   });
 
 
 

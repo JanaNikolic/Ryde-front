@@ -47,10 +47,10 @@ export class MapComponent implements AfterViewInit {
   fromAddress = '';
   toAddress = '';
 
-  fromLat!: number;
-  fromLng!: number;
-  toLat!: number;
-  toLng!: number;
+  fromLat: number = 45.249734; // TODO
+  fromLng: number = 19.832662;
+  toLat: number = 45.249734;
+  toLng: number = 19.832662;
 
   currentLocation: any;
 
@@ -117,6 +117,16 @@ export class MapComponent implements AfterViewInit {
 
         } else {
           this.currentRoute.spliceWaypoints(0, 1, e.latlng);
+          this.currentRoute.on('routesfound', (e: any) => {
+            this.distance = e.routes[0].summary.totalDistance;
+            this.time = e.routes[0].summary.totalTime;
+      
+            this.mapService.setDistance(this.distance);
+            this.mapService.setDuration(this.time);
+      
+      
+            // console.log(e.routes[0]);
+          });
         }
         this.mapService.reverseSearch(this.fromLat, this.fromLng).subscribe((address) => {
           this.fromAddress = address;
@@ -142,6 +152,13 @@ export class MapComponent implements AfterViewInit {
 
         } else {
           this.currentRoute.spliceWaypoints(this.currentRoute.getWaypoints().length - 1, 1, e.latlng);
+          this.currentRoute.on('routesfound', (e: any) => {
+            this.distance = e.routes[0].summary.totalDistance;
+            this.time = e.routes[0].summary.totalTime;
+      
+            this.mapService.setDistance(this.distance);
+            this.mapService.setDuration(this.time);
+          });
         }
         this.mapService.reverseSearch(this.toLat, this.toLng).subscribe((address) => {
           this.toAddress = address;
