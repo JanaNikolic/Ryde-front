@@ -19,7 +19,11 @@ export class LoginComponent {
   });
   hasError: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+  };
+  }
 
   ngOnInit(): void {}
 

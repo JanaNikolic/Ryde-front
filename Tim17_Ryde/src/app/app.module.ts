@@ -52,11 +52,7 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS,
-      useClass: Interceptor,
-      multi: true,}
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

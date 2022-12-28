@@ -70,7 +70,7 @@ export class CreateDriverComponent {
 
 
   ngOnInit(): void { }
-  constructor(private driverService: DriverService, private vehicleService: VehicleService, private router: Router) { }
+  constructor(private driverService: DriverService, private vehicleService: VehicleService) { }
 
 
 
