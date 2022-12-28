@@ -16,8 +16,8 @@ import { DriverService } from 'src/app/services/driver/driver.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
-  drivers:Driver[] = [];
-  vehicle:Vehicle = {
+  drivers: Driver[] = [];
+  vehicle: Vehicle = {
     vehicleType: '',
     model: '',
     licenseNumber: '',
@@ -28,8 +28,8 @@ export class MapComponent implements AfterViewInit {
   greenCarIcon = L.icon({
     iconUrl: "assets/images/greenCar.png",
     iconSize: [30, 30],
-    popupAnchor:  [-3, -76],
-    iconAnchor:   [30, 30]
+    popupAnchor: [-3, -76],
+    iconAnchor: [30, 30]
 
 
   })
@@ -37,20 +37,20 @@ export class MapComponent implements AfterViewInit {
   redCarIcon = L.icon({
     iconUrl: "assets/images/redCar.png",
     iconSize: [30, 30],
-    popupAnchor:  [-3, -76],
-    iconAnchor:   [30, 30]
+    popupAnchor: [-3, -76],
+    iconAnchor: [30, 30]
 
   })
 
-  constructor(private mapService: MapService, private driverService: DriverService) {}
+  constructor(private mapService: MapService, private driverService: DriverService) { }
 
   fromAddress = '';
   toAddress = '';
 
-  fromLat: number = 0;
-  fromLng: number = 0;
-  toLat: number = 0;
-  toLng: number = 0;
+  fromLat!: number;
+  fromLng!: number;
+  toLat!: number;
+  toLng!: number;
 
   currentLocation: any;
 
@@ -124,6 +124,9 @@ export class MapComponent implements AfterViewInit {
         });
         this.map.closePopup();
 
+        this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        // this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
+
       });
 
       L.DomEvent.on(destBtn, 'click', () => {
@@ -145,6 +148,8 @@ export class MapComponent implements AfterViewInit {
           this.mapService.setToAddress(address);
         });
         this.map.closePopup();
+        // this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
       });
     });
     // L.control.locate().addTo(this.map);
@@ -166,6 +171,9 @@ export class MapComponent implements AfterViewInit {
         this.currentLayerGroup = this.currentLayerGroup.clearLayers();
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
+
+        this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });        
       },
       error: () => { },
     });
@@ -215,15 +223,19 @@ export class MapComponent implements AfterViewInit {
       addWaypoints: false,
     }).addTo(this.map);
     // get markers and set them as draggable false
+    this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+    this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
 
-
-    this.currentRoute.on('routesfound', (e : any) =>{
+    this.currentRoute.on('routesfound', (e: any) => {
       this.distance = e.routes[0].summary.totalDistance;
       this.time = e.routes[0].summary.totalTime;
-      
+
       this.mapService.setDistance(this.distance);
       this.mapService.setDuration(this.time);
-  });
+
+
+      // console.log(e.routes[0]);
+    });
   }
 
   private setFromAndToLatLngFromAddress(from: string, to: string): void {
@@ -301,35 +313,35 @@ export class MapComponent implements AfterViewInit {
     this.initMap();
 
     this.driverService.getAllDrivers()
-    .subscribe(
-      
-      (pageDriver) => {
-        
-        this.drivers = pageDriver.drivers;
-        for(let driver of this.drivers){
-          
-            if (driver.blocked === false){
-              
+      .subscribe(
+
+        (pageDriver) => {
+
+          this.drivers = pageDriver.drivers;
+          for (let driver of this.drivers) {
+
+            if (driver.blocked === false) {
+
               this.driverService.getVehicle(driver.id as number).
-              subscribe(
-                (vehicle) =>{
-                  
-                  this.vehicle = vehicle
-                  if (driver.active== true){
-                  L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
-                     {icon: this.greenCarIcon}).addTo(this.map);
+                subscribe(
+                  (vehicle) => {
+
+                    this.vehicle = vehicle
+                    if (driver.active == true) {
+                      L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                        { icon: this.greenCarIcon }).addTo(this.map);
+                    }
+                    else {
+                      L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                        { icon: this.redCarIcon }).addTo(this.map);
+                    }
+
                   }
-                  else{
-                    L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
-                      {icon: this.redCarIcon}).addTo(this.map);
-                  }
-                
-                }
                 );
             }
+          }
         }
-      }
-    
+
       );
   }
 }
