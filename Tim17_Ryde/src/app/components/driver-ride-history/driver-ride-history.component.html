@@ -73,7 +73,36 @@
             </div>
         </div>
         <hr>
-        <h3>Review</h3>
+        <h3>Vehicle reviews</h3>
+        <div *ngFor="let vehicleReviews of rideReview.vehicleReview"> 
+            <div class="left-side-info">
+                <p class="margin-top">Vehicle rating</p>
+                <p class="margin-top">Comment:</p>
+                <p class="margin-top">passenger:</p>
+
+            </div>
+            <div class="right-side-info">
+                <p class="margin-top">{{vehicleReviews.rating}}</p>
+                <p class="margin-top">{{vehicleReviews.comment}}</p>
+                <p class="margin-top">{{vehicleReviews.passenger.email}}</p>
+            </div>
+            <hr>
+        </div>
+        <h3>Driver reviews</h3>
+        <div *ngFor="let driverReviews of rideReview.driverReview"> 
+            <div class="left-side-info">
+                <p class="margin-top">Driver rating</p>
+                <p class="margin-top">Comment:</p>
+                <p class="margin-top">passenger:</p>
+
+            </div>
+            <div class="right-side-info">
+                <p class="margin-top">{{driverReviews.rating}}</p>
+                <p class="margin-top">{{driverReviews.comment}}</p>
+                <p class="margin-top">{{driverReviews.passenger.email}}</p>
+            </div>
+            <hr>
+        </div>
 
 
     </div>

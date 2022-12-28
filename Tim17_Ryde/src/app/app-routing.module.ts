@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
+import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: 'get-started', component:UnregisteredUserComponent},
   {path: 'home', component:MainComponent},
   {path: 'admin-main', component:AdminMainComponent},
-  {path: 'driver-ride-history/:driverId', component:DriverRideHistoryComponent}
+  {path: 'driver-ride-history/:driverId', component:DriverRideHistoryComponent},
+  {path: 'driver-profile/:driverId', component:DriverProfileComponent}
 ];
 
 @NgModule({

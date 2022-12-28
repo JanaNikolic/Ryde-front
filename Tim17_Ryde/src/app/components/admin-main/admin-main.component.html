@@ -9,7 +9,7 @@
                 <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
                 <p> {{driver.name}}</p>
                 <div class="buttons">
-                    <button class="detailBtn" [routerLink]="['/driver-ride-history/' + driver.id]">Details</button>
+                    <button class="detailBtn" [routerLink]="['/driver-profile/' + driver.id]">Details</button>
                     <button class="blockBtn"   (click)="blockDriver(driver.id!)" *ngIf="!driver.blocked">Block</button>
                     <button class="blockBtn"   (click)="unblockDriver(driver.id!)" *ngIf="driver.blocked">Unblock</button>
                 </div>
