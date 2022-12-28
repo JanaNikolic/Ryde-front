@@ -16,8 +16,8 @@ import { DriverService } from 'src/app/services/driver/driver.service';
 })
 export class MapComponent implements AfterViewInit {
   private map: any;
-  drivers:Driver[] = [];
-  vehicle:Vehicle = {
+  drivers: Driver[] = [];
+  vehicle: Vehicle = {
     vehicleType: '',
     model: '',
     licenseNumber: '',
@@ -28,8 +28,8 @@ export class MapComponent implements AfterViewInit {
   greenCarIcon = L.icon({
     iconUrl: "assets/images/greenCar.png",
     iconSize: [30, 30],
-    popupAnchor:  [-3, -76],
-    iconAnchor:   [30, 30]
+    popupAnchor: [-3, -76],
+    iconAnchor: [30, 30]
 
 
   })
@@ -37,20 +37,20 @@ export class MapComponent implements AfterViewInit {
   redCarIcon = L.icon({
     iconUrl: "assets/images/redCar.png",
     iconSize: [30, 30],
-    popupAnchor:  [-3, -76],
-    iconAnchor:   [30, 30]
+    popupAnchor: [-3, -76],
+    iconAnchor: [30, 30]
 
   })
 
-  constructor(private mapService: MapService, private driverService: DriverService) {}
+  constructor(private mapService: MapService, private driverService: DriverService) { }
 
   fromAddress = '';
   toAddress = '';
 
-  fromLat: number = 0;
-  fromLng: number = 0;
-  toLat: number = 0;
-  toLng: number = 0;
+  fromLat!: number;
+  fromLng!: number;
+  toLat!: number;
+  toLng!: number;
 
   currentLocation: any;
 
@@ -58,6 +58,9 @@ export class MapComponent implements AfterViewInit {
 
   currentRoute: any;
 
+  planOptions: Object = { addWaypoints: false, draggableWaypoints: false };
+  distance: any;
+  time: any;
 
 
   private initMap(): void {
@@ -79,9 +82,7 @@ export class MapComponent implements AfterViewInit {
 
     // this.addCurrentLocation();
 
-    // this.mapService.selectedFromAddress$.subscribe((from) => {
-    //   this.search(from);
-    // });
+
     this.currentLayerGroup = this.currentLayerGroup.addTo(this.map);
 
     this.currentLayerGroup = this.currentLayerGroup.clearLayers();
@@ -117,8 +118,14 @@ export class MapComponent implements AfterViewInit {
         } else {
           this.currentRoute.spliceWaypoints(0, 1, e.latlng);
         }
-
+        this.mapService.reverseSearch(this.fromLat, this.fromLng).subscribe((address) => {
+          this.fromAddress = address;
+          this.mapService.setFromAddress(address);
+        });
         this.map.closePopup();
+
+        this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        // this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
 
       });
 
@@ -136,23 +143,22 @@ export class MapComponent implements AfterViewInit {
         } else {
           this.currentRoute.spliceWaypoints(this.currentRoute.getWaypoints().length - 1, 1, e.latlng);
         }
+        this.mapService.reverseSearch(this.toLat, this.toLng).subscribe((address) => {
+          this.toAddress = address;
+          this.mapService.setToAddress(address);
+        });
         this.map.closePopup();
+        // this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
       });
     });
-
-
-    // this.currentLayerGroup = L.layerGroup([this.fromMarker, this.toMarker]).addTo(this.map).openPopup();
-
     // L.control.locate().addTo(this.map);
-
   }
 
   private setFromAddress(): void {
     this.mapService.getFromAddress().subscribe({
       next: (address) => {
         this.currentLayerGroup = this.currentLayerGroup.clearLayers();
-
-        // this.search(address);
         this.fromAddress = address;
       },
       error: () => { },
@@ -162,12 +168,12 @@ export class MapComponent implements AfterViewInit {
   private setToAddress(): void {
     this.mapService.getToAddress().subscribe({
       next: (address) => {
-
         this.currentLayerGroup = this.currentLayerGroup.clearLayers();
-
-        // this.search(address);
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
+
+        this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+        this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });        
       },
       error: () => { },
     });
@@ -201,6 +207,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   route(): void {
+    // this.currentLocation.remove();
     this.map.eachLayer((layer: any) => {
       if (layer.options.waypoints && layer.options.waypoints.length) {
         this.map.removeLayer(layer);
@@ -214,8 +221,21 @@ export class MapComponent implements AfterViewInit {
     this.currentRoute = L.Routing.control({
       waypoints: [L.latLng(this.fromLat, this.fromLng), L.latLng(this.toLat, this.toLng)],
       addWaypoints: false,
-      // routeWhileDragging: false,  add later
     }).addTo(this.map);
+    // get markers and set them as draggable false
+    this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
+    this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
+
+    this.currentRoute.on('routesfound', (e: any) => {
+      this.distance = e.routes[0].summary.totalDistance;
+      this.time = e.routes[0].summary.totalTime;
+
+      this.mapService.setDistance(this.distance);
+      this.mapService.setDuration(this.time);
+
+
+      // console.log(e.routes[0]);
+    });
   }
 
   private setFromAndToLatLngFromAddress(from: string, to: string): void {
@@ -286,41 +306,42 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+      iconAnchor: [10, 45]
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;
     this.initMap();
 
     this.driverService.getAllDrivers()
-    .subscribe(
-      
-      (pageDriver) => {
-        
-        this.drivers = pageDriver.drivers;
-        for(let driver of this.drivers){
-          
-            if (driver.blocked === false){
-              
+      .subscribe(
+
+        (pageDriver) => {
+
+          this.drivers = pageDriver.drivers;
+          for (let driver of this.drivers) {
+
+            if (driver.blocked === false) {
+
               this.driverService.getVehicle(driver.id as number).
-              subscribe(
-                (vehicle) =>{
-                  
-                  this.vehicle = vehicle
-                  if (driver.active== true){
-                  L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
-                     {icon: this.greenCarIcon}).addTo(this.map);
+                subscribe(
+                  (vehicle) => {
+
+                    this.vehicle = vehicle
+                    if (driver.active == true) {
+                      L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                        { icon: this.greenCarIcon }).addTo(this.map);
+                    }
+                    else {
+                      L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
+                        { icon: this.redCarIcon }).addTo(this.map);
+                    }
+
                   }
-                  else{
-                    L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
-                      {icon: this.redCarIcon}).addTo(this.map);
-                  }
-                
-                }
                 );
             }
+          }
         }
-      }
-    
+
       );
   }
 }

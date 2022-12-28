@@ -12,8 +12,20 @@ export class MapService {
   private fromAddress$ = new BehaviorSubject<any>({});
   private toAddress$  = new BehaviorSubject<any>({});
 
+  private duration$ = new BehaviorSubject<any>({});
+  private distance$  = new BehaviorSubject<any>({});
+
+  private departure$  = new BehaviorSubject<any>({});
+  private destination$ = new BehaviorSubject<any>({});
+  
   selectedFromAddress$ = this.fromAddress$.asObservable();
   selectedToAddress$ = this.toAddress$.asObservable();
+
+  selectedDuration$ = this.duration$.asObservable();
+  selectedDistance$ = this.distance$.asObservable();
+
+  selectedDeparture$ = this.departure$.asObservable();
+  selectedDestination$ = this.destination$.asObservable();
 
   search(street: string): Observable<any> {
     return this.http.get(
@@ -43,4 +55,35 @@ export class MapService {
     return this.toAddress$;
   }
 
+  setDuration(duration: string) {
+    this.duration$.next(duration);
+  }
+
+  getDuration() {
+    return this.duration$;
+  }
+
+  setDistance(distance: string) {
+    this.distance$.next(distance);
+  }
+
+  getDistance() {
+    return this.distance$;
+  }
+
+  getDestination() {
+    return this.destination$;
+  }
+
+  setDestination(value: any) {
+    this.destination$.next(value);
+  }
+
+  getDeparture() {
+    return this.departure$;
+  }
+  
+  setDeparture(value: any) {
+    this.departure$.next(value);
+  }
 }
