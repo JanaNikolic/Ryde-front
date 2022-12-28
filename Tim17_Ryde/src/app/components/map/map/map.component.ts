@@ -25,6 +25,10 @@ export class MapComponent implements AfterViewInit {
 
   currentRoute: any;
 
+  planOptions: Object = { addWaypoints: false, draggableWaypoints: false };
+  distance: any;
+  time: any;
+
   constructor(private mapService: MapService) { }
 
   private initMap(): void {
@@ -46,7 +50,7 @@ export class MapComponent implements AfterViewInit {
 
     // this.addCurrentLocation();
 
-    
+
     this.currentLayerGroup = this.currentLayerGroup.addTo(this.map);
 
     this.currentLayerGroup = this.currentLayerGroup.clearLayers();
@@ -177,8 +181,17 @@ export class MapComponent implements AfterViewInit {
     this.currentRoute = L.Routing.control({
       waypoints: [L.latLng(this.fromLat, this.fromLng), L.latLng(this.toLat, this.toLng)],
       addWaypoints: false,
-      // routeWhileDragging: false,  add later
     }).addTo(this.map);
+    // get markers and set them as draggable false
+
+
+    this.currentRoute.on('routesfound', (e : any) =>{
+      this.distance = e.routes[0].summary.totalDistance;
+      this.time = e.routes[0].summary.totalTime;
+      
+      this.mapService.setDistance(this.distance);
+      this.mapService.setDuration(this.time);
+  });
   }
 
   private setFromAndToLatLngFromAddress(from: string, to: string): void {
@@ -249,6 +262,7 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     let DefaultIcon = L.icon({
       iconUrl: 'https://unpkg.com/leaflet@1.6.0/dist/images/marker-icon.png',
+      iconAnchor: [10, 45]
     });
 
     L.Marker.prototype.options.icon = DefaultIcon;

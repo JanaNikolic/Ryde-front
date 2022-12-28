@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MapService } from '../../services/map/map.service';
@@ -18,6 +18,9 @@ export class UnregisteredUserComponent implements OnInit {
 
   selectedFromAddress = '';
   selectedToAddress = '';
+  duration: string = '';
+  price: string = '';
+  distance: string = '';
 
   constructor(private renderer: Renderer2, private router: Router, private mapService: MapService) {
 
@@ -29,11 +32,11 @@ export class UnregisteredUserComponent implements OnInit {
 
     this.mapService.getFromAddress().subscribe(data => {
       this.selectedFromAddress = data.display_name;
-    })
+    });
 
     this.mapService.getToAddress().subscribe(data => {
       this.selectedToAddress = data.display_name;
-    })
+    });
   }
 
   calculate() {
@@ -45,21 +48,18 @@ export class UnregisteredUserComponent implements OnInit {
       this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");
 
       this.CalculateForm.reset(this.CalculateForm.value);
-      // let formVal = {
-      //   from: this.CalculateForm.value.from,
-      //   to: this.CalculateForm.value.to,
-      // };
 
+      this.mapService.getDistance().subscribe(data => {
 
+        this.distance = (Math.round((data / 1000) * 100) / 100) + ' km';
+        console.log(this.distance);
 
-      // console.log(this.CalculateForm.value);
-      //   this.mapService.setFromAddress(from)
-      //   .subscribe({
-      //     next: (result) => {
+      });
 
-      //     },
-      // error: () => {},
-      //   });
+      this.mapService.getDuration().subscribe(data => {
+          this.duration = Math.floor(data / 60) + ' min ' + (Math.round(data - Math.floor(data / 60)*60)) + ' s';
+          console.log(this.duration);
+      });
     }
   }
   sendToMap() {
