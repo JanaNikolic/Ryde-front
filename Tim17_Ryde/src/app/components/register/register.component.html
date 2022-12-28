@@ -35,6 +35,10 @@
                     <input type="password" formControlName="ConfirmPassword" class="infoInput" name="confirmPassword" id="confirmPassword"
                         placeholder="Confirm password:">
                 </p>
+                <p class="textLabel noMargin"><label>Insert picture</label></p>
+                    <p>
+                        <input type="file" class="infoInput" name="inputImage" id="inputImage" (change)="inputImage($event)">
+                    </p>
                 <p>
                     <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn">REGISTER</button>
                 </p>

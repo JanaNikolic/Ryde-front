@@ -1,0 +1,137 @@
+.container {
+    margin-top: 3%;
+    margin-bottom: 10%;
+    margin: auto;
+    display: flex;
+    float: center;
+    width: 80%;
+    height: 70%;
+    color: #D9D9D9;
+}
+
+h3{
+    margin: 0;
+    margin-top: 4%;
+}
+
+.center{
+    text-align: center;
+}
+
+.inline{
+    display: inline-block;
+    
+    text-align: center;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 19%;
+
+}
+
+.left-container{
+    display:inline-block;
+    width: 30%;
+    height: fit-content;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 18%;
+    margin-left: 5%;
+    background: #161619aa;
+    mix-blend-mode: normal;
+    border-radius: 5px;
+    margin-right: 1%;
+    text-align: center;
+}
+
+.all-rides{
+    margin: auto;
+    margin-top: 10%;
+    color: #053132;
+    width: 98%;
+    text-align: center;
+    background-color: #AFBAA3;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+
+.inlineTop1{
+    margin-left: 5%;
+    text-align: left;
+    width: 24%;
+    display: inline-block;
+    vertical-align: top;
+}
+p{
+    margin: 0;
+    
+}
+.line{
+    display: inline-block;
+    width: 4%;
+    border-left: 6px solid #095356;
+    height: 50px;
+}
+.scrollable{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:500px;
+}
+.inlineTop2{
+    text-align: left;
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.top-div{
+    display: block;
+}
+
+.bottom-div{
+    margin-top: 4%;
+}
+
+.right-container{
+    display:inline-block;
+    width: 50%;
+    height: fit-content;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 18%;
+    margin-left: 1%;
+    background: #161619aa;
+    mix-blend-mode: normal;
+    border-radius: 5px;
+    margin-right: 3%;
+    text-align: center;
+}
+.map {
+    border-radius: 5px;
+    
+    height: 300px;
+    width: 100%;
+}
+h3{
+    text-align: left;
+    margin-bottom: 0;
+}
+.left-side-info{
+    text-align: left;
+    display: inline-block;
+    width: 25%;
+}
+.right-side-info{
+    text-align: left;
+    display: inline-block;
+    line-height: normal;
+    width: 75%;
+}
+img{
+    height: 100%;
+    width:100%;
+}
+.margin-top{
+    margin-top: 1px;
+}
