@@ -37,7 +37,8 @@ import { DriverRideHistoryComponent } from './components/driver-ride-history/dri
     MainComponent,
     MapComponent,
     AdminMainComponent,
-    DriverRideHistoryComponent
+    DriverRideHistoryComponent,
+    AdminNavbarComponent
   ],
   imports: [
     CommonModule,
