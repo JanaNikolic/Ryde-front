@@ -7,6 +7,9 @@ import { RideService } from 'src/app/services/ride/ride.service';
 import { Locations } from 'src/app/model/Locations';
 import { Passenger } from 'src/app/model/Passenger';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
+import { ReviewService } from 'src/app/services/review/review.service';
+import { RideReview } from 'src/app/model/Review';
+import { Review } from 'src/app/model/Review';
 
 @Component({
   selector: 'app-driver-ride-history',
@@ -15,8 +18,15 @@ import { PassengerService } from 'src/app/services/passenger/passenger.service';
 })
 export class DriverRideHistoryComponent {
 
-  constructor(private driverService: DriverService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute) {}
+  constructor(private driverService: DriverService,private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute) {}
   rides: Ride[] = [];
+
+  review: Review[] = [];
+
+  rideReview: RideReview = {
+    driverReview: this.review,
+    vehicleReview: this.review
+  }
 
   passengers: Passenger[] = [];
 
@@ -69,6 +79,15 @@ export class DriverRideHistoryComponent {
         this.singleRide = ride;
         this.passengers = this.singleRide.passengers;
         console.log(this.passengers);
+      }
+    )
+
+    this.reviewService.getRideReviews(rideId)
+    .subscribe(
+      (rideReview) => {
+        this.rideReview = rideReview;
+        
+        console.log(this.rideReview);
       }
     )
 
