@@ -19,7 +19,11 @@ export class LoginComponent {
   });
   hasError: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;
+  };
+  }
 
   ngOnInit(): void {}
 
@@ -40,7 +44,11 @@ export class LoginComponent {
         next: (result) => {
           localStorage.setItem('user', JSON.stringify(result));
           this.authService.setUser();
-          this.router.navigate(['/admin-main']);
+          if (this.authService.getRole() == "ROLE_ADMIN") {
+            this.router.navigate(['/admin-main']);
+          } else {
+            this.router.navigate(['/home'])
+          }
         },
         error: (error) => {
           if (error instanceof HttpErrorResponse) {

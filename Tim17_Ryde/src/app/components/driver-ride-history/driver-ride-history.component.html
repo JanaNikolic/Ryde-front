@@ -6,7 +6,7 @@
                 <div (click)="showHistoryDetails(ride.id!)" class="all-rides">
                     <div top-div>
                         <div class="inlineTop1">
-                            <h3>{{ride.startTime.split("T")[0]}}</h3>
+                            <h3>{{ride.startTime[0]}}-{{ride.startTime[1]}}-{{ride.startTime[2]}}</h3>
                         </div>
                         <div class="line"></div>
                         <div class="inlineTop2">
@@ -18,13 +18,11 @@
                     <div class="bottom-div">
                         <div class="inline">
                             <p>Start</p>
-                            <p>{{ride.startTime.split("T")[1].split(":")[0] +':'+
-                                ride.startTime.split("T")[1].split(":")[1]}}</p>
+                            <p>{{ride.startTime[3]}}:{{ride.startTime[4]}}</p>
                         </div>
                         <div class="inline">
                             <p>End</p>
-                            <p>{{ride.endTime.split("T")[1].split(":")[0] +':'+
-                                ride.endTime.split("T")[1].split(":")[1]}}</p>
+                            <p>{{ride.endTime[3]}}:{{ride.endTime[4]}}</p>
                         </div>
 
                         <div class="inline">

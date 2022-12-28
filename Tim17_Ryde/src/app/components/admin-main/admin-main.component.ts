@@ -25,20 +25,16 @@ export class AdminMainComponent implements OnInit{
   
 
   constructor(private driverService: DriverService, private userService: UserService) {}
+  
   ngOnInit(): void {
     
+    console.log("YES");
     this.driverService.getAllDrivers()
     .subscribe(
       
       (pageDriver) => {
         console.log(this.driver1.blocked);
         this.drivers1 = pageDriver.drivers; console.log(this.drivers1[0].blocked);
-        /*this.drivers1.forEach(function(driver){
-            driver.blocked = false;
-            driver.active = false;
-            //TODO TREBA DA VRATI I DA LI JE VOZAC ACTIVE I BLOKIRAN DA ZNA DA LI DA BUDE CRVEN ILI ZELEN
-        })*/
-      
       }
     ); 
   }
