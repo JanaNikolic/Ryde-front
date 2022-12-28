@@ -8,17 +8,17 @@
                 <img class="pin" src="assets/images/pin.png" alt="pin">
             </div>
             <div class="form">
-                <form [formGroup]="createCalculateForm" fxLayout="colums">
+                <form [formGroup]="CalculateForm" fxLayout="colums" (ngSubmit)="calculate()">
                     <mat-form-field appearance="fill">
                         <mat-label>From</mat-label>
-                        <input matInput type="text" name="from" formControlName="from">
+                        <input matInput type="text" [(ngModel)]="selectedFromAddress" formControlName="from" id="fromInput">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
                         <mat-label>To</mat-label>
-                        <input matInput type="text" name="to" formControlName="to">
+                        <input matInput type="text" [(ngModel)]="selectedToAddress" formControlName="to" id="toInput">
                     </mat-form-field>
                     <div class="vertical-center" fxLayout="row" fxLayoutAlign="space-between end">
-                        <button type="submit" mat-raised-button>Calculate</button>
+                        <button type="submit" id="calculateBtn" mat-raised-button>Calculate</button>
                     </div>
                 </form>
             </div>
@@ -33,9 +33,9 @@
                     <li>Distance</li>
                 </ul>
                 <div class="right-details">
-                    <p id="duration">15:00</p>
-                    <p id="price">300 RSD</p>
-                    <p id="distance">2.5 km</p>
+                    <p>{{duration}}</p>
+                    <p>{{price}}</p>
+                    <p>{{distance}}</p>
                 </div>
             </div>
         </div>
