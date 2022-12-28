@@ -44,9 +44,9 @@ export class RegisterComponent {
       name: this.RegisterForm.value.name as string,
       surname: this.RegisterForm.value.surname as string,
       telephoneNumber: this.RegisterForm.value.telephoneNumber as string,
-      profilePicture: this.image,
+      profilePicture: undefined,
       email: this.RegisterForm.value.email as string,
-      password: this.RegisterForm.value.email as string,
+      password: this.RegisterForm.value.password as string,
       address: this.RegisterForm.value.address as string,
       blocked: false,
       active: false

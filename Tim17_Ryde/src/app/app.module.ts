@@ -26,9 +26,7 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
 
 @NgModule({
   declarations: [
-
     AppComponent,
-    LoginComponent,
     RegisterComponent,
     NavbarComponent,
     RegisteredUserNavbarComponent,
@@ -37,15 +35,16 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     UnregisteredUserComponent,
     MainComponent,
     MapComponent,
+    AdminNavbarComponent,
     AdminMainComponent,
     DriverRideHistoryComponent,
     AdminNavbarComponent,
     DriverProfileComponent
   ],
   imports: [
+    AppRoutingModule,
     CommonModule,
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -60,4 +59,4 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

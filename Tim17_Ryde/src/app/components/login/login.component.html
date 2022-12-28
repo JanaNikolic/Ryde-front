@@ -4,9 +4,11 @@
             <h1>Login</h1>
             <form [formGroup]="LoginForm"
              (ngSubmit)="login()">
-                <div *ngIf="invalidInput" class="text-danger">
+             <div *ngIf="hasError" id="login-warning"
+             >Login credentials are not correct!</div>
+                <div  class="text-danger">
                 <p >
-                    <input  type="text" formControlName="Email" class="infoInput" name="Email" id="Email" placeholder="Email:">
+                    <input  type="text" formControlName="Email" [ngClass]="hasError? 'invalid infoInput' : 'infoInput'" class="infoInput" name="Email" id="Email" placeholder="Email:">
                 </p>
             </div>
 
@@ -24,7 +26,7 @@
             <hr>
             <p id="noAccount">Don't Have An Account?</p>
             <p>
-                <button type="submit" value="REGISTER" class="whiteBtn" id="regBtn"
+                <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
 
                     [routerLink]="['/admin-main']">REGISTER</button>
 

@@ -5,7 +5,7 @@ export interface Driver{
     telephoneNumber:string;
     email:string;
     address:string;
-    profilePicture:string;
+    profilePicture?:string;
     password:string;
     blocked:Boolean;
     active:Boolean;

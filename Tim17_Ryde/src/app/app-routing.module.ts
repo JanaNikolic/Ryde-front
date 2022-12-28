@@ -6,13 +6,20 @@ import { RegisterComponent } from './components/register/register.component';
 import { MainComponent } from './components/main/main.component';
 import { UnregisteredUserComponent } from './components/unregistered-user/unregistered-user.component';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
+import { LoginGuard } from './guard/login.guard';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
-  {path: 'login', component:LoginComponent},
-  {path: 'register', component:RegisterComponent},
+  {path: 'login', component:LoginComponent,
+  canActivate: [LoginGuard],
+  loadChildren: () =>
+    import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
+  {path: 'register', component:RegisterComponent,
+  canActivate: [LoginGuard],
+  loadChildren: () =>
+    import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
   {path: 'createDriver', component:CreateDriverComponent},
   {path: 'get-started', component:UnregisteredUserComponent},
   {path: 'home', component:MainComponent},
