@@ -23,7 +23,6 @@ export class AppComponent {
   }
 
   isRegisteredUser() {
-    console.log(this.authService.getRole());
     if (this.authService.isLoggedIn()) {
       if (this.authService.getRole()=="ROLE_PASSENGER" || this.authService.getRole()=="ROLE_DRIVER") {
         return true;

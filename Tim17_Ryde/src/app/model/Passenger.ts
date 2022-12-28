@@ -3,7 +3,7 @@ export interface Passenger{
     name:string;
     surname:string;
     telephoneNumber:string;
-    profilePicture: string;
+    profilePicture?: string;
     email:string;
     address:string;
     password:string;

@@ -91,13 +91,15 @@ export class CreateDriverComponent {
         name: this.CreateDriverForm.value.name as string,
         surname: this.CreateDriverForm.value.surname as string,
         telephoneNumber: this.CreateDriverForm.value.telephoneNumber as string,
-        profilePicture: this.image,
+        profilePicture: "someProfilePicture",
         email: this.CreateDriverForm.value.email as string,
-        password: this.CreateDriverForm.value.email as string,
+        password: this.CreateDriverForm.value.password as string,
         address: this.CreateDriverForm.value.address as string,
         blocked: false,
         active: false
       }
+
+      console.log(this.driver);
 
       this.driverService.
         addDriver(this.driver)

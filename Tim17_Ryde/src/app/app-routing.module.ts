@@ -14,7 +14,10 @@ const routes: Routes = [
   canActivate: [LoginGuard],
   loadChildren: () =>
     import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
-  {path: 'register', component:RegisterComponent},
+  {path: 'register', component:RegisterComponent,
+  canActivate: [LoginGuard],
+  loadChildren: () =>
+    import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
   {path: 'createDriver', component:CreateDriverComponent},
   {path: 'get-started', component:UnregisteredUserComponent},
   {path: 'home', component:MainComponent},
