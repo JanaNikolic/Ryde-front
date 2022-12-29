@@ -2,8 +2,8 @@ p {
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 700;
-    font-size: 600%;
-    line-height: 126px;
+    font-size: 10vh;
+    line-height: 20vh;
 
     text-transform: uppercase;
     text-align: center;
@@ -14,7 +14,7 @@ p {
 button {
     position: relative;
     margin: 0;
-    padding: 18px;
+    padding: 2vh 3vh;
     border-radius: 20px;
     background-color: #D9D9D9;
     border-width: 0;
@@ -22,8 +22,8 @@ button {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 23px;
+    font-size: 1.8vh;    
+    line-height: 3vh;
 
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -32,6 +32,10 @@ button {
     cursor: pointer;
 
     
+}
+
+button:hover {
+    transform: scale(1.05);
 }
 
 .vertical-center {

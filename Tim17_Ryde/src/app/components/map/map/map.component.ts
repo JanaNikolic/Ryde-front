@@ -54,8 +54,6 @@ export class MapComponent implements AfterViewInit {
 
   currentLocation: any;
 
-  currentLayerGroup: L.LayerGroup = L.layerGroup();
-
   currentRoute: any;
 
   planOptions: Object = { addWaypoints: false, draggableWaypoints: false };
@@ -81,11 +79,6 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
 
     // this.addCurrentLocation();
-
-
-    this.currentLayerGroup = this.currentLayerGroup.addTo(this.map);
-
-    this.currentLayerGroup = this.currentLayerGroup.clearLayers();
 
     this.setFromAddress();
     this.setToAddress();
@@ -175,7 +168,6 @@ export class MapComponent implements AfterViewInit {
   private setFromAddress(): void {
     this.mapService.getFromAddress().subscribe({
       next: (address) => {
-        this.currentLayerGroup = this.currentLayerGroup.clearLayers();
         this.fromAddress = address;
       },
       error: () => { },
@@ -185,7 +177,6 @@ export class MapComponent implements AfterViewInit {
   private setToAddress(): void {
     this.mapService.getToAddress().subscribe({
       next: (address) => {
-        this.currentLayerGroup = this.currentLayerGroup.clearLayers();
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
 
@@ -200,7 +191,7 @@ export class MapComponent implements AfterViewInit {
     this.mapService.search(address).subscribe({
       next: (result) => {
         L.marker([result[0].lat, result[0].lon], { draggable: false })
-          .addTo(this.currentLayerGroup)
+          .addTo(this.map)
           .openPopup();
       },
       error: () => { },
