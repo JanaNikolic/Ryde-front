@@ -113,7 +113,7 @@ export class UnregisteredUserComponent implements OnInit {
         .subscribe({
           next: (res) => {
             console.log(res);
-            this.price = Math.round(res.estimatedCost) + " RSD";
+            this.price = Math.round(res.estimatedCost) + "";
           },
           error: (error) => {
             // if (error instanceof HttpErrorResponse) {
@@ -124,15 +124,22 @@ export class UnregisteredUserComponent implements OnInit {
 
       this.mapService.selectedDistance$.subscribe({next: (data) => {
         if (!isNaN(data)) {
-          this.distance = (Math.round((data / 1000) * 100) / 100) + ' km';
+          this.distance = (Math.round((data / 1000) * 100) / 100) + '';
         }
       }});
 
       this.mapService.selectedDuration$.subscribe({next: (data) => {
+        console.log(data);
         if (!isNaN(data)) {
-          this.duration = Math.floor(data / 60) + ' min ' + (Math.round(data - Math.floor(data / 60) * 60)) + ' s';
+          this.duration = Math.floor(data / 60) + '';
         }
       }});
+      console.log(this.duration);
+
+      const details = document.getElementById('data') as HTMLDivElement | null;
+      if (details != null) {
+          details.style.display = 'block';
+      }
       this.CalculateForm.reset(this.CalculateForm.value);
     }
   }

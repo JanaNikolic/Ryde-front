@@ -156,7 +156,6 @@ export class MapComponent implements AfterViewInit {
         this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
       });
     });
-    console.log(this.fromLat, this.fromLng );
     this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
     this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
   }
@@ -197,7 +196,6 @@ export class MapComponent implements AfterViewInit {
       const lat = coord.lat;
       const lng = coord.lng;
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
-        console.log(res.display_name);
       });
       console.log(
         'You clicked the map at latitude: ' + lat + ' and longitude: ' + lng
@@ -233,9 +231,6 @@ export class MapComponent implements AfterViewInit {
 
       this.mapService.setDistance(this.distance);
       this.mapService.setDuration(this.time);
-
-
-      // console.log(e.routes[0]);
     });
   }
 
@@ -247,18 +242,12 @@ export class MapComponent implements AfterViewInit {
           this.fromLat = dep[0].lat;
           this.fromLng = dep[0].lon;
         }
-        console.log(this.fromLat);
-        console.log(this.fromLng);
-
-
         this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
 
         if (this.toLat != des[0].lat && this.toLng != des[0].lon) {
           this.toLat = des[0].lat;
           this.toLng = des[0].lon;
         }
-        console.log(this.toLat);
-        console.log(this.toLng);
         this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
         this.route();
         this.map.setView([this.fromLat, this.fromLng], 15);
