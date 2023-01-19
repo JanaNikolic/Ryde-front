@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 
@@ -45,13 +45,13 @@ export class MapComponent implements AfterViewInit {
 
   constructor(private mapService: MapService, private driverService: DriverService) { }
 
-  fromAddress = '';
-  toAddress = '';
+  fromAddress: string = '';
+  toAddress: string = '';
 
-  fromLat: number = 0;//45.249734; // TODO
-  fromLng: number = 0;//19.832662;
-  toLat: number = 0;//45.249734;
-  toLng: number = 0;//19.832662;
+  fromLat: number = 0;
+  fromLng: number = 0;
+  toLat: number = 0;
+  toLng: number = 0;
 
   currentLocation: any;
 
@@ -105,8 +105,7 @@ export class MapComponent implements AfterViewInit {
         if (this.currentRoute == null) {
           this.currentRoute = L.Routing.control({
             waypoints: [L.latLng(this.fromLat, this.fromLng)],
-            addWaypoints: false,
-            // routeWhileDragging: false,  add later
+            addWaypoints: false
           }).addTo(this.map);
 
         } else {
@@ -117,9 +116,6 @@ export class MapComponent implements AfterViewInit {
 
             this.mapService.setDistance(this.distance);
             this.mapService.setDuration(this.time);
-
-
-            // console.log(e.routes[0]);
           });
         }
         this.mapService.reverseSearch(this.fromLat, this.fromLng).subscribe((address) => {
@@ -129,7 +125,6 @@ export class MapComponent implements AfterViewInit {
         this.map.closePopup();
 
         this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
-        // this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
 
       });
 
@@ -141,7 +136,6 @@ export class MapComponent implements AfterViewInit {
           this.currentRoute = L.Routing.control({
             waypoints: [L.latLng(this.toLat, this.toLng)],
             addWaypoints: false,
-            // routeWhileDragging: false,  add later
           }).addTo(this.map);
 
         } else {
@@ -159,11 +153,10 @@ export class MapComponent implements AfterViewInit {
           this.mapService.setToAddress(address);
         });
         this.map.closePopup();
-        // this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
         this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
       });
     });
-    // L.control.locate().addTo(this.map);
+    console.log(this.fromLat, this.fromLng );
     this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
     this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
   }
@@ -182,9 +175,6 @@ export class MapComponent implements AfterViewInit {
       next: (address) => {
         this.toAddress = address;
         this.setFromAndToLatLngFromAddress(this.fromAddress, this.toAddress);
-
-        // this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
-        // this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });        
       },
       error: () => { },
     });
@@ -250,32 +240,6 @@ export class MapComponent implements AfterViewInit {
   }
 
   private setFromAndToLatLngFromAddress(from: string, to: string): void {
-    /**
-        this.mapService.search(from).subscribe({
-          next: (result1) => {
-            if (this.fromLat != result1[0].lat && this.fromLng != result1[0].lon) {
-              this.fromLat = result1[0].lat;
-              this.fromLng = result1[0].lon;
-            }
-            this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
-    
-          },
-          error: () => { },
-        });
-        this.mapService.search(to).subscribe({
-          next: (result2) => {
-            if (this.toLat != result2[0].lat && this.toLng != result2[0].lon) {
-              this.toLat = result2[0].lat;
-              this.toLng = result2[0].lon;
-            }
-            this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
-            this.route();
-            this.map.setView([this.fromLat, this.fromLng], 15);
-          },
-          error: () => { },
-        });
-     */
-
     forkJoin([this.mapService.search(from), this.mapService.search(to)])
       .pipe(map(([dep, des]) => {
         
@@ -283,12 +247,18 @@ export class MapComponent implements AfterViewInit {
           this.fromLat = dep[0].lat;
           this.fromLng = dep[0].lon;
         }
+        console.log(this.fromLat);
+        console.log(this.fromLng);
+
+
         this.mapService.setDeparture({ lat: this.fromLat, lng: this.fromLng });
 
         if (this.toLat != des[0].lat && this.toLng != des[0].lon) {
           this.toLat = des[0].lat;
           this.toLng = des[0].lon;
         }
+        console.log(this.toLat);
+        console.log(this.toLng);
         this.mapService.setDestination({ lat: this.toLat, lng: this.toLng });
         this.route();
         this.map.setView([this.fromLat, this.fromLng], 15);
