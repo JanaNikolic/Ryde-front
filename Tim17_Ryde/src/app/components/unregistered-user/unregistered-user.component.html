@@ -1,20 +1,21 @@
 <div class="container">
     <div class="left-container">
+        <h1>Get a Ryde Estimate</h1>
         <div class="form-container">
-            <div class="ping left-container">
+            <!-- <div class="ping left-container">
                 <span class="bigElipse"></span>
                 <span class="smallElipse"></span>
                 <span class="smallElipse"></span>
                 <img class="pin" src="assets/images/pin.png" alt="pin">
-            </div>
+            </div> -->
             <div class="form">
                 <form [formGroup]="CalculateForm" fxLayout="colums" (ngSubmit)="calculate()">
                     <mat-form-field appearance="fill">
-                        <mat-label>From</mat-label>
+                        <mat-label>Departure</mat-label>
                         <input matInput type="text" [(ngModel)]="selectedFromAddress" formControlName="from" id="fromInput">
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                        <mat-label>To</mat-label>
+                        <mat-label>Destination</mat-label>
                         <input matInput type="text" [(ngModel)]="selectedToAddress" formControlName="to" id="toInput">
                     </mat-form-field>
                     <div class="vertical-center" fxLayout="row" fxLayoutAlign="space-between end">
@@ -24,18 +25,21 @@
             </div>
         </div>
 
-        <div class="details-container">
-            <h2>Details</h2>
+        <div id="data" class="details-container">
             <div class="details">
-                <ul>
-                    <li>Duration</li>
-                    <li>Price</li>
-                    <li>Distance</li>
-                </ul>
-                <div class="right-details">
-                    <p>{{duration}}</p>
-                    <p>{{price}}</p>
-                    <p>{{distance}}</p>
+                <div class="circle top">
+                    <span class="big-text">{{price}}</span>
+                    <span class="small-text">RSD</span>
+                </div>
+            </div>
+            <div class="details">
+                <div class="circle left-details">
+                    <span class="big-text">{{duration}}</span>
+                    <span class="small-text">Minutes</span>
+                </div>
+                <div class="circle right-details">
+                    <span class="big-text">{{distance}}</span>
+                    <span class="small-text">Kilometers</span>
                 </div>
             </div>
         </div>

@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin, map } from 'rxjs';
 import { Locations } from 'src/app/model/Locations';
+import { UnregisteredUserRequest } from 'src/app/model/request/UnregisteredUserRequest';
 import { LocationDTO, Ride } from 'src/app/model/Ride';
 import { MapService } from 'src/app/services/map/map.service';
 import { UnregisteredUserService } from 'src/app/services/unregistered_user/unregistered-user.service';
@@ -21,19 +24,17 @@ export class UnregisteredUserComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<string>();
 
-  selectedFromAddress = '';
-  selectedToAddress = '';
+  selectedFromAddress: string = '';
+  selectedToAddress: string = '';
   duration: string = '';
   price: string = '';
   distance: string = '';
 
-  departureLat: number = 0;
-  departureLng: number = 0;
+  private departureLat: number = 0;
+  private departureLng: number = 0;
 
-  destinationLat: number = 0;
-  destinationLng: number = 0;
-
-
+  private destinationLat: number = 0;
+  private destinationLng: number = 0;
 
   constructor(private renderer: Renderer2, private router: Router, private mapService: MapService, private unregisteredUserSerivce: UnregisteredUserService) {
 
@@ -43,189 +44,103 @@ export class UnregisteredUserComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mapService.getFromAddress().subscribe(data => {
+    this.mapService.selectedFromAddress$.subscribe(data => {
       this.selectedFromAddress = data.display_name;
-      this.mapService.search(this.selectedFromAddress + ", Novi Sad").subscribe({
-        next: (result) => {
-          this.departureLat = result[0].lat;
-          this.departureLng = result[0].lon;
-          
-        },
-        error: () => { },
-      });
     });
 
-    this.mapService.getToAddress().subscribe(data => {
+    this.mapService.selectedToAddress$.subscribe(data => {
       this.selectedToAddress = data.display_name;
-
-      this.mapService.search(this.selectedToAddress + ", Novi Sad").subscribe({
-        next: (result) => {
-          this.destinationLat = result[0].lat;
-          this.destinationLng = result[0].lon;
-          
-        },
-        error: () => { },
-      });
-    });   
+    });
 
   }
 
   calculate() {
-
     if (this.CalculateForm.valid) {
 
+      let departure = {
+        address: this.selectedFromAddress,
+        latitude: this.departureLat,
+        longitude: this.departureLng
+      }
+
+      let destination = {
+        address: this.selectedToAddress,
+        latitude: this.destinationLat,
+        longitude: this.destinationLng
+      }
+
       this.mapService.setFromAddress(this.selectedFromAddress + ", Novi Sad");
-      
-      this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");      
 
-      this.CalculateForm.reset(this.CalculateForm.value);
+      this.mapService.setToAddress(this.selectedToAddress + ", Novi Sad");
 
-      let departure: Locations = {
-        address: '',
-        latitude: 0,
-        longitude: 0
-      }
+      this.mapService.selectedDeparture$.subscribe({
+        next: (dep) => {
+          this.departureLat = dep.lat;
+          this.departureLng = dep.lon;
 
-      let destination: Locations = {
-        address: '',
-        latitude: 0,
-        longitude: 0
-      }
-
-
-      this.mapService.getDeparture().subscribe(data => {
-        console.log(data);
-        this.departureLat = data.lat;
-        this.departureLng = data.lng;
-
-        console.log("Flat " + this.departureLat + " Flng " + this.departureLng);
-        this.mapService.getDestination().subscribe(data => {
-          console.log(data);
-          this.destinationLat = data.lat;
-          this.destinationLng = data.lng;
-
-          console.log("Tlat " + this.destinationLat + " Tlng " + this.destinationLng);
-
-          departure = {
-            address: this.selectedFromAddress,
-            latitude: this.departureLat,
-            longitude: this.departureLng
-          }
-
-          destination = {
-            address: this.selectedToAddress,
-            latitude: this.destinationLat,
-            longitude: this.destinationLng
-          }
-        });
-
-        const location: LocationDTO = {
-          departure: departure,
-          destination: destination
-        };
-
-        const locations: LocationDTO[] = [location];
-
-        const ride: Ride = {
-          id: 0,
-          startTime: '',
-          endTime: '',
-          totalCost: 0,
-          estimatedTimeInMinutes: 0,
-          locations: locations,
-          passengers: []
-
-        };
-
-        this.unregisteredUserSerivce
-          .calculatePrice(ride)
-          .subscribe({
-            next: (res) => {
-              console.log(res);
-              this.price = Math.round(res.estimatedCost) + " RSD";
-            }
-          });
-
-        this.mapService.getDistance().subscribe(data => {
-          if (Object.keys(data).length === 0) {
-            this.distance = '';
-          }
-          this.distance = (Math.round((data / 1000) * 100) / 100) + ' km';
-        });
-
-        this.mapService.getDuration().subscribe(data => {
-          if (Object.keys(data).length === 0) {
-            this.duration = '';
-          }
-          this.duration = Math.floor(data / 60) + ' min ' + (Math.round(data - Math.floor(data / 60) * 60)) + ' s';
-        });
-
+          departure.latitude = dep.lat;
+          departure.longitude = dep.lng;
+        },
+        error: () => { },
       });
 
-      
-      // this.mapService.getDeparture().subscribe(data => {
-      //   console.log(data);
-      //   this.departureLat = data.lat;
-      //   this.departureLng = data.lng;
+      this.mapService.selectedDestination$.subscribe({
+        next: (des) => {
 
-      //   console.log("Flat " + this.departureLat + " Flng " + this.departureLng);
-      // });
+          this.destinationLat = des.lat;
+          this.destinationLng = des.lon;
 
-      // this.mapService.getDestination().subscribe(data => {
-      //   console.log(data);
-      //   this.destinationLat = data.lat;
-      //   this.destinationLng = data.lng;
+          destination.latitude = des.lat;
+          destination.longitude = des.lng;
+        },
+        error: () => { },
+      });
 
-      //   console.log("Tlat " + this.destinationLat + " Tlng " + this.destinationLng);
+      let location: LocationDTO = {
+        departure: departure,
+        destination: destination
+      };
 
+      let request: UnregisteredUserRequest = {
+        locations: [location],
+        babyTransport: false,
+        petTransport: false,
+        vehicleType: 'STANDARD'
+      };
 
-      // });
+      this.unregisteredUserSerivce
+        .calculatePrice(request)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            this.price = Math.round(res.estimatedCost) + "";
+          },
+          error: (error) => {
+            // if (error instanceof HttpErrorResponse) {
+            //   this.hasError = true;
+            // }
+          }
+        });
 
-      // departure = {
-      //   address: this.selectedFromAddress,
-      //   latitude: this.departureLat,
-      //   longitude: this.departureLng
-      // };
+      this.mapService.selectedDistance$.subscribe({next: (data) => {
+        if (!isNaN(data)) {
+          this.distance = (Math.round((data / 1000) * 100) / 100) + '';
+        }
+      }});
 
-      // destination = {
-      //   address: this.selectedToAddress,
-      //   latitude: this.destinationLat,
-      //   longitude: this.destinationLng
-      // };
+      this.mapService.selectedDuration$.subscribe({next: (data) => {
+        console.log(data);
+        if (!isNaN(data)) {
+          this.duration = Math.floor(data / 60) + '';
+        }
+      }});
+      console.log(this.duration);
 
-      // const location: LocationDTO = {
-      //   departure: departure,
-      //   destination: destination
-      // };
-
-      // const locations: LocationDTO[] = [location];
-
-      // const ride: Ride = {
-      //   id: 0,
-      //   startTime: '',
-      //   endTime: '',
-      //   totalCost: 0,
-      //   estimatedTimeInMinutes: 0,
-      //   locations: locations,
-      //   passengers: []
-
-      // };
-
-      // this.unregisteredUserSerivce
-      //   .calculatePrice(ride)
-      //   .subscribe({
-      //     next: (res) => {
-      //       console.log(res);
-      //       this.price = Math.round(res.estimatedCost) + " RSD";
-      //     }
-      //   });
-
-
-
+      const details = document.getElementById('data') as HTMLDivElement | null;
+      if (details != null) {
+          details.style.display = 'block';
+      }
+      this.CalculateForm.reset(this.CalculateForm.value);
     }
-  }
-  sendToMap() {
-    //TODO
-    this.newItemEvent.emit(this.selectedToAddress);
   }
 }

@@ -1,8 +1,8 @@
 .map-container {
   position: absolute;
-  margin: 30px;
-  height: 75%;
-  width: 55%;
+  /* margin: 30px; */
+  height: 90%;
+  width: 65%;
 }
 
 .map-frame {

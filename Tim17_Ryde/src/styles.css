@@ -9,10 +9,10 @@ body {
 body {
     margin: 0;
     font-family: Outfit, Roboto, sans-serif;
-    background-color: #131313;
-    background: linear-gradient(0deg, black, #0A3932 50%, black);
+    /* background-color: #131313; */
     mix-blend-mode: normal;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(to bottom left, #101111 55.97%, rgba(0, 102, 98, 0.72) 98.06%);
 }
 
 /* body.black {
