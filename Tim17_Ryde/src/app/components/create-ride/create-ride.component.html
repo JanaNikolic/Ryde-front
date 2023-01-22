@@ -5,18 +5,19 @@
             <form [formGroup]="CreateRideForm" fxLayout="colums" (ngSubmit)="createRide()">
                 <mat-form-field appearance="fill">
                     <mat-label>Departure</mat-label>
-                    <input matInput type="text" [(ngModel)]="selectedFromAddress" formControlName="departure"
+                    <!-- [formControl]="departure" -->
+                    <input matInput type="text" [formControl]="selectedFromAddress" formControlName="departure"
                         id="departureInput">
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Destination</mat-label>
-                    <input matInput type="text" [(ngModel)]="selectedToAddress" formControlName="destination"
+                    <input matInput type="text" [formControl]="selectedToAddress" formControlName="destination"
                         id="destinationInput">
                 </mat-form-field>
                 <div class="split">
                     <mat-form-field class="date-picker" appearance="fill" color="accent">
                         <mat-label>Choose a date</mat-label>
-                        <input matInput [matDatepicker]="picker" [formControl]="date">
+                        <input matInput [matDatepicker]="picker" formControlName="date">
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -25,10 +26,10 @@
                 <ngx-mat-timepicker #picker></ngx-mat-timepicker>   -->
 
                     <mat-form-field class="time-picker">
-                        <input matInput name="selected_time_B" [format]="24" formControlName="selectedTime"
-                            [ngxMatTimepicker]="pickerB" readonly />
+                        <input matInput name="selected_time" [format]="24" formControlName="selectedTime"
+                            [ngxMatTimepicker]="pickerB" [max]="maxTime" [min]="minTime" placeholder="Now" readonly />
                         <mat-icon matSuffix (click)="pickerB.open()">
-                            watch_later
+                            schedule
                         </mat-icon>
                     </mat-form-field>
                     <ngx-mat-timepicker color="accent" #pickerB></ngx-mat-timepicker>
@@ -38,11 +39,14 @@
                 <h2>Type of Car</h2>
 
                 <div class="radio-button">
-                    <input id="standard" type="radio" name="vehicleType" value="standard" formControlName="vehicleType" />
+                    <input id="standard" type="radio" name="vehicleType" value="standard" formControlName="vehicleType"
+                        required />
                     <label class="vehicletype-cc standard" for="standard"></label>
-                    <input id="luxry" type="radio" name="vehicleType" value="luxry" formControlName="vehicleType" />
+                    <input id="luxry" type="radio" name="vehicleType" value="luxry" formControlName="vehicleType"
+                        required />
                     <label class="vehicletype-cc luxry" for="luxry"></label>
-                    <input id="van" type="radio" name="vehicleType" value="van" formControlName="vehicleType"/>
+                    <input id="van" type="radio" name="vehicleType" value="van" formControlName="vehicleType"
+                        required />
                     <label class="vehicletype-cc van" for="van"></label>
                 </div>
                 <div class="car-labels">
@@ -54,11 +58,11 @@
                     <h2>Traveling with</h2>
                     <mat-checkbox class="checkbox" formControlName="petTransport" src="assets/images/pet.png">
                         <!-- <img src="assets/images/pet.png"> -->
-                        <p>Pet Transport</p>
+                        <p>Pets</p>
                     </mat-checkbox>
                     <mat-checkbox class="checkbox" formControlName="babyTransport">
                         <!-- <img src="assets/images/baby.png"> -->
-                        <p>Baby Transport</p>
+                        <p>Babies</p>
                     </mat-checkbox>
                 </section>
 
@@ -79,10 +83,25 @@
                         </mat-radio-button>
                       </mat-label>
                   </mat-radio-group> -->
+                <h2>Share ride with</h2>
+                <div>
+                    <div id="friends">
+                        <!-- <span> -->
+                            <button class="add" type="button" (click)="openPopup()"></button>
+                        <!-- </span> -->
+                    </div>
 
+                    <!-- <button class="add" type="button" (click)="openPopup()"></button> -->
+                    <div>
+                        <label class="popup" id="popup">
+                            <input [formControl]="friendEmail" type="email" id="addPassenger" placeholder="Enter friend's email...">
+                            <button id="addFriend" (click)="addFriend()">Add</button>
+                        </label>
+                    </div>
+                </div>
 
                 <div class="vertical-center" fxLayout="row" fxLayoutAlign="space-between end">
-                    <button type="submit" id="calculateBtn" mat-raised-button>Look For Driver</button>
+                    <button class="submit" type="submit" id="getRideBtn" mat-raised-button>Look For Driver</button>
                 </div>
             </form>
         </div>

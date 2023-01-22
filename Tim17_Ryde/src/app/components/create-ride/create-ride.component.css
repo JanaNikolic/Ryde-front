@@ -9,7 +9,7 @@ h1 {
     color: #D9D9D9;
     margin-top: 5vh;
     text-align: center;
-    margin-bottom: 6vh;
+    margin-bottom: 2vh;
 }
 
 .form-container {
@@ -25,22 +25,19 @@ h1 {
     height: 20%;
     margin: auto;
     text-align: center;
-
 }
 
 .left-container {
     margin-left: 2vw;
     margin-top: 5vh;
-    height: 87vh;
+    height: fit-content;
     width: 30%;
     float: left;
     background: linear-gradient(174.79deg, #101111 88.31%, rgba(1, 172, 171, 0.2) 116.35%);
-    border-image: 
-    linear-gradient(
-      to top, 
-      #01acac 40%, 
-      rgba(0, 0, 0, 0)
-    ) 1;
+    border-image:
+        linear-gradient(to top,
+            #01acac 40%,
+            rgba(0, 0, 0, 0)) 1;
     border-width: 0px 4px 4px 4px;
     border-style: solid;
     border-color: #01acac52;
@@ -79,7 +76,7 @@ host ::ng-deep .mat-radio-container {
     border-radius: 5px;
 }
 
-button {
+.submit {
     position: relative;
     margin: 2vh 0;
     width: 60%;
@@ -98,7 +95,7 @@ button {
     letter-spacing: 0.15em;
     text-transform: uppercase;
 
-    color: #D9D9D9!important;
+    color: #D9D9D9 !important;
     cursor: pointer;
 }
 
@@ -106,13 +103,14 @@ button:hover {
     transform: scale(1.05);
 }
 
-.radio-button {
+.radio-button,
+.car-labels {
     text-align: center;
-    margin: 0;
+    /* margin: 0; */
 }
 
-.radio-button input {
-    margin: 0;
+.radio-button input,
+.car-labels label {
     padding: 0;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -122,20 +120,24 @@ button:hover {
 
 .standard {
     background-image: url("src/assets/images/standard-aqua.png");
-    width: 100px;
-    height: 60px;
+    width: 55px;
+    height: 50px;
+    margin-inline-end: 2vw;
 }
 
 .luxry {
     background-image: url("src/assets/images/luxury-aqua.png");
-    width: 100px;
-    height: 65px;
+    width: 62px;
+    height: 47px;
+    margin-inline-start: 2vw;
+    margin-inline-end: 2vw;
 }
 
 .van {
     background-image: url("src/assets/images/van-aqua.svg");
-    width: 100px;
+    width: 50px;
     height: 55px;
+    margin-inline-start: 2vw;
 }
 
 .radio-button input:active+.vehicletype-cc {
@@ -153,7 +155,8 @@ button:hover {
     background-size: contain;
     background-repeat: no-repeat;
     display: inline-block;
-    margin-inline-start: 1.5vw;
+    /* margin-inline-start: 3vw;
+    margin-inline-end: 1vw; */
     /* width: 100px;
     height: 70px; */
     -webkit-transition: all 100ms ease-in;
@@ -172,22 +175,34 @@ button:hover {
 }
 
 .text {
+    padding: 0;
     color: #D9D9D9;
-    margin-right: 3.2vw;
+    /* margin-right: 2vw; */
     font-size: 20px;
     line-height: 47px;
     align-items: center;
     text-align: center;
     text-transform: capitalize;
+
+    /* margin-inline-start: 1vw; */
+    /* margin-inline-end: 1vw; */
+    margin-left: 3.7vw;
+    margin-right: 3vw;
 }
 
-.text:last-child,
+.text:last-child {
+    margin-left: 2vw;
+    margin-right: 6vw;
+}
+
 .text:first-child {
-    margin-left: 1vw;
+    margin-left: 4vw;
+    margin-right: 0vw;
 }
 
 h2 {
     color: #D9D9D9;
+    margin: 1vh 0;
 }
 
 
@@ -242,4 +257,95 @@ p {
     align-items: center;
     text-align: center;
     text-transform: capitalize;
+    margin: 0;
+}
+
+::ng-deep .mat-form-field-flex>.mat-form-field-infix {
+    padding: 0.4em 0px !important;
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+    top: -1.5em;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+
+.add {
+    background-image: url("src/assets/images/plus.png");
+    height: 35px;
+    width: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: DodgerBlue; */
+    border: none;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    display: inline-flex;
+
+}
+
+#friends>span:first-child{
+    display: ruby-text-container;
+}
+
+.popup {
+    margin-top: 2vh;
+    position: relative;
+    display: none;
+}
+
+input[type="email"] {
+    font-family: 'Outfit';
+    font-size: 16px;
+    color: #D9D9D9;
+    border-radius: 10px;
+    border: 1px solid #01ACAB;
+    height: 30px;
+    width: 230px;
+    padding: 0 10px;
+    background-color:rgba(0, 0, 0, 0.4)
+}
+
+#addFriend {
+    position: absolute;
+    top: -5px;
+    bottom: 0;
+    right: 0;
+    height: 30px;
+    background-color: #01acac;
+    border-radius: 10px;
+    padding: 0 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+#addFriend:hover {
+    transform: none;
+}
+
+.circle {
+    margin: 10px 5px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: 1px solid #01acac;
+    display: inline-block;
+}
+
+#firends{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    height: 10%;
+    
 }
