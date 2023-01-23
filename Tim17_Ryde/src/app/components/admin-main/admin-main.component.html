@@ -1,21 +1,84 @@
 <div class="container">
     <div class="driverContainer">
 
-        <button type="submit" value="REGISTER" class="whiteBtn"  [routerLink]="['/createDriver']" id="regBtn">Create driver</button>
-        <div class=leftContainer >
-        <div  *ngFor="let driver of drivers1">
-            <div class="driverInfo">
-                <img id="image" [src]="driver.profilePicture">
-                <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
-                <p> {{driver.name}}</p>
-                <div class="buttons">
-                    <button class="detailBtn" [routerLink]="['/driver-profile/' + driver.id]">Details</button>
-                    <button class="blockBtn"   (click)="blockDriver(driver.id!)" *ngIf="!driver.blocked">Block</button>
-                    <button class="blockBtn"   (click)="unblockDriver(driver.id!)" *ngIf="driver.blocked">Unblock</button>
+        <div *ngIf="showNotes">
+            <div class="leftAlign inline">
+                <img (click)="showButtonsDriverPassenger()" id="backImg" src="assets/images/back2.png">
+            </div>
+            <div class="rightAlign inline">
+
+                <button id="createNote" (click)="showFormForNoteCreateion()">Add</button>
+                <img (click)="showFormForNoteCreateion()" id="addImg" src="assets/images/add4.png">
+
+            </div>
+
+
+            <h2>Notes of {{currentUserName}}:</h2>
+
+
+            <div class="notesBox">
+                <div *ngFor="let note of userNotes">
+                    <span><b>date:  </b> <i>{{note.date}}</i></span>
+                    <span class="oneNote"><b>message:  </b> <i>{{note.message}}</i></span>
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="showNoteCreateForm">
+            <img (click)="getNotesOfUser(currentUserId, currentUserName)" id="backImg" src="assets/images/back2.png">
+            <form [formGroup]="CreateNoteForm" (ngSubmit)="createNote()">
+                <textarea formControlName="message" cols="40" rows="3"></textarea>
+                <button id="noteSubmision"type="submit">Create note!</button>
+            </form>
+
+        </div>
+        <button *ngIf="showButtons" (click)="showDrivers()" class="chooseBtn row">Drivers</button>
+        <button *ngIf="showButtons" (click)="showPassengers()" class="chooseBtn row">Passengers</button>
+
+
+        <button *ngIf="driversInfo&&showButtons" type="submit" value="REGISTER" class="whiteBtn"
+            [routerLink]="['/createDriver']" id="regBtn">Create
+            driver</button>
+
+        <div *ngIf="driversInfo" class=leftContainer>
+
+            <div *ngFor="let driver of drivers1">
+                <div class="driverInfo">
+                    <img id="image" [src]="driver.profilePicture">
+                    <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
+                    <p> {{driver.name}}</p>
+                    <img (click)="getNotesOfUser(driver.id!, driver.name)" id="noteImg" src="assets/images/notes.png">
+                    <div class="buttons">
+                        <button class="detailBtn" [routerLink]="['/driver-profile/' + driver.id]">Details</button>
+                        <button class="blockBtn" (click)="blockUser(driver.id!)" *ngIf="!driver.blocked">Block</button>
+                        <button class="blockBtn" (click)="unblockUser(driver.id!)"
+                            *ngIf="driver.blocked">Unblock</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div *ngIf="passengersInfo" class=leftContainer>
+
+            <div *ngFor="let passenger of passengers">
+                <div class="driverInfo">
+                    <img id="image" [src]="passenger.profilePicture">
+                    <span [ngClass]="passenger.active ? 'greenDot' : 'redDot'" class="dot"></span>
+                    <p> {{passenger.name}}</p>
+                    <img (click)="getNotesOfUser(passenger.id!, passenger.name)" id="noteImg"
+                        src="assets/images/notes.png">
+
+                    <div class="buttons">
+                        <button class="detailBtn" [routerLink]="['/driver-profile/' + passenger.id]">Details</button>
+                        <button class="blockBtn" (click)="blockUser(passenger.id!)"
+                            *ngIf="!passenger.blocked">Block</button>
+                        <button class="blockBtn" (click)="unblockUser(passenger.id!)"
+                            *ngIf="passenger.blocked">Unblock</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

@@ -23,6 +23,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { StatisticsComponent } from './components/statistics-component/statistics.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,9 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     AdminMainComponent,
     DriverRideHistoryComponent,
     AdminNavbarComponent,
-    DriverProfileComponent
+    DriverProfileComponent,
+    StatisticsComponent,
+    AdminStatisticsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -51,6 +57,8 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

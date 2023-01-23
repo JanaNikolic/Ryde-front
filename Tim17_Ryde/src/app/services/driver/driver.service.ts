@@ -17,9 +17,14 @@ import { pageRide } from 'src/app/model/Ride';
   
     getDriver(driverId:number):Observable<Driver>{
       console.log((environment.apiHost+'/api/driver/' + driverId));
-      return this.http.get<Driver>(environment.apiHost+'/api/driver/' + driverId);
-      
-      
+      return this.http.get<Driver>(environment.apiHost+'/api/driver/' + driverId);  
+    }
+    getRidesPerDay(driverId:number, from:string, to:string):Observable<Map<String, Number>>{
+      return this.http.get<Map<String, Number>>(environment.apiHost+'/api/driver/' + driverId + "/ridesPerDate?page=0&" + "from="+ from + "&to=" + to);  
+    }
+
+    getEarningsPerDay(driverId:number, from:string, to:string):Observable<Map<String, Number>>{
+      return this.http.get<Map<String, Number>>(environment.apiHost+'/api/driver/' + driverId + "/earningsPerDate?page=0&" + "from="+ from + "&to=" + to);  
     }
 
     addDriver(driver: any): Observable<any> {
