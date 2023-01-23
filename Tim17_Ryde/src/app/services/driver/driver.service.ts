@@ -6,7 +6,7 @@ import { environment } from 'src/app/environment/environment';
 import { Driver } from 'src/app/model/Driver';
 import { pageDriver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
-import { pageRide } from 'src/app/model/Ride';
+import { KilometersResponse, MoneyResponse, pageRide, RideCountResponse } from 'src/app/model/Ride';
 @Injectable({
     providedIn: 'root'
   })
@@ -19,12 +19,17 @@ import { pageRide } from 'src/app/model/Ride';
       console.log((environment.apiHost+'/api/driver/' + driverId));
       return this.http.get<Driver>(environment.apiHost+'/api/driver/' + driverId);  
     }
-    getRidesPerDay(driverId:number, from:string, to:string):Observable<Map<String, Number>>{
-      return this.http.get<Map<String, Number>>(environment.apiHost+'/api/driver/' + driverId + "/ridesPerDate?page=0&" + "from="+ from + "&to=" + to);  
+
+
+    getRidesPerDay(driverId:number, from:string, to:string):Observable<RideCountResponse>{
+      return this.http.get<RideCountResponse>(environment.apiHost+'/api/driver/rideCount/' + driverId + "?startDate="+ from + "&endDate=" + to);  
     }
 
-    getEarningsPerDay(driverId:number, from:string, to:string):Observable<Map<String, Number>>{
-      return this.http.get<Map<String, Number>>(environment.apiHost+'/api/driver/' + driverId + "/earningsPerDate?page=0&" + "from="+ from + "&to=" + to);  
+    getMoneyPerDay(driverId:number, from:string, to:string):Observable<MoneyResponse>{
+      return this.http.get<MoneyResponse>(environment.apiHost+'/api/driver/money/' + driverId + "?startDate="+ from + "&endDate=" + to);  
+    }
+    getKilometersPerDay(driverId:number, from:string, to:string):Observable<KilometersResponse>{
+      return this.http.get<KilometersResponse>(environment.apiHost+'/api/driver/kilometers/' + driverId + "?startDate="+ from + "&endDate=" + to);  
     }
 
     addDriver(driver: any): Observable<any> {
