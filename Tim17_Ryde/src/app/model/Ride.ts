@@ -12,7 +12,7 @@ export interface Ride{
 }
 export interface pageRide{
     count:number
-    rides:Ride[]
+    results:Ride[]
 }
 
 export interface LocationDTO{

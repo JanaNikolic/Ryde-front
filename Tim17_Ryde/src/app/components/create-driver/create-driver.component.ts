@@ -17,9 +17,9 @@ export class CreateDriverComponent {
 
   location: Locations = {
 
-    address: "",
-    latitude: 0,
-    longitude: 0,
+    address: "slovacka 5",
+    latitude: 1,
+    longitude: 1,
 
   }
   image: string = "";
@@ -91,7 +91,7 @@ export class CreateDriverComponent {
         name: this.CreateDriverForm.value.name as string,
         surname: this.CreateDriverForm.value.surname as string,
         telephoneNumber: this.CreateDriverForm.value.telephoneNumber as string,
-        profilePicture: "someProfilePicture",
+        profilePicture: this.image,
         email: this.CreateDriverForm.value.email as string,
         password: this.CreateDriverForm.value.password as string,
         address: this.CreateDriverForm.value.address as string,
@@ -99,21 +99,22 @@ export class CreateDriverComponent {
         active: false
       }
 
-      console.log(this.driver);
-
+      
+      
       this.driverService.
         addDriver(this.driver)
-        .subscribe(
-          {
-            next:
-              (driver) => {
-                this.driver = driver;
+        .subscribe( (res: Driver) =>
+          { 
+            console.log(this.vehicle);
+                
+                this.driver = res;
                 this.driverService.
-                  addVehicle(Number(this.driver.id), this.vehicle)
+                  addVehicle(Number(res.id), this.vehicle)
                   .subscribe((res: any) => {
+                    
                   });
 
-              }
+              
 
           }
 

@@ -10,3 +10,7 @@ export interface Passenger{
     blocked: Boolean;
     active: Boolean;
 }
+export interface pagePassenger{
+    count:number
+    results:Passenger[]
+}

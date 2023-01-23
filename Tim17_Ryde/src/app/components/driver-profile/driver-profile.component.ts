@@ -3,6 +3,10 @@ import { DriverService } from 'src/app/services/driver/driver.service';
 import { ActivatedRoute } from '@angular/router';
 import { Driver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
+import { Ride } from 'src/app/model/Ride';
+
+
+
 
 @Component({
   selector: 'app-driver-profile',
@@ -11,11 +15,16 @@ import { Vehicle } from 'src/app/model/Vehicle';
 })
 export class DriverProfileComponent {
 
-  constructor(private driverService: DriverService, private route: ActivatedRoute){}
-
+  constructor(private driverService: DriverService, private route: ActivatedRoute){
+    
+  }
+  
+  ridesPerDay!: Map<String, Number>;
+  rides: Ride[] = [];
   driverInfo: boolean = true;
   vehicleInfo: boolean = false;
   statisticInfo: boolean = false;
+  
   driver: Driver = {
     id: 1,
     name: '',
@@ -37,33 +46,51 @@ export class DriverProfileComponent {
     petTransport: false,
     currentLocation: null!,
   };
+  
 
 
   ngOnInit(): void {
+
+    this.route.params.subscribe((params) => {
+      this.driverService.getDriverRides(+params['driverId'])
+      .subscribe(
+        (pageRide) => {
+          this.rides = pageRide.results;
+          console.log(this.rides)
+        }
+      );
+    });
 
     this.route.params.subscribe((params) => {
       this.driverService.getDriver(+params['driverId'])
       .subscribe(
         (driver) => {         
           this.driver = driver;
-          console.log(this.driver);
+          
         }
       ); 
   });
 
+  
+
   this.route.params.subscribe((params) => {
+    console.log(+params['driverId'])
     this.driverService.getVehicle(+params['driverId'])
     .subscribe(
       (vehicle) => {         
         this.vehicle = vehicle;
-        console.log(this.vehicle);
+       
       }
     ); 
 });
 
+
+
   }
+  
 
   showDriverInfo(){
+    console.log(this.driver)
     this.vehicleInfo = false;
     this.statisticInfo = false
     this.driverInfo = true;

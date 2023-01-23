@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   login(auth: any): Observable<Token> {
-    return this.http.post<Token>(environment.apiHost + '/api/login', auth, {
+    return this.http.post<Token>(environment.apiHost + '/api/user/login', auth, {
       headers: this.headers,
     });
   }
@@ -38,7 +38,7 @@ export class AuthService {
     if (this.isLoggedIn()) {
       const accessToken: any = localStorage.getItem('user');
       const helper = new JwtHelperService();
-      const role = helper.decodeToken(accessToken).role["name"];
+      const role = helper.decodeToken(accessToken).role;
       return role;
     }
     return null;

@@ -1,17 +1,57 @@
 <p>driver-profile works!</p>
 <div class="container">
+    <div class="left-container">
+        <h1>History</h1>
+        <div class="scrollable">
+            <div *ngFor="let ride of rides">
+                <div [routerLink]="['/driver-ride-history/' + driver.id]" class="all-rides">
+                    <div top-div>
+                        <div class="inlineTop1">
+                            <h3>{{ride.startTime[0]}}-{{ride.startTime[1]}}-{{ride.startTime[2]}}</h3>
+                        </div>
+                        <div class="lineGreen"></div>
+                        <div class="inlineTop2">
+                            <p>{{ride.locations[0].departure.address}}</p>
+                            <p class="center">To</p>
+                            <p>{{ride.locations[0].destination.address}}</p>
+                        </div>
+                    </div>
+                    <div class="bottom-div">
+                        <div class="inline">
+                            <p>Start</p>
+                            <p>{{ride.startTime[3]}}:{{ride.startTime[4]}}</p>
+                        </div>
+                        <div class="inline">
+                            <p>End</p>
+                            
+                        </div>
+
+                        <div class="inline">
+                            <p>Duration</p>
+                            <p>{{ride.estimatedTimeInMinutes}}</p>
+                        </div>
+                        <div class="inline">
+                            <p>Price</p>
+                            <p>{{ride.totalCost}}rsd</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="right-container">
         <div>
             <img id="image" [src]="driver.profilePicture" alt="picture">
         </div>
         <hr>
-        <div class="inline">
+        <div class="inlineRight">
             <p class="pointer" (click)="showDriverInfo()">Profile</p>
         </div>
-        <div class="inline line">
+        <div class="inlineRight line">
             <p class="pointer" (click)="showVehicleInfo()">Car</p>
         </div>
-        <div class="inline">
+        <div class="inlineRight">
             <p class="pointer" (click)="showStatistics()">Statistics</p>
         </div>
         <hr>
@@ -56,6 +96,11 @@
                 <p class="margin-top">{{vehicle.petTransport}}</p>
 
             </div>
+        </div>
+        <div *ngIf="statisticInfo">
+            
+            <app-statistics></app-statistics>
+
         </div>
     </div>
 
