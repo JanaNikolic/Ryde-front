@@ -34,15 +34,12 @@ export class LoginComponent {
       email: this.LoginForm.value.Email!,
       password: this.LoginForm.value.Password!,
     };
-    
-    console.log("loginVal");
-
-    console.log(this.LoginForm.valid);
 
     if (this.LoginForm.valid) {
       this.authService.login(loginVal).subscribe({
         next: (result) => {
-          localStorage.setItem('user', JSON.stringify(result));
+          localStorage.setItem('user', JSON.stringify(result.accessToken));
+          console.log(result.accessToken);
           this.authService.setUser();
           if (this.authService.getRole() == "ROLE_ADMIN") {
             this.router.navigate(['/admin-main']);

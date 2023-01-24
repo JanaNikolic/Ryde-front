@@ -1,11 +1,10 @@
 #navbar {
-    background-color: #161619;
+    background-color: #101111;
     width: 100%;
     position: absolute;
     height: 60px;
     left: 0px;
     top: 0px;
-    z-index: 1;
 }
 
 ul {
@@ -41,8 +40,8 @@ a {
 }
 
 #registerButton {
-    color: #FFD700;
-    border: 1px solid #FFD700;
+    color: #01acac;
+    border: 1px solid #01acac;
 }
 
 #name {

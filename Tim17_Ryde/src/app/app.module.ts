@@ -23,6 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { DriverMainComponent } from './components/driver-main/driver-main.component';
+import { AcceptRideComponent } from './components/accept-ride/accept-ride.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     AdminMainComponent,
     DriverRideHistoryComponent,
     AdminNavbarComponent,
-    DriverProfileComponent
+    DriverProfileComponent,
+    DriverMainComponent,
+    AcceptRideComponent
   ],
   imports: [
     AppRoutingModule,
@@ -52,7 +56,13 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
     MaterialModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

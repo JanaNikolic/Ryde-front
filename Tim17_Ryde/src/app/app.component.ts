@@ -34,8 +34,9 @@ export class AppComponent {
   isUnregistered() {
     if (this.authService.isLoggedIn()) {
       return false;
+    } else {
+      return true
     }
-    return true
   }
   
 }
