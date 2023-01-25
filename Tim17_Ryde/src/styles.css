@@ -11,11 +11,8 @@ body {
     font-family: Outfit, Roboto, sans-serif;
     /* background-color: #131313; */
     mix-blend-mode: normal;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background: linear-gradient(to bottom left, #101111 55.97%, rgba(0, 102, 98, 0.72) 98.06%);
 }
 
-/* body.black {
-    background: rgb(22,22,25);
-    background: linear-gradient(180deg, rgba(22,22,25,1) 0%, rgba(22,22,25,0.6026785714285714) 100%);
-} */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

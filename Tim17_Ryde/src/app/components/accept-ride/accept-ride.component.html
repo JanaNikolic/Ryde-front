@@ -1,0 +1,25 @@
+
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">You've got a new Ride request.
+            Do you want to accept it?</h1>
+    </header>
+    <section id="modal-body">
+        <div class="location">
+            <p>Departure:</p>
+            <p>{{departure}}</p>
+        </div>
+        <div class="location">
+            <p>Destination:</p>
+            <p>{{destination}}</p>
+        </div>
+        <div class="location">
+            <p>Passenger:</p>
+            <p>{{passenger}}</p>
+        </div>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-action-button" (click)="actionFunction()">Accept</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="rejectFunction()">Reject</button>
+    </footer>
+</div>

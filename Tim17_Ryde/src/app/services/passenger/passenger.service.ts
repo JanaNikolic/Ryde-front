@@ -13,7 +13,7 @@ export class PassengerService {
   constructor(private http: HttpClient) { }
 
 
-  get(passengerId:number):Observable<Passenger>{
+  getPassenger(passengerId:number):Observable<Passenger>{
     return this.http.get<Passenger>(environment.apiHost+'/api/passenger/' + passengerId);
     
   }

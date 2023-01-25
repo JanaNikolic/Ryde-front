@@ -4,11 +4,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
 
 @Component({
-  selector: 'app-registered-user-navbar',
-  templateUrl: './registered-user-navbar.component.html',
-  styleUrls: ['./registered-user-navbar.component.css']
+  selector: 'app-driver-navbar',
+  templateUrl: './driver-navbar.component.html',
+  styleUrls: ['./driver-navbar.component.css']
 })
-export class RegisteredUserNavbarComponent {
+export class DriverNavbarComponent {
   driver: boolean = false;
   workingHour: WorkingHourResponse = {
     id: 0,
@@ -53,8 +53,8 @@ export class RegisteredUserNavbarComponent {
               this.workingHour = result;
             }
           })
+          this.checked = res.active;
         }
-        this.checked = res.active;
       }
     })
   }

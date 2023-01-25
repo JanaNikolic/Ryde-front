@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +22,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { DriverMainComponent } from './components/driver-main/driver-main.component';
+import { AcceptRideComponent } from './components/accept-ride/accept-ride.component';
+import { RejectRideComponent } from './components/reject-ride/reject-ride.component';
+import { DriverNavbarComponent } from './components/driver-navbar/driver-navbar.component';
 import { StatisticsComponent } from './components/statistics-component/statistics.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -44,8 +47,12 @@ import { AdminStatisticsComponent } from './components/admin-statistics/admin-st
     DriverRideHistoryComponent,
     AdminNavbarComponent,
     DriverProfileComponent,
-    StatisticsComponent,
-    AdminStatisticsComponent
+    DriverMainComponent,
+    AcceptRideComponent,
+    RejectRideComponent,
+    DriverNavbarComponent,
+    AdminStatisticsComponent,
+    StatisticsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -60,7 +67,13 @@ import { AdminStatisticsComponent } from './components/admin-statistics/admin-st
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

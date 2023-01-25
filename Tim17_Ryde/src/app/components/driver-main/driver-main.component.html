@@ -1,0 +1,35 @@
+
+<body><app-map class="map">
+</app-map>
+<div id="left-container" *ngIf="currentActiveRide">
+    <h1>Current ride</h1>
+        <div class="ping">
+            <span class="bigElipse"></span>
+            <span class="smallElipse"></span>
+            <span class="smallElipse"></span>
+            <img class="pin" src="assets/images/pin.svg" alt="pin" width="80px" height="80px">
+        </div>
+        <div class="form">
+        </div>
+    <div class="location-info">
+        <p class="subtitles">Departure</p>
+        <p id= "departure"class="locations">{{departure}}</p>
+        <p class="subtitles">Destination</p>
+        <p id= "destination" class="locations">{{destination}}</p>
+    </div>
+    <p class="subtitles passenger-title">Passenger</p>
+    <div id="passenger-info">
+        <img id= "profile-pic" src="assets/images/avatar.png" alt="profilePic">
+        <div id="profile-info">
+            <p id="name">{{name}}</p>
+            <p id="email">{{email}}</p>
+        </div>
+    </div>
+    <div id="buttons">
+        <button id="panic" >PANIC</button>
+        <button id="start" class="button" (click)="startRide()" *ngIf="!started">Start Ride</button>
+        <button id="end" class="button" *ngIf="started" (click)="endRide()" >End Ride</button>
+    </div>
+</div>
+    
+</body>

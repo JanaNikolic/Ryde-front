@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 @Component({
@@ -8,7 +9,6 @@ import { AuthService } from './services/auth/auth.service';
 })
 export class AppComponent {
   title = 'Tim17_Ryde';
-
   constructor(private authService: AuthService) {}
 
   ngOnInit() : void {}
@@ -28,8 +28,16 @@ export class AppComponent {
   isRegisteredUser() {
     
     if (this.authService.isLoggedIn()) {
-      
-      if (this.authService.getRole()=="ROLE_PASSENGER" || this.authService.getRole()=="ROLE_DRIVER") {
+      if (this.authService.getRole()=="ROLE_PASSENGER") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isDriver() {
+    if (this.authService.isLoggedIn()) {
+      if (this.authService.getRole()=="ROLE_DRIVER") {
         return true;
         
       }
@@ -41,8 +49,9 @@ export class AppComponent {
     
     if (this.authService.isLoggedIn()) {
       return false;
+    } else {
+      return true
     }
-    return true
   }
   
 }

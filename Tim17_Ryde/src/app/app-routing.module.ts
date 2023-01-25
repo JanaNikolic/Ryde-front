@@ -9,6 +9,7 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
 import { LoginGuard } from './guard/login.guard';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { StatisticsComponent } from './components/statistics-component/statistics.component';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'admin-main', component:AdminMainComponent},
   {path: 'driver-ride-history/:driverId', component:DriverRideHistoryComponent},
   {path: 'driver-profile/:driverId', component:DriverProfileComponent},
+  {path: 'driver-main', component:DriverMainComponent},
   {path: 'statistics', component:StatisticsComponent},
   {path: 'admin-statistics', component:AdminStatisticsComponent}
 ];

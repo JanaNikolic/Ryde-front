@@ -1,48 +1,55 @@
-.register-page {
-    margin: 0;
-    /* position: relative; */
-    /* height: 95vh; */
-    height: 100%;
-    font-size: 2vh;
-}
-
-.container {
+.container{
     position: absolute;
-    width: 40vw;
-    /* height: 80vh; */
-    height: fit-content;
-    left: 50vw;
-    top: 50vh;
-    margin-top: 2vh;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
+    top: 0px;
+    right: 15%;
+    width: 650px;
+    height: 1040px;
+    background: #101111;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-image:
+        linear-gradient(to top,
+        #4E4D4D 40%,
+            rgba(0, 0, 0, 0)) 1;
+    box-shadow: 5px 4px 29px 53px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
 }
 
-h1 {
-    padding-top: 2vh;
-    padding-bottom: 2%;
-    font-family: 'Outfit', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 5vh;
-    line-height: 5vh;
+body {
+    width: 100%;
+    background-image: url("../../../assets/images/RydeBackground.png");     
+    background-size: 100%;
+}
+
+h1{
+    padding-left: 32px;
+    margin-bottom: 0px;
     text-align: center;
-    letter-spacing: 0.15em;
-
-    color: #FFFFFF;
+    padding-top: 5%;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 100px;
+    line-height: 126px;
+    letter-spacing: 0.35em;
+    color: rgba(217, 217, 217, 0.8);
 }
 
-input {
-    padding: 1.3vh;
-    font-family: 'Outfit', sans-serif;
+
+.infoInput{
+    padding: 12px;
+    width: 65%;
+    display: flex;
+    margin: auto;
+    font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    font-size: 1.7vh;
-    line-height: 1.5vh;
+    font-size: 16px;
+    line-height: 18px;
     letter-spacing: 0.05em;
     border-width: 0;
+    background: rgba(217, 217, 217, 0.8);
+    border-radius: 10px;
 }
 
 p {
@@ -51,26 +58,18 @@ p {
     margin: auto;
 }
 
-hr {
-    width: 50%;
-    margin-top: 5%;
-    margin-bottom: 0;
-}
-
-label {
-    text-align: left;
-}
-
-.form {
-    margin-left: 15vh;
-    margin-right: 15vh;
-}
-
 .textLabel {
     text-align: left;
-    margin-left: 5vh;
-    margin-top: 1vh;
+    margin-left: 17.5%;
     margin-bottom: 0.5vh;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    display: flex;
+    padding: 10px 0px;
+    letter-spacing: 0.15em;
 }
 
 .shortInfoInput {
@@ -81,49 +80,31 @@ label {
     border-radius: 25px;
 }
 
-.right-margin {
-    margin-right: 13vh;
-}
-
-.left-margin {
-    margin-left: 1.5vh;
-}
-
-.infoInput {
-    position: relative;
-    width: 20vw;
-    height: 5%;
-
-    background: #AFBAA3;
-    border-radius: 25px;
-}
-
 input:hover {
     background: #D9D9D9;
 }
 
 .whiteBtn {
-    padding: 1.5vh;
-    border-radius: 25px;
-    border-width: 0;
-    background-color: #D9D9D9;
-    width: 50%;
-    margin-top: 5vh;
-    margin-bottom: 2vh;
-
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 15px;
-
-
+    padding: 12px;
+    background: #01ACAB;
+    border-radius: 30px;
+    display: block;
+    margin: auto;
+    width: 65%;
+    margin-top: 40px;
     letter-spacing: 0.15em;
-    text-transform: uppercase;
-
-    color: #000000;
     cursor: pointer;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 25px;
+/* identical to box height */
+    letter-spacing: 0.15em;
+    text-transform: capitalize;
 }
+
 
 @media only screen and (max-width: 650px) {
     .register-page {

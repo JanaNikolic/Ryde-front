@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/app/environment/environment';
 import { JwtAuthenticationRequest } from 'src/app/model/JwtAuthenticationRequest';
+import { TokenResponse } from 'src/app/model/response/TokenResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,8 @@ export class AuthService {
     this.user$.next(this.getRole());
   }
 
-  login(auth: any): Observable<Token> {
-    return this.http.post<Token>(environment.apiHost + '/api/user/login', auth, {
+  login(auth: any): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>(environment.apiHost + '/api/user/login', auth, {
       headers: this.headers,
     });
   }
@@ -40,6 +41,16 @@ export class AuthService {
       const helper = new JwtHelperService();
       const role = helper.decodeToken(accessToken).role;
       return role;
+    }
+    return null;
+  }
+
+  getId(): any {
+    if (this.isLoggedIn()) {
+      const accessToken: any = localStorage.getItem('user');
+      const helper = new JwtHelperService();
+      const id = helper.decodeToken(accessToken).id;
+      return id;
     }
     return null;
   }
