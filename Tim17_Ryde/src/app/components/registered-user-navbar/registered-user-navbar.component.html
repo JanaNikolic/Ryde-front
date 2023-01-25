@@ -9,7 +9,12 @@
         <li><a id = "historyButton" [routerLink]="['/history']">HISTORY</a></li>
         <li><a id = "profileButton" [routerLink]="['/profile']">PROFILE</a></li>
         <li><a id = "logoutButton" [routerLink]="['/login']" (click)="logout()">LOGOUT</a></li>
+        
+    <mat-slide-toggle [(ngModel)]="checked" id="toggle" *ngIf="driver" (change)="changed()">
+    </mat-slide-toggle>
       </ul>
+      
+    
     </span>
 </div>
   

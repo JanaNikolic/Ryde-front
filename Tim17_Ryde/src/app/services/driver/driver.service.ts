@@ -7,6 +7,7 @@ import { Driver } from 'src/app/model/Driver';
 import { pageDriver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
 import { pageRide } from 'src/app/model/Ride';
+import { WorkingHourResponse } from 'src/app/model/response/WorkingHourResponse';
 @Injectable({
     providedIn: 'root'
   })
@@ -49,5 +50,13 @@ import { pageRide } from 'src/app/model/Ride';
     getDriverRides(driverId:number):Observable<pageRide>{
       return this.http.get<pageRide>(environment.apiHost + '/api/driver/' + driverId + '/ride')
 
+    }
+
+    startWorkingHour(driverId:number):Observable<WorkingHourResponse>{
+      return this.http.post<WorkingHourResponse>(environment.apiHost + '/api/driver/' + driverId + '/working-hour', null)
+    }
+
+    endWorkingHour(driverId:number):Observable<WorkingHourResponse>{
+      return this.http.put<WorkingHourResponse>(environment.apiHost + '/api/driver/working-hour/' + driverId, null)
     }
   }

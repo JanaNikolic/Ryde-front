@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { WorkingHourResponse } from 'src/app/model/response/WorkingHourResponse';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DriverService } from 'src/app/services/driver/driver.service';
 
 @Component({
   selector: 'app-registered-user-navbar',
@@ -6,8 +9,46 @@ import { Component } from '@angular/core';
   styleUrls: ['./registered-user-navbar.component.css']
 })
 export class RegisteredUserNavbarComponent {
+  driver: boolean = false;
+  workingHour: WorkingHourResponse = {
+    id: 0,
+    start: "",
+    end: ""
+  }
+  toggle: any;
+  checked: boolean = false;
+  constructor(public authService: AuthService, public driverService: DriverService){}
+
   ngOnInit(): void {
     
+    this.toggle = document.getElementById("toggle");
+    if (this.authService.getRole() === "ROLE_DRIVER") this.driver = true;
+    else {
+      
+      let nav = document.getElementById("navigation");
+      this.driver = false;
+      if (nav != null) {
+        nav.style.paddingRight = '10%';
+      }
+    }
+
+
+  }
+
+  changed(){
+    if (this.checked) {
+        this.driverService.startWorkingHour(this.authService.getId()).subscribe({
+          next: (res) => {
+            this.workingHour = res;
+          }
+        })
+    } else {
+      this.driverService.endWorkingHour(this.workingHour.id).subscribe({
+        next: (res) => {
+          this.workingHour = res;
+        }
+      })
+    }
   }
 
   logout() {
