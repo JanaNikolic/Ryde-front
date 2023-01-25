@@ -59,4 +59,8 @@ import { WorkingHourResponse } from 'src/app/model/response/WorkingHourResponse'
     endWorkingHour(driverId:number):Observable<WorkingHourResponse>{
       return this.http.put<WorkingHourResponse>(environment.apiHost + '/api/driver/working-hour/' + driverId, null)
     }
+
+    getWorkingHour(driverId:number):Observable<WorkingHourResponse>{
+      return this.http.get<WorkingHourResponse>(environment.apiHost + '/api/driver/' + driverId + "/working-hour/active")
+    }
   }

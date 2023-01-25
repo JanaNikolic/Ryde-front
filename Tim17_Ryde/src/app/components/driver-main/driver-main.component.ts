@@ -12,6 +12,8 @@ import { Passenger } from 'src/app/model/Passenger';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { UserResponse } from 'src/app/model/response/UserResponse';
+import { RejectRideComponent } from '../reject-ride/reject-ride.component';
+import { DriverService } from 'src/app/services/driver/driver.service';
 
 @Component({
   selector: 'app-driver-main',
@@ -21,6 +23,7 @@ import { UserResponse } from 'src/app/model/response/UserResponse';
 export class DriverMainComponent {
   private serverUrl = environment.apiHost + '/example-endpoint'
   private stompClient: any;
+  active:Boolean = false;
   departure = "";
   destination = "";
   passenger!: Passenger;
@@ -46,7 +49,7 @@ export class DriverMainComponent {
     scheduledTime: ''
   };
 
-  constructor(private mapService: MapService, private authService: AuthService, public matDialog: MatDialog, public passengerService: PassengerService, public rideService: RideService) {}
+  constructor(private mapService: MapService, private authService: AuthService, public matDialog: MatDialog, public passengerService: PassengerService, public rideService: RideService, public driverService: DriverService) {}
 
   ngOnInit() {
 
@@ -103,9 +106,24 @@ export class DriverMainComponent {
             this.departure = this.ride.locations[0].departure.address;
             this.destination = this.ride.locations[0].destination.address;
             that.setPassenger();
+          } else {
+            that.openRejection();
           }
         }
       });
+    }
+
+    openRejection() {
+      
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "rejection-component";
+      dialogConfig.height = "350px";
+      dialogConfig.width = "600px";
+      dialogConfig.data = this.ride;
+
+      const modalDialog = this.matDialog.open(RejectRideComponent, dialogConfig);
+      let that = this;
     }
 
     setPassenger() {

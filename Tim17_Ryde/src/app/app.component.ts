@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './services/auth/auth.service';
 
 @Component({
@@ -8,7 +9,6 @@ import { AuthService } from './services/auth/auth.service';
 })
 export class AppComponent {
   title = 'Tim17_Ryde';
-
   constructor(private authService: AuthService) {}
 
   ngOnInit() : void {}

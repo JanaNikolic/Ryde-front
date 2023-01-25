@@ -16,7 +16,7 @@ export class RegisteredUserNavbarComponent {
     end: ""
   }
   toggle: any;
-  checked: boolean = false;
+  checked: Boolean = false;
   constructor(public authService: AuthService, public driverService: DriverService){}
 
   ngOnInit(): void {
@@ -31,8 +31,32 @@ export class RegisteredUserNavbarComponent {
         nav.style.paddingRight = '10%';
       }
     }
+    this.getActive();
+  }
 
+  ngOnDestroy() : void {
+    if (this.workingHour.id != 0) {
+    this.driverService.endWorkingHour(this.workingHour.id).subscribe({
+      next: (res) => {
+        this.workingHour = res;
+      }
+    })
+    }
+  }
 
+  getActive() {
+    this.driverService.getDriver(this.authService.getId()).subscribe({
+      next: (res) => {
+        if (res.active == true) {
+          this.driverService.getWorkingHour(this.authService.getId()).subscribe({
+            next: (result) => {
+              this.workingHour = result;
+            }
+          })
+        }
+        this.checked = res.active;
+      }
+    })
   }
 
   changed(){
