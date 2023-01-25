@@ -26,6 +26,7 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
 import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { AcceptRideComponent } from './components/accept-ride/accept-ride.component';
 import { RejectRideComponent } from './components/reject-ride/reject-ride.component';
+import { DriverNavbarComponent } from './components/driver-navbar/driver-navbar.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RejectRideComponent } from './components/reject-ride/reject-ride.compon
     DriverProfileComponent,
     DriverMainComponent,
     AcceptRideComponent,
-    RejectRideComponent
+    RejectRideComponent,
+    DriverNavbarComponent
   ],
   imports: [
     AppRoutingModule,

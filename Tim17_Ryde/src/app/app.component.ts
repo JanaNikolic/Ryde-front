@@ -24,7 +24,16 @@ export class AppComponent {
 
   isRegisteredUser() {
     if (this.authService.isLoggedIn()) {
-      if (this.authService.getRole()=="ROLE_PASSENGER" || this.authService.getRole()=="ROLE_DRIVER") {
+      if (this.authService.getRole()=="ROLE_PASSENGER") {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isDriver() {
+    if (this.authService.isLoggedIn()) {
+      if (this.authService.getRole()=="ROLE_DRIVER") {
         return true;
       }
     }
