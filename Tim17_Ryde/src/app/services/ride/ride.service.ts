@@ -5,8 +5,9 @@ import { environment } from 'src/app/environment/environment';
 import { Interceptor } from 'src/app/interceptor/interceptor.interceptor';
 import { RejectionRequest } from 'src/app/model/request/RejectionRequest';
 import { RideResponse } from 'src/app/model/response/RideResponse';
-import { Ride } from 'src/app/model/Ride';
 import { AuthService } from '../auth/auth.service';
+import { KilometersResponse, MoneyResponse, Ride } from 'src/app/model/Ride';
+import { RideCountResponse } from 'src/app/model/Ride';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +19,14 @@ export class RideService {
   getRide(rideId:number):Observable<Ride>{
     return this.http.get<Ride>(environment.apiHost+'/api/ride/' + rideId);
   }
-  getRidesPerDay(from:string, to:string):Observable<Map<String, Number>>{
-    return this.http.get<Map<String, Number>>(environment.apiHost+"/api/ride/ridesPerDate?" + "from="+ from + "&to=" + to);  
+  getRidesPerDay(from:string, to:string):Observable<RideCountResponse>{
+    return this.http.get<RideCountResponse>(environment.apiHost+"/api/ride/rideCount?" + "startDate="+ from + "&endDate=" + to);  
   }
-  getTotalCostPerDay(from:string, to:string):Observable<Map<String, Number>>{
-    return this.http.get<Map<String, Number>>(environment.apiHost+"/api/ride/totalCostPerDate?" + "from="+ from + "&to=" + to);  
+  getMoneyPerDay(from:string, to:string):Observable<MoneyResponse>{
+    return this.http.get<MoneyResponse>(environment.apiHost+"/api/ride/money?" + "startDate="+ from + "&endDate=" + to);  
+  }
+  getKilometersPerDay(from:string, to:string):Observable<KilometersResponse>{
+    return this.http.get<KilometersResponse>(environment.apiHost+"/api/ride/kilometers?" + "startDate="+ from + "&endDate=" + to);  
   }
 
   acceptRide(rideId: number):Observable<RideResponse> {
