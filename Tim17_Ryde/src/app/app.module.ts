@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +26,10 @@ import { DriverMainComponent } from './components/driver-main/driver-main.compon
 import { AcceptRideComponent } from './components/accept-ride/accept-ride.component';
 import { RejectRideComponent } from './components/reject-ride/reject-ride.component';
 import { DriverNavbarComponent } from './components/driver-navbar/driver-navbar.component';
+import { StatisticsComponent } from './components/statistics-component/statistics.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,9 @@ import { DriverNavbarComponent } from './components/driver-navbar/driver-navbar.
     DriverMainComponent,
     AcceptRideComponent,
     RejectRideComponent,
-    DriverNavbarComponent
+    DriverNavbarComponent,
+    AdminStatisticsComponent,
+    StatisticsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -59,6 +64,8 @@ import { DriverNavbarComponent } from './components/driver-navbar/driver-navbar.
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {

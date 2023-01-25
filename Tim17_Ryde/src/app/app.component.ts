@@ -15,14 +15,18 @@ export class AppComponent {
 
 
   isAdmin() {
+    
     if (this.authService.isLoggedIn()) {
       if (this.authService.getRole()=="ROLE_ADMIN")
+     
+      
       return true;
     }
     return false;
   }
 
   isRegisteredUser() {
+    
     if (this.authService.isLoggedIn()) {
       if (this.authService.getRole()=="ROLE_PASSENGER") {
         return true;
@@ -35,12 +39,14 @@ export class AppComponent {
     if (this.authService.isLoggedIn()) {
       if (this.authService.getRole()=="ROLE_DRIVER") {
         return true;
+        
       }
     }
     return false;
   }
 
   isUnregistered() {
+    
     if (this.authService.isLoggedIn()) {
       return false;
     } else {

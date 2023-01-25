@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { Driver } from 'src/app/model/Driver';
+import { pageNote } from 'src/app/model/Note';
+import { Note } from 'src/app/model/Note';
 
 
 @Injectable({
@@ -22,4 +24,11 @@ import { Driver } from 'src/app/model/Driver';
         return this.http.put<1>(environment.apiHost+'/api/user/' + userId + "/unblock", HttpRequest);
         
       }
+    getNotes(userId:number):Observable<pageNote>{
+      return this.http.get<pageNote>(environment.apiHost + '/api/user/'+ userId + "/note");
+    }
+    createNote(note: any, userId:Number): Observable<any> {
+      
+      return this.http.post<Note>(environment.apiHost + '/api/user/'+ userId + "/note",note);
+    }
 }

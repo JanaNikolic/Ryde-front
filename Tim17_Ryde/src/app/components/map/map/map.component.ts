@@ -309,7 +309,7 @@ export class MapComponent implements AfterViewInit {
 
         (pageDriver) => {
 
-          this.drivers = pageDriver.drivers;
+          this.drivers = pageDriver.results;
           for (let driver of this.drivers) {
 
             if (driver.blocked === false) {
