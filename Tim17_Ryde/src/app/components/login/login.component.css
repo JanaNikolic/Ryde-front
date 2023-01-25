@@ -141,6 +141,10 @@ p{
 color: #020D11;
 }
 
+a {
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 650px) {
     .center{
         width: 100%;

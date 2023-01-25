@@ -21,7 +21,6 @@ export class RegisteredUserNavbarComponent {
 
   ngOnInit(): void {
     
-    this.toggle = document.getElementById("toggle");
     if (this.authService.getRole() === "ROLE_DRIVER") this.driver = true;
     else {
       
@@ -31,49 +30,8 @@ export class RegisteredUserNavbarComponent {
         nav.style.paddingRight = '10%';
       }
     }
-    this.getActive();
   }
 
-  ngOnDestroy() : void {
-    if (this.workingHour.id != 0) {
-    this.driverService.endWorkingHour(this.workingHour.id).subscribe({
-      next: (res) => {
-        this.workingHour = res;
-      }
-    })
-    }
-  }
-
-  getActive() {
-    this.driverService.getDriver(this.authService.getId()).subscribe({
-      next: (res) => {
-        if (res.active == true) {
-          this.driverService.getWorkingHour(this.authService.getId()).subscribe({
-            next: (result) => {
-              this.workingHour = result;
-            }
-          })
-        }
-        this.checked = res.active;
-      }
-    })
-  }
-
-  changed(){
-    if (this.checked) {
-        this.driverService.startWorkingHour(this.authService.getId()).subscribe({
-          next: (res) => {
-            this.workingHour = res;
-          }
-        })
-    } else {
-      this.driverService.endWorkingHour(this.workingHour.id).subscribe({
-        next: (res) => {
-          this.workingHour = res;
-        }
-      })
-    }
-  }
 
   logout() {
     localStorage.removeItem("user");

@@ -1,31 +1,32 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RejectionRequest } from 'src/app/model/request/RejectionRequest';
+import { PanicRequest } from 'src/app/model/request/PanicRequest';
 import { RideResponse } from 'src/app/model/response/RideResponse';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { AcceptRideComponent } from '../accept-ride/accept-ride.component';
 
 @Component({
-  selector: 'app-reject-ride',
-  templateUrl: './reject-ride.component.html',
-  styleUrls: ['./reject-ride.component.css']
+  selector: 'app-panic',
+  templateUrl: './panic.component.html',
+  styleUrls: ['./panic.component.css']
 })
-export class RejectRideComponent {
-  constructor(public dialogRef: MatDialogRef<RejectRideComponent>, @Inject(MAT_DIALOG_DATA) public data: RideResponse, public rideService: RideService) { }
+export class PanicComponent {
+  constructor(public dialogRef: MatDialogRef<PanicComponent>, @Inject(MAT_DIALOG_DATA) public data: RideResponse, public rideService: RideService) { }
 
-  rejection: RejectionRequest = { 
+  panic: PanicRequest = { 
     reason : ""
   }
+
   givenReason: string = "";
 
   ngOnInit() {
   }
 
-  sendRejection() {
+  sendPanic() {
     let reason = document.getElementById("reason");
     if (reason != null) {
-      this.rejection.reason = this.givenReason;
-      this.rideService.rejectRide(this.data.id, this.rejection).subscribe({
+      this.panic.reason = this.givenReason;
+      this.rideService.panic(this.data.id, this.panic).subscribe({
         next: (res) => {
           console.log(res);
         }

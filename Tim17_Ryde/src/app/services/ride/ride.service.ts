@@ -8,6 +8,8 @@ import { RideResponse } from 'src/app/model/response/RideResponse';
 import { AuthService } from '../auth/auth.service';
 import { KilometersResponse, MoneyResponse, Ride } from 'src/app/model/Ride';
 import { RideCountResponse } from 'src/app/model/Ride';
+import { PanicResponse } from 'src/app/model/response/PanicResponse';
+import { PanicRequest } from 'src/app/model/request/PanicRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +45,9 @@ export class RideService {
 
   endRide(rideId: number):Observable<RideResponse> {
     return this.http.put<RideResponse>(environment.apiHost+'/api/ride/' + rideId + '/end', null);
+  }
+
+  panic(rideId: number, reason: PanicRequest):Observable<PanicResponse> {
+    return this.http.put<PanicResponse>(environment.apiHost+"/api/ride/" + rideId + "/panic", reason);
   }
 }

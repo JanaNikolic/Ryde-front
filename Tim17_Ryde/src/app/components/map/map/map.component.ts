@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 

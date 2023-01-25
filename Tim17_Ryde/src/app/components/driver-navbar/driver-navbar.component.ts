@@ -51,9 +51,9 @@ export class DriverNavbarComponent {
           this.driverService.getWorkingHour(this.authService.getId()).subscribe({
             next: (result) => {
               this.workingHour = result;
+              this.checked = res.active;
             }
           })
-          this.checked = res.active;
         }
       }
     })
