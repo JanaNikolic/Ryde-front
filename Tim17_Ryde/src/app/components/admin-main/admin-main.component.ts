@@ -27,7 +27,8 @@ export class AdminMainComponent implements OnInit {
     password: '',
     address: '',
     blocked: false,
-    active: false
+    active: false,
+    activeRide: false
   };
   drivers1: Driver[] = [];
   passengers: Passenger[] = [];
@@ -51,7 +52,7 @@ export class AdminMainComponent implements OnInit {
 
         (pageDriver) => {
 
-          this.drivers1 = pageDriver.results; console.log(this.drivers1[0].blocked);
+          this.drivers1 = pageDriver.results; console.log(this.drivers1);
           console.log(this.drivers1);
 
         }

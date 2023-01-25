@@ -5,7 +5,30 @@
     height: 100%;
     font-size: 2vh;
 }
-
+.red-border-class{
+    border-color: red;
+}
+.error{
+    text-align: left;
+    margin-left: 10%;
+    display: block;
+    color: red;
+    line-height: 14px;
+    font-size:80%;
+}
+.left{
+    float: left;
+    
+}
+.right{
+    margin-left: 52%;
+}
+.noError{
+    display: block;
+    opacity: 0;
+    line-height: 14px;
+    font-size:80%;
+}
 .container {
     position: absolute;
     width: 40vw;
@@ -42,7 +65,6 @@ input {
     font-size: 1.7vh;
     line-height: 1.5vh;
     letter-spacing: 0.05em;
-    border-width: 0;
 }
 
 p {
@@ -77,7 +99,8 @@ label {
     position: relative;
     width: 8.8vw;
     height: 5%;
-    background: #AFBAA3;
+    background: #D9D9D9;
+    opacity: 0.8;
     border-radius: 25px;
 }
 
@@ -93,8 +116,8 @@ label {
     position: relative;
     width: 20vw;
     height: 5%;
-
-    background: #AFBAA3;
+    opacity: 0.8;
+    background: #D9D9D9;
     border-radius: 25px;
 }
 
@@ -106,7 +129,7 @@ input:hover {
     padding: 1.5vh;
     border-radius: 25px;
     border-width: 0;
-    background-color: #D9D9D9;
+    background-color: #01ACAB;
     width: 50%;
     margin-top: 5vh;
     margin-bottom: 2vh;

@@ -60,8 +60,9 @@ export class DriverRideHistoryComponent {
     this.driverService.getDriverRides(+params['driverId'])
     .subscribe(
       (pageRide) => {
-        console.log(this.rides);
+        
         this.rides = pageRide.results;
+        console.log(this.rides);
         
         console.log(this.rides[1].locations[0].departure);
       }
@@ -78,7 +79,7 @@ export class DriverRideHistoryComponent {
       (ride) => {
         this.singleRide = ride;
         this.passengers = this.singleRide.passengers;
-        console.log(this.passengers);
+        console.log(this.singleRide);
       }
     )
 

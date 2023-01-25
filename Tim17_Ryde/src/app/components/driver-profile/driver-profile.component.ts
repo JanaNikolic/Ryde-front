@@ -35,7 +35,8 @@ export class DriverProfileComponent {
     profilePicture: '',
     address: '',
     blocked: false,
-    active: false
+    active: false,
+    activeRide: false
   };
   vehicle: Vehicle = {
     vehicleType: '',

@@ -23,9 +23,9 @@
     
 }
 .infoInput{
-    padding: 12px;
+    padding: 8px;
     border-radius: 25px;
-    background-color: #AFBAA3;
+    background-color: rgba(217, 217, 217, 0.8);
     width: 80%;
     font-family: 'Outfit', sans-serif;
     font-style: normal;
@@ -34,7 +34,27 @@
     line-height: 18px;
     letter-spacing: 0.05em;
 }
-
+.error{
+    text-align: left;
+    margin-left: 10%;
+    display: block;
+    color: red;
+    line-height: 14px;
+    font-size:80%;
+}
+.noError{
+    display: block;
+    opacity: 0;
+    line-height: 14px;
+    font-size:80%;
+}
+.left{
+    float: left;
+    
+}
+.right{
+    margin-left: 52%;
+}
 input:hover {
     background: #D9D9D9;
 }
@@ -50,7 +70,8 @@ input:hover {
 p {
     color: #D9D9D9;
     text-align: center;
-    margin-top: 1%;
+    margin-top: 0%;
+    margin-bottom: 1%;
     
     
 }
@@ -58,7 +79,7 @@ p {
     margin-right: 12%;
 }
 #lastNameLabel{
-   margin-left: 15%;
+   margin-left: 12%;
 }
 label{
     margin: 0;
@@ -136,6 +157,9 @@ input[type='checkbox']:checked {
     background-position: center;
     background-repeat: no-repeat;
 }
+.red-border-class{
+    border-color: red;
+}
 .seatNumbers{
     margin-top: 5%;
 }
@@ -192,12 +216,12 @@ h3 {
 .whiteBtn {
     padding: 12px;
     border-radius: 25px;
-    background-color: #D9D9D9;
+    background-color: #01ACAB;
     width: 40%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 10%;
+    margin-top: 48px;
+    margin-bottom: 7%;
 
     font-family: 'Roboto';
     font-style: normal;
@@ -241,9 +265,10 @@ input {
 
 .shortInfoInput {
     position: relative;
-    width: 35%;
+    width: 37%;
     height: 5%;
-    background: #AFBAA3;
+    padding: 8px;
+    background: rgba(217, 217, 217, 0.8);
     border-radius: 25px;
     transform: matrix(1, -0.01, 0.01, 1, 0, 0);
 }
