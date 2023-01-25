@@ -20,7 +20,10 @@
     <canvas id="ridesPerDay"></canvas>
 </div>
 <div class="row inline">
-    <canvas id="totalCostPerDay"></canvas>
+    <canvas id="moneyPerDay"></canvas>
+</div>
+<div class="row inline">
+    <canvas id="kilometersPerDay"></canvas>
 </div>
 
 <div>
@@ -30,7 +33,11 @@
     </div>
     <div class="row inline">
         <h4>Total cost:</h4>
-        <h2>{{totalCost}}</h2>
+        <h2>{{totalMoney}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Total kilometers:</h4>
+        <h2>{{totalKilometers}}</h2>
     </div>
 </div>
 <div>
@@ -40,6 +47,10 @@
     </div>
     <div class="row inline">
         <h4>Avg cost:</h4>
-        <h2>{{averageCost}}</h2>
+        <h2>{{averageMoney}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Avg kilometers:</h4>
+        <h2>{{averageKilometers}}</h2>
     </div>
 </div>

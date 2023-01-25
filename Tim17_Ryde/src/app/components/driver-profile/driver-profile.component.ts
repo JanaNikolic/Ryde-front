@@ -64,7 +64,8 @@ export class DriverProfileComponent {
     this.route.params.subscribe((params) => {
       this.driverService.getDriver(+params['driverId'])
       .subscribe(
-        (driver) => {         
+        (driver) => {    
+  
           this.driver = driver;
           
         }
