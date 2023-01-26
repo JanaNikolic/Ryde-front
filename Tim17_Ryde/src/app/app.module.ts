@@ -26,6 +26,9 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
 import { CreateRideComponent } from './components/create-ride/create-ride.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SearchingForDriverComponent } from './components/searching-for-driver/searching-for-driver.component';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     DriverRideHistoryComponent,
     AdminNavbarComponent,
     DriverProfileComponent,
-    CreateRideComponent
+    CreateRideComponent,
+    SearchingForDriverComponent
   ],
   imports: [
     AppRoutingModule,
@@ -57,6 +61,7 @@ import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
     HttpClientModule,
     MatNativeDateModule,
     NgxMatTimepickerModule.setLocale('en-GB'),
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
