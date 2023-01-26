@@ -27,6 +27,7 @@ import { StatisticsComponent } from './components/statistics-component/statistic
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
+import { NgxMaterialRatingModule } from 'ngx-material-rating';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AdminStatisticsComponent } from './components/admin-statistics/admin-st
     MaterialModule,
     HttpClientModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxMaterialRatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

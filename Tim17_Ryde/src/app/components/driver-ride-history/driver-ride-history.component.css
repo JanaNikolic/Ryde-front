@@ -14,6 +14,25 @@ h3{
     margin-top: 4%;
 }
 
+.scrollableReviews::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+
+  select{
+    background-color: #053132;
+    color: white;
+    border-radius: 2%;
+  }
+
+.scrollableReviews{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:90px;
+}
+
 .center{
     text-align: center;
 }
@@ -25,7 +44,11 @@ h3{
     margin-left: 3%;
     margin-right: 3%;
     width: 19%;
-
+}
+.inline2{
+    display: inline-block;
+    text-align: center;
+    width: 44%;
 }
 
 .left-container{
@@ -76,7 +99,7 @@ p{
 .scrollable{
     overflow-y:scroll;
     overflow-x:hidden;
-    height:500px;
+    height:520px;
 }
 .inlineTop2{
     text-align: left;
@@ -95,7 +118,7 @@ p{
 
 .right-container{
     display:inline-block;
-    width: 50%;
+    width: 45%;
     height: fit-content;
     padding: 2%;
     margin-top: 5%;
@@ -107,15 +130,27 @@ p{
     margin-right: 3%;
     text-align: center;
 }
-.map {
-    border-radius: 5px;
+.mapa2{
+    flex: 1;
+    height: 22%;
+    width: 55%;
+    position: absolute;
     
-    height: 250px;
-    width: 100%;
+    z-index: 0;
 }
+.below-map{
+    
+    margin-top: 160px;
+}
+.map{
+    height: 100%;
+    width: 1%;
+}
+
 h3{
     text-align: left;
     margin-bottom: 0;
+    margin-top: 2%;
 }
 .left-side-info{
     text-align: left;
@@ -133,5 +168,8 @@ img{
     width:100%;
 }
 .margin-top{
-    margin-top: 1px;
+    margin-top: 3px;
+}
+.margin-bottom{
+    margin-bottom: 12%;
 }

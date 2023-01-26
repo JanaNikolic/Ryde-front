@@ -10,17 +10,21 @@ import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { ReviewService } from 'src/app/services/review/review.service';
 import { RideReview } from 'src/app/model/Review';
 import { Review } from 'src/app/model/Review';
+import { MapService } from 'src/app/services/map/map.service';
 
 @Component({
   selector: 'app-driver-ride-history',
   templateUrl: './driver-ride-history.component.html',
   styleUrls: ['./driver-ride-history.component.css']
 })
+
 export class DriverRideHistoryComponent {
+  value: number = 1;
+  max: number = 5;
 
-  constructor(private driverService: DriverService,private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute) {}
+  constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService) { }
   rides: Ride[] = [];
-
+  sortCriteria: string = '';
   review: Review[] = [];
 
   rideReview: RideReview = {
@@ -37,64 +41,93 @@ export class DriverRideHistoryComponent {
   }
 
   location: LocationDTO = {
-    departure:this.loc,
-    destination:this.loc
-    
+    departure: this.loc,
+    destination: this.loc
+
   }
   locc: LocationDTO[] = [this.location];
-  
+
   singleRide: Ride = {
     id: 1,
     startTime: '',
     endTime: '',
+    status: '',
     totalCost: 0,
     estimatedTimeInMinutes: 0,
     locations: this.locc,
     passengers: this.passengers
 
   }
- 
+
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-    this.driverService.getDriverRides(+params['driverId'])
-    .subscribe(
-      (pageRide) => {
-        
-        this.rides = pageRide.results;
-        console.log(this.rides);
-        
-        console.log(this.rides[1].locations[0].departure);
-      }
-    );
-  
-});
+      this.driverService.getDriverRides(+params['driverId'])
+        .subscribe(
+          (pageRide) => {
+
+            this.rides = pageRide.results;
+            console.log(this.rides);
+            this.rides.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
+            console.log(this.rides[1].locations[0].departure);
+          }
+        );
+
+    });
   }
-  
 
 
-  showHistoryDetails(rideId:number){
+
+  showHistoryDetails(rideId: number) {
     this.rideService.getRide(rideId)
-    .subscribe(
-      (ride) => {
-        this.singleRide = ride;
-        this.passengers = this.singleRide.passengers;
-        console.log(this.singleRide);
-      }
-    )
+      .subscribe(
+        (ride) => {
+          this.singleRide = ride;
+          this.passengers = this.singleRide.passengers;
+          this.mapService.setFromAddress(this.singleRide.locations[0].departure.address + ", Novi Sad");
+
+          this.mapService.setToAddress(this.singleRide.locations[0].destination.address + ", Novi Sad");
+          console.log(this.singleRide);
+        }
+      )
 
     this.reviewService.getRideReviews(rideId)
-    .subscribe(
-      (rideReview) => {
-        this.rideReview = rideReview;
-        
-        console.log(this.rideReview);
-      }
-    )
+      .subscribe(
+        (rideReview) => {
+          this.rideReview = rideReview;
+
+          console.log(this.rideReview.vehicleReview[0].rating);
+          this.rideReview.driverReview.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+          this.rideReview.vehicleReview.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+
+        }
+      )
+
+
+
 
 
   }
-  showPassengerInfo(passengerId:number){
-    
-}
+  sortBy() {
+    if (this.sortCriteria == "dateAsc") {
+      this.rides.sort((a, b) => (a.startTime < b.startTime ? -1 : 1));
+    }
+    else if (this.sortCriteria == "dateDesc") {
+      this.rides.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
+    }
+    else if (this.sortCriteria == "durationAsc") {
+      this.rides.sort((a, b) => (a.estimatedTimeInMinutes < b.estimatedTimeInMinutes ? -1 : 1));
+    }
+    else if (this.sortCriteria == "durationDesc") {
+      this.rides.sort((a, b) => (a.estimatedTimeInMinutes > b.estimatedTimeInMinutes ? -1 : 1));
+    }
+    else if (this.sortCriteria == "priceAsc") {
+      this.rides.sort((a, b) => (a.totalCost < b.totalCost ? -1 : 1));
+    }
+    else if (this.sortCriteria == "priceDesc") {
+      this.rides.sort((a, b) => (a.totalCost > b.totalCost ? -1 : 1));
+    }
+
+  }
+
 }

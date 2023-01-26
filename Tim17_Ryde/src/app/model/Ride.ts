@@ -7,6 +7,7 @@ export interface Ride{
     endTime: string,
     totalCost: number,
     estimatedTimeInMinutes: number,
+    status: string;
     locations:LocationDTO[],
     passengers:Passenger[];
 }

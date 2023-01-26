@@ -1,12 +1,21 @@
 <div class="container">
     <div class="left-container">
         <h1>History</h1>
+        Sort by: <select (change)="sortBy()" [(ngModel)] ="sortCriteria">
+            <option value="dateAsc">Date ascending</option>
+            <option value="dateDesc">Date descending</option>
+            <option value="durationAsc">Duration ascending</option>
+            <option value="durationDesc">Duration descending</option>
+            <option value="priceAsc">Price ascending</option>
+            <option value="priceDesc">Price descending</option>
+            
+        </select>
         <div class="scrollable">
             <div *ngFor="let ride of rides">
                 <div (click)="showHistoryDetails(ride.id!)" class="all-rides">
                     <div top-div>
                         <div class="inlineTop1">
-                            <h3>{{ride.startTime[0]}}-{{ride.startTime[1]}}-{{ride.startTime[2]}}</h3>
+                            <h3>{{ride.startTime.split("T")[0]}}</h3>
                         </div>
                         <div class="line"></div>
                         <div class="inlineTop2">
@@ -18,20 +27,23 @@
                     <div class="bottom-div">
                         <div class="inline">
                             <p>Start</p>
-                            <p>{{ride.startTime[3]}}:{{ride.startTime[4]}}</p>
+                            <p>{{ride.startTime.split("T")[1].split(":")[0] +':'+
+                                ride.startTime.split("T")[1].split(":")[1]}}</p>
                         </div>
-                        <div class="inline">
-                            <p>End</p>
-                            <p>{{ride.endTime[3]}}:{{ride.endTime[4]}}</p>
+                        <div *ngIf="ride.status=='FINISHED'" class="inline">
+                            <p >End</p>
+                            <p >{{ride.endTime.split("T")[1].split(":")[0] +':'+
+                                ride.endTime.split("T")[1].split(":")[1]}}</p>
                         </div>
-
-                        <div class="inline">
-                            <p>Duration</p>
-                            <p>{{ride.estimatedTimeInMinutes}}</p>
+                        
+                        <div [ngClass]="ride.status=='FINISHED' ? 'inline' : 'inline2'">
+                            <p *ngIf="ride.status=='FINISHED'">Duration</p>
+                            <p *ngIf="!(ride.status=='FINISHED')">Estimated duration</p>
+                            <p>{{ride.estimatedTimeInMinutes}} min</p>
                         </div>
                         <div class="inline">
                             <p>Price</p>
-                            <p>{{ride.totalCost}}rsd</p>
+                            <p>{{ride.totalCost}} rsd</p>
                         </div>
                     </div>
                 </div>
@@ -41,24 +53,27 @@
     </div>
     <div class="right-container">
         <div class="map">
-            <img src="assets/images/map.png">
+            <app-map class="mapa2"></app-map>
         </div>
+        <div class="below-map">
         <h3>Ride information</h3>
         <div class="left-side-info">
             <p class="margin-top">From: </p>
             <p class="margin-top">To: </p>
             <p class="margin-top">Start time: </p>
-            <p class="margin-top">End time: </p>
+            <p *ngIf="singleRide.status=='FINISHED'" class="margin-top">End time: </p>
             <p class="margin-top">Duration: </p>
             <p class="margin-top">Price: </p>
+            <p *ngIf="!(singleRide.status=='FINISHED')" class="margin-top">Status:</p>
         </div>
         <div class="right-side-info">
             <p class="margin-top">{{singleRide.locations[0].departure.address}} </p>
             <p class="margin-top">{{singleRide.locations[0].destination.address}}</p>
             <p class="margin-top">{{singleRide.startTime}}</p>
-            <p class="margin-top">{{singleRide.endTime}}</p>
-            <p class="margin-top">{{singleRide.estimatedTimeInMinutes}}</p>
-            <p class="margin-top">{{singleRide.totalCost}}</p>
+            <p *ngIf="singleRide.status=='FINISHED'" class="margin-top">{{singleRide.endTime}}</p>
+            <p class="margin-top">{{singleRide.estimatedTimeInMinutes}} min</p>
+            <p class="margin-top">{{singleRide.totalCost}} rsd</p>
+            <p *ngIf="!(singleRide.status=='FINISHED')" class="margin-top">{{singleRide.status}}</p>
         </div>
         <hr>
         <h3>Passengers</h3>
@@ -71,36 +86,46 @@
             </div>
         </div>
         <hr>
-        <h3>Vehicle reviews</h3>
-        <div *ngFor="let vehicleReviews of rideReview.vehicleReview"> 
+        <h3>Vehicle reviews:</h3>
+        <div *ngIf="singleRide.status=='FINISHED'" class="scrollableReviews">
+        <div *ngFor="let vehicleReviews of rideReview.vehicleReview">
             <div class="left-side-info">
-                <p class="margin-top">Vehicle rating</p>
+                <p class="margin-bottom">Vehicle rating:</p>
                 <p class="margin-top">Comment:</p>
-                <p class="margin-top">passenger:</p>
+                <p class="margin-top">Passenger:</p>
 
             </div>
             <div class="right-side-info">
-                <p class="margin-top">{{vehicleReviews.rating}}</p>
+
+                <p class="margin-top"><ngx-material-rating [readonly]="true" [(ngModel)]="vehicleReviews.rating"
+                        [max]="5" [color]="'accent'">
+                    </ngx-material-rating></p>
                 <p class="margin-top">{{vehicleReviews.comment}}</p>
                 <p class="margin-top">{{vehicleReviews.passenger.email}}</p>
             </div>
             <hr>
         </div>
-        <h3>Driver reviews</h3>
-        <div *ngFor="let driverReviews of rideReview.driverReview"> 
-            <div class="left-side-info">
-                <p class="margin-top">Driver rating</p>
-                <p class="margin-top">Comment:</p>
-                <p class="margin-top">passenger:</p>
-
-            </div>
-            <div class="right-side-info">
-                <p class="margin-top">{{driverReviews.rating}}</p>
-                <p class="margin-top">{{driverReviews.comment}}</p>
-                <p class="margin-top">{{driverReviews.passenger.email}}</p>
-            </div>
-            <hr>
         </div>
+        <h3>Driver reviews:</h3>
+        <div *ngIf="singleRide.status=='FINISHED'" class="scrollableReviews">
+            <div *ngFor="let driverReviews of rideReview.driverReview">
+                <div class="left-side-info">
+                    <p class="margin-bottom">Driver rating</p>
+                    <p class="margin-top">Comment:</p>
+                    <p class="margin-top">passenger:</p>
+
+                </div>
+                <div class="right-side-info">
+                    <p class="margin-top"><ngx-material-rating [readonly]="true" [(ngModel)]="driverReviews.rating"
+                        [max]="5" [color]="'accent'">
+                    </ngx-material-rating></p>
+                    <p class="margin-top">{{driverReviews.comment}}</p>
+                    <p class="margin-top">{{driverReviews.passenger.email}}</p>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
 
 
     </div>
