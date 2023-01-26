@@ -1,0 +1,8 @@
+input{
+    color: black;
+}
+
+.row{
+    display:inline-block;
+    width: 49%;
+}

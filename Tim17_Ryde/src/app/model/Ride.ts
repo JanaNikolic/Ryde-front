@@ -12,10 +12,27 @@ export interface Ride{
 }
 export interface pageRide{
     count:number
-    rides:Ride[]
+    results:Ride[]
 }
 
 export interface LocationDTO{
     departure:Locations,
     destination:Locations
+}
+
+export interface RideCountResponse {
+    countsByDay:Map<string, number>,
+    totalCount:number,
+    averageCount:number
+}
+
+export interface KilometersResponse {
+    kilometersByDay:Map<string, number>,
+    totalCount:number,
+    averageCount:number
+}
+export interface MoneyResponse {
+    money:Map<string,number>,
+    totalCount:number,
+    averageCount:number
 }

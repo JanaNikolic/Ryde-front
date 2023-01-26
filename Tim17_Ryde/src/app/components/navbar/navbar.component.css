@@ -1,5 +1,4 @@
 #navbar {
-    background-color: #161619;
     width: 100%;
     position: absolute;
     height: 60px;
@@ -41,8 +40,8 @@ a {
 }
 
 #registerButton {
-    color: #FFD700;
-    border: 1px solid #FFD700;
+    color: #01acac;
+    border: 1px solid #01acac;
 }
 
 #name {

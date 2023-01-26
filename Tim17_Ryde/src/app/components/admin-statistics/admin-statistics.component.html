@@ -1,0 +1,56 @@
+<div class="calendar">
+    <form (ngSubmit)="Submit()">
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>First campaign</mat-label>
+            <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
+
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
+
+            </mat-date-range-input>
+
+            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+
+        </mat-form-field>
+    </form>
+</div>
+<div class="row inline">
+    <canvas id="ridesPerDay"></canvas>
+</div>
+<div class="row inline">
+    <canvas id="moneyPerDay"></canvas>
+</div>
+<div class="row inline">
+    <canvas id="kilometersPerDay"></canvas>
+</div>
+
+<div>
+    <div class="row inline">
+        <h4>Total rides:</h4>
+        <h2>{{totalRides}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Total cost:</h4>
+        <h2>{{totalMoney}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Total kilometers:</h4>
+        <h2>{{totalKilometers}}</h2>
+    </div>
+</div>
+<div>
+    <div class="row inline">
+        <h4>Avg rides:</h4>
+        <h2>{{averageRides}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Avg cost:</h4>
+        <h2>{{averageMoney}}</h2>
+    </div>
+    <div class="row inline">
+        <h4>Avg kilometers:</h4>
+        <h2>{{averageKilometers}}</h2>
+    </div>
+</div>

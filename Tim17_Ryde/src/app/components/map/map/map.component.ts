@@ -69,7 +69,7 @@ export class MapComponent implements AfterViewInit {
     });
 
     const tiles = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
       {
         maxZoom: 18,
         minZoom: 3,
@@ -78,6 +78,7 @@ export class MapComponent implements AfterViewInit {
       }
     );
     tiles.addTo(this.map);
+    
 
     // this.addCurrentLocation();
 
@@ -308,7 +309,7 @@ export class MapComponent implements AfterViewInit {
 
         (pageDriver) => {
 
-          this.drivers = pageDriver.drivers;
+          this.drivers = pageDriver.results;
           for (let driver of this.drivers) {
 
             if (driver.blocked === false) {

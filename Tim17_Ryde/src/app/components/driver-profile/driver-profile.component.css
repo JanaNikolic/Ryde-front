@@ -8,6 +8,52 @@
     height: 70%;
     color: #D9D9D9;
 }
+.left-container{
+    display:inline-block;
+    width: 30%;
+    height: fit-content;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 18%;
+    margin-left: 5%;
+    background: #161619aa;
+    mix-blend-mode: normal;
+    border-radius: 5px;
+    margin-right: 1%;
+    text-align: center;
+}
+.all-rides{
+    margin: auto;
+    margin-top: 10%;
+    color: #053132;
+    width: 98%;
+    text-align: center;
+    background-color: #AFBAA3;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.inlineTop1{
+    margin-left: 5%;
+    text-align: left;
+    width: 24%;
+    display: inline-block;
+    vertical-align: top;
+}
+.inlineTop2{
+    text-align: left;
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
+}
+.scrollable{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:500px;
+}
+
+input{
+    color: black;
+}
 
 #image{
     /* added */
@@ -17,6 +63,12 @@
     margin-top: 2%;
     width: 15%;
     margin-bottom: 5%;
+}
+.lineGreen{
+    display: inline-block;
+    width: 4%;
+    border-left: 6px solid #095356;
+    height: 50px;
 }
 
 .line{
@@ -40,7 +92,7 @@
     margin-right: 3%;
     text-align: center;
 }
-.inline{
+.inlineRight{
     display: inline-block;
     text-align: center;
     margin-left: 3%;
@@ -49,8 +101,28 @@
     width: 24%;
 
 }
+.inline{
+    display: inline-block;
+    
+    text-align: center;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 19%;
+
+}
+p{
+    margin: 0;
+    
+}
+.center{
+    text-align: center;
+}
+
 .pointer{
     cursor: pointer;
+}
+.bottom-div{
+    margin-top: 4%;
 }
 .left-side-info{
     text-align: left;
