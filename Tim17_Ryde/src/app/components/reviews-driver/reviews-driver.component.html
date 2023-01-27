@@ -1,0 +1,48 @@
+<div class="reviews-body">
+    <h1>Reviews</h1>
+    <div class="left-side">
+        <div>
+            <h2 class="align-center">Driver</h2>
+            <canvas id="driverReviews"></canvas>
+        </div>
+        <div>
+            <h2 class="align-center">Vehicle</h2>
+            <canvas id="vehicleReviews"></canvas>
+        </div>
+
+    </div>
+    <div class="right-side">
+        <div>
+            <h2>Driver reviews:</h2>
+            <div class="scrollable">
+                <div *ngFor="let driverReview of driverReviews">
+                    <div class="singleReview">
+                    <h3>{{driverReview.passenger.email}}</h3>
+                    <ngx-material-rating class="float-right" [(ngModel)]="driverReview.rating"
+                        [max]="5" [color]="'primary'"></ngx-material-rating>
+                    <p>
+                        {{driverReview.comment}}
+                    </p>
+                </div>
+                
+                    
+
+                </div>
+                
+            </div>
+            <hr>
+            <h2>Vehicle reviews:</h2>
+            <div class="scrollable">
+                <div *ngFor="let vehicleReview of driverReviews">
+                    <div class="singleReview">
+                    <h3>{{vehicleReview.passenger.email}}</h3>
+                    <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="vehicleReview.rating"
+                        [max]="5" [color]="'primary'"></ngx-material-rating>
+                    <p>
+                        {{vehicleReview.comment}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>

@@ -1,0 +1,65 @@
+.reviews-body{
+    height: 10%;
+    width: 100%;
+    margin-top: 5%;
+    margin: auto;
+}
+
+h1{
+    text-align: center;
+    color: #01ACAB;
+}
+h2{
+    font-family: 'Roboto';
+    letter-spacing: 0.15vh;
+    color: #D9D9D9;
+}
+.align-center{
+    text-align: center;
+}
+h3{
+    font-family: 'Roboto';
+    letter-spacing: 0.15vh;
+    display: inline-block;
+    margin-right: 10%;
+    color: #D9D9D9;
+    margin-bottom: 0;
+}
+h4{
+    color: #D9D9D9;
+}
+.singleReview{
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 4%;
+}
+
+.float-right{
+    float:right;
+}
+p{
+    font-size:x-small;
+    margin: 0;
+    color: #D9D9D9;
+}
+
+.left-side{
+    display: inline-block;
+    width: 40%;
+}
+
+.right-side{
+    float: right;
+    width: 50%;
+}
+
+.scrollable{
+    
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:230px;
+}
+.scrollable::-webkit-scrollbar {
+    display: none;
+  }
+  

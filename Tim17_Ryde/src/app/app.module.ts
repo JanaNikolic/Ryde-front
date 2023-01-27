@@ -28,6 +28,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 import { NgxMaterialRatingModule } from 'ngx-material-rating';
+import { ReviewsDriverComponent } from './components/reviews-driver/reviews-driver.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { NgxMaterialRatingModule } from 'ngx-material-rating';
     AdminNavbarComponent,
     DriverProfileComponent,
     StatisticsComponent,
-    AdminStatisticsComponent
+    AdminStatisticsComponent,
+    ReviewsDriverComponent
   ],
   imports: [
     AppRoutingModule,

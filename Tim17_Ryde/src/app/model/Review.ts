@@ -11,3 +11,8 @@ export interface RideReview{
     vehicleReview: Review[],
     driverReview:Review[]
 }
+
+export interface pageReview{
+    count:number
+    results:Review[]
+}
