@@ -1,8 +1,9 @@
 import { Locations } from "../Locations";
+import { UserResponse } from "../response/UserResponse";
 
 export interface RideRequest {
     locations: Location[]
-    passengers: Passenger[]
+    passengers: UserResponse[]
     vehicleType: string
     babyTransport: boolean
     petTransport: boolean
@@ -14,8 +15,3 @@ export interface Location {
     destination: Locations
   }
 
-
-export interface Passenger {
-    id: number,
-    email: string
-}
