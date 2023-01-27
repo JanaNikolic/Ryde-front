@@ -1,5 +1,6 @@
 import { formatDate, Location } from '@angular/common';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {Chart, registerables} from 'chart.js';
@@ -35,6 +36,11 @@ export class PassengerProfileComponent {
 
   constructor(private route: ActivatedRoute, private matDialog: MatDialog, private rideService: RideService, 
     private passengerService: PassengerService, private authService:AuthService, @Inject(LOCALE_ID) private locale: string) {}
+
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
 
   ngOnInit() : void {
     this.rideService.getFavorites().subscribe({
@@ -176,36 +182,46 @@ export class PassengerProfileComponent {
 
     let end: string = formatDate(lastDay,'yyyy-MM-dd',this.locale);
 
-    this.route.params.subscribe((params) => {
-    this.passengerService.getRidesPerDay(start, end, +params['passengerId']).subscribe({
-       next: (res) => {
-        this.totalRideCount = res.totalCount;
-        this.averageRideCount = parseFloat(res.averageCount.toFixed(2));
-        this.updateChartRides(Array.from(Object.keys(res.countsByDay)), Array.from(Object.values(res.countsByDay)));
-      }
-    })
-  });
-
-  this.route.params.subscribe((params) => {
-    this.passengerService.getKilometersPerDay(start, end, +params['passengerId']).subscribe({
-      next: (res) => {
-        this.totalKilometers = parseFloat(res.totalCount.toFixed(2));
-        this.averageKilometers = parseFloat(res.averageCount.toFixed(2));
-        this.updateChartDistance(Array.from(Object.keys(res.kilometersByDay)), Array.from(Object.values(res.kilometersByDay)));
-      }
-    })
-  });
-
-  this.route.params.subscribe((params) => {
-    this.passengerService.getMoneyPerDay(start, end, +params['passengerId']).subscribe({
-      next: (res) => {
-        this.totalMoney = res.totalCount;
-        this.averageMoney = parseFloat(res.averageCount.toFixed(2));
-        this.updateChartMoney(Array.from(Object.keys(res.money)), Array.from(Object.values(res.money)));
-      }
-    })
-  });
+    this.getRideCount(start, end);
+    this.getKilometers(start,end);
+    this.getMoney(start,end);
 }
+
+  getRideCount(start:string, end:string) {
+    this.route.params.subscribe((params) => {
+      this.passengerService.getRidesPerDay(start, end, +params['passengerId']).subscribe({
+         next: (res) => {
+          this.totalRideCount = res.totalCount;
+          this.averageRideCount = parseFloat(res.averageCount.toFixed(2));
+          this.updateChartRides(Array.from(Object.keys(res.countsByDay)), Array.from(Object.values(res.countsByDay)));
+        }
+      })
+    });
+  }
+
+  getKilometers(start:string, end:string) {
+    this.route.params.subscribe((params) => {
+      this.passengerService.getKilometersPerDay(start, end, +params['passengerId']).subscribe({
+        next: (res) => {
+          this.totalKilometers = parseFloat(res.totalCount.toFixed(2));
+          this.averageKilometers = parseFloat(res.averageCount.toFixed(2));
+          this.updateChartDistance(Array.from(Object.keys(res.kilometersByDay)), Array.from(Object.values(res.kilometersByDay)));
+        }
+      })
+    });
+  }
+
+  getMoney(start:string, end:string) {
+    this.route.params.subscribe((params) => {
+      this.passengerService.getMoneyPerDay(start, end, +params['passengerId']).subscribe({
+        next: (res) => {
+          this.totalMoney = res.totalCount;
+          this.averageMoney = parseFloat(res.averageCount.toFixed(2));
+          this.updateChartMoney(Array.from(Object.keys(res.money)), Array.from(Object.values(res.money)));
+        }
+      })
+    });
+  }
 
   updateChartRides(labelData: any, mainData: any) {
     this.chartRides.data.labels = labelData;
@@ -235,6 +251,28 @@ export class PassengerProfileComponent {
 
       const modalDialog = this.matDialog.open(EditPassengerComponent, dialogConfig);
   }
-  deleteFavorite(locationId:number) {}
+
+  onChange() {
+    let firstDay = new Date(this.range.value.start.getFullYear(), this.range.value.start.getMonth(), this.range.value.start.getDate());
+    let lastDay = new Date(this.range.value.end.getFullYear(), this.range.value.end.getMonth(), this.range.value.end.getDate());
+    let start: string = formatDate(firstDay,'yyyy-MM-dd',this.locale);
+    let end: string = formatDate(lastDay,'yyyy-MM-dd',this.locale);
+    this.getRideCount(start, end);
+    this.getKilometers(start,end);
+    this.getMoney(start,end);
+
+  }
+
+
+  deleteFavorite(location:FavoriteRideResponse) {
+    this.rideService.deleteFavorite(location.id).subscribe({
+      next: (res) => {
+        let index = this.locations.indexOf(location);
+        this.locations.splice(index, 1);
+      }
+    })
+  }
+
+  
   orderRide(locationId:number) {}
 }

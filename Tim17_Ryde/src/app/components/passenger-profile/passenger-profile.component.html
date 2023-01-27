@@ -23,7 +23,7 @@
                 <div class="footer">
                     <p>{{location.favoriteName}}</p>
                     <div class="icons">
-                    <img (click)="deleteFavorite(location.id)" class="icon"
+                    <img (click)="deleteFavorite(location)" class="icon"
                         src="assets/images/delete.svg">
                     <img (click)="orderRide(location.id)" class="icon"
                         src="assets/images/order.svg">    
@@ -44,6 +44,15 @@
     </div>
 </div>
     </div>
+    <mat-form-field>
+        <mat-label>Date range for graphs</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
+          <input matStartDate matInput placeholder="Start date" formControlName="start">
+          <input matEndDate matInput placeholder="End date" formControlName="end" (dateChange)="onChange()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
     <div id="statistics">
         <div id="monthly">
             <div id="monthly-count">
@@ -87,4 +96,6 @@
             <canvas  id="DistanceChart" ></canvas>
         </div>
     </div>
+    
+      
 </body>

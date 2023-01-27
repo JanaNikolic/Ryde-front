@@ -235,6 +235,10 @@ height: 312px;
     filter: invert(89%) sepia(9%) saturate(9%) hue-rotate(43deg) brightness(92%) contrast(105%);
 }
 
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
 #favorite-rides h1 {
     font-family: 'Raleway';
 font-style: normal;
@@ -335,4 +339,13 @@ margin: 0;
     margin: 0 7% 10% 0;
     width: 40%;
     height: 50%;
+}
+
+mat-form-field {
+    top: 10%;
+    display: flex;
+    position: relative;
+    width: fit-content;
+    margin: auto;
+    justify-content: center;
 }

@@ -59,4 +59,8 @@ export class RideService {
   getFavorites(): Observable<FavoriteRidePage> {
     return this.http.get<FavoriteRidePage>(environment.apiHost + "/api/ride/favorites");
   }
+
+  deleteFavorite(favoriteId:number): Observable<string>{
+    return this.http.delete<string>(environment.apiHost + "/api/ride/favorites/" + favoriteId);
+  }
 }
