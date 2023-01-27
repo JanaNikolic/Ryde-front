@@ -176,6 +176,7 @@
       <p>{{ licensePlate }}</p>
       <p>{{ time }}</p>
       <p class="price">{{ price }}</p>
+      <p *ngIf="currentRide.status == 'ACCEPTED'">You're driver will arrive in {{ driverArrive }} minutes</p>
     </div>
     <div id="buttons" *ngIf="currentRide.status == 'STARTED'">
       <button id="panic">PANIC</button>
