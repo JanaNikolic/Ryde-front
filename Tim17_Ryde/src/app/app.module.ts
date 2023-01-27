@@ -32,6 +32,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 import { PanicComponent } from './components/panic/panic.component';
 import { PanicNotificationComponent } from './components/panic-notification/panic-notification.component';
+import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
     AdminStatisticsComponent,
     StatisticsComponent,
     PanicComponent,
-    PanicNotificationComponent
+    PanicNotificationComponent,
+    PassengerProfileComponent
   ],
   imports: [
     AppRoutingModule,

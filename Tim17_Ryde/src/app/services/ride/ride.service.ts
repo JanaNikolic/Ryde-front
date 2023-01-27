@@ -10,6 +10,7 @@ import { KilometersResponse, MoneyResponse, Ride } from 'src/app/model/Ride';
 import { RideCountResponse } from 'src/app/model/Ride';
 import { PanicResponse } from 'src/app/model/response/PanicResponse';
 import { PanicRequest } from 'src/app/model/request/PanicRequest';
+import { FavoriteRidePage } from 'src/app/model/response/FavoriteRidePage';
 @Injectable({
   providedIn: 'root'
 })
@@ -49,5 +50,13 @@ export class RideService {
 
   panic(rideId: number, reason: PanicRequest):Observable<PanicResponse> {
     return this.http.put<PanicResponse>(environment.apiHost+"/api/ride/" + rideId + "/panic", reason);
+  }
+
+  getActive(driverId: number): Observable<RideResponse> {
+    return this.http.get<RideResponse>(environment.apiHost + "/api/ride/driver/" + driverId + "/active");
+  }
+
+  getFavorites(): Observable<FavoriteRidePage> {
+    return this.http.get<FavoriteRidePage>(environment.apiHost + "/api/ride/favorites");
   }
 }

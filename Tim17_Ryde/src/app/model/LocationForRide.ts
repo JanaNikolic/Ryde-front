@@ -1,4 +1,6 @@
+import { Locations } from "./Locations";
+
 export interface LocationForRide {
-    departure: Location;
-    destination: Location;
+    departure: Locations;
+    destination: Locations;
 }

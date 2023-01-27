@@ -12,6 +12,7 @@ import { DriverProfileComponent } from './components/driver-profile/driver-profi
 import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { StatisticsComponent } from './components/statistics-component/statistics.component';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
+import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: 'driver-profile/:driverId', component:DriverProfileComponent},
   {path: 'driver-main', component:DriverMainComponent},
   {path: 'statistics', component:StatisticsComponent},
-  {path: 'admin-statistics', component:AdminStatisticsComponent}
+  {path: 'admin-statistics', component:AdminStatisticsComponent},
+  {path: 'passenger-profile', component:PassengerProfileComponent}
 ];
 
 @NgModule({

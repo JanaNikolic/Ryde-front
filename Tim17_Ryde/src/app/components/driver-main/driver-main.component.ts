@@ -53,10 +53,20 @@ export class DriverMainComponent {
   constructor(private mapService: MapService, private authService: AuthService, public matDialog: MatDialog, public passengerService: PassengerService, public rideService: RideService, public driverService: DriverService) {}
 
   ngOnInit() {
-
     this.driverId = this.authService.getId();
+    this.getActiveRide();
     this.initializeWebSocketConnection();
     }
+
+  getActiveRide() {
+    this.rideService.getActive(this.driverId).subscribe({
+      next: (res) => {
+        this.ride = res;
+        this.currentActiveRide = true;
+        this.setPassenger();
+      }
+    })
+  }
 
   initializeWebSocketConnection() {
     // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
@@ -104,8 +114,6 @@ export class DriverMainComponent {
           console.log("closed");
           if (result === "accepted") {
             that.currentActiveRide = true;
-            this.departure = this.ride.locations[0].departure.address;
-            this.destination = this.ride.locations[0].destination.address;
             that.setPassenger();
           } else {
             that.openRejection();
@@ -130,7 +138,8 @@ export class DriverMainComponent {
       console.log(this.currentActiveRide);
       this.passengerService.getPassenger(this.ride.passengers[0].id).subscribe({
         next: (res) => {
-          console.log(res);
+          this.departure = this.ride.locations[0].departure.address;
+          this.destination = this.ride.locations[0].destination.address;
           this.name = res.name + " " + res.surname;
           this.email = res.email;
       },
