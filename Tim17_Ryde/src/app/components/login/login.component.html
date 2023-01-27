@@ -1,7 +1,7 @@
 <body>
     <div class="container">
         <div id="login" class="center">
-            <h1>RYDE</h1>
+            <a id = "home" [routerLink]="['/home']"><h1>RYDE</h1></a>
             <form [formGroup]="LoginForm"
              (ngSubmit)="login()">
              <div *ngIf="hasError" id="login-warning"

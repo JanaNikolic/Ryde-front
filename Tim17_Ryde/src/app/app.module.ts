@@ -34,6 +34,8 @@ import { StatisticsComponent } from './components/statistics-component/statistic
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
+import { PanicComponent } from './components/panic/panic.component';
+import { PanicNotificationComponent } from './components/panic-notification/panic-notification.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { AdminStatisticsComponent } from './components/admin-statistics/admin-st
     RejectRideComponent,
     DriverNavbarComponent,
     AdminStatisticsComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    PanicComponent,
+    PanicNotificationComponent
   ],
   imports: [
     AppRoutingModule,

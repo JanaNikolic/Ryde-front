@@ -1,8 +1,23 @@
+:host.map-container {
+  position: absolute;
+  /* margin: 30px; */
+  height: 100%;
+  width: 100%;
+}
+
 .map-container {
   position: absolute;
   /* margin: 30px; */
   height: 100%;
   width: 100%;
+  z-index: 0;
+}
+
+:host.map-container-small {
+  position: absolute;
+  height: 90%;
+  width: 65%;
+  z-index: 0;
 }
 
 .map-frame {

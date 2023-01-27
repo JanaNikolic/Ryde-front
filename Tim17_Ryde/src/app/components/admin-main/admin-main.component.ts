@@ -6,6 +6,13 @@ import { UserService } from 'src/app/services/user/user.service';
 import { Passenger } from 'src/app/model/Passenger';
 import { Note } from 'src/app/model/Note';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { environment } from 'src/app/environment/environment';
+import { PanicRequest } from 'src/app/model/request/PanicRequest';
+import { PanicResponse } from 'src/app/model/response/PanicResponse';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { PanicNotificationComponent } from '../panic-notification/panic-notification.component';
 
 @Component({
   selector: 'app-admin-main',
@@ -13,6 +20,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./admin-main.component.css']
 })
 export class AdminMainComponent implements OnInit {
+  private serverUrl = environment.apiHost + '/example-endpoint'
+  private stompClient: any;
+  isLoaded: boolean = false;
 
   passengersInfo: boolean = false;
   driversInfo: boolean = true;
@@ -29,6 +39,8 @@ export class AdminMainComponent implements OnInit {
     blocked: false,
     active: false
   };
+
+  panic!: PanicResponse;
   drivers1: Driver[] = [];
   passengers: Passenger[] = [];
   userNotes: Note[] = [];
@@ -43,8 +55,9 @@ export class AdminMainComponent implements OnInit {
 
 
 
-  constructor(private driverService: DriverService, private userService: UserService, private passengerService: PassengerService) { }
+  constructor(private driverService: DriverService, public matDialog: MatDialog, private userService: UserService, private passengerService: PassengerService) { }
   ngOnInit(): void {
+    this.initializeWebSocketConnection();
 
     this.driverService.getAllDrivers()
       .subscribe(
@@ -61,12 +74,48 @@ export class AdminMainComponent implements OnInit {
     })
   }
 
+    
+
+  initializeWebSocketConnection() {
+    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
+    let ws = new SockJS(this.serverUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+
+    this.stompClient.connect({}, function () {
+      that.isLoaded = true;
+      that.openSocket()
+    });
+
+  }
+
+  openSocket() {
+    if (this.isLoaded) {
+      this.stompClient.subscribe("/topic/panic", (message: { body: string; }) => {
+        this.handleResult(message);
+      });
+    }
+  }
+
+  // Funkcija koja se poziva kada server posalje poruku na topic na koji se klijent pretplatio
+  handleResult(panicResponse: { body: string; }) {
+    if (panicResponse.body) {
+      this.panic = JSON.parse(panicResponse.body);
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "modal-component";
+      dialogConfig.height = "350px";
+      dialogConfig.width = "600px";
+      dialogConfig.data = this.panic;
+
+      const modalDialog = this.matDialog.open(PanicNotificationComponent, dialogConfig);
+    }
+  }
+
+
   CreateNoteForm = new FormGroup({
-
-
     message: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
-
 
 
   blockUser(id: number) {
@@ -86,6 +135,7 @@ export class AdminMainComponent implements OnInit {
         });
     }
   }
+
   getNotesOfUser(id: number, name: string) {
     this.showNoteCreateForm = false;
     this.showButtons = false;

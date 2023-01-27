@@ -26,7 +26,7 @@
         </div>
     </div>
     <div id="buttons">
-        <button id="panic" >PANIC</button>
+        <button id="panic" (click)="sendPanic()">PANIC</button>
         <button id="start" class="button" (click)="startRide()" *ngIf="!started">Start Ride</button>
         <button id="end" class="button" *ngIf="started" (click)="endRide()" >End Ride</button>
     </div>

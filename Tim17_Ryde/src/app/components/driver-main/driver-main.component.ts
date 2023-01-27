@@ -14,6 +14,7 @@ import { RideService } from 'src/app/services/ride/ride.service';
 import { UserResponse } from 'src/app/model/response/UserResponse';
 import { RejectRideComponent } from '../reject-ride/reject-ride.component';
 import { DriverService } from 'src/app/services/driver/driver.service';
+import { PanicComponent } from '../panic/panic.component';
 
 @Component({
   selector: 'app-driver-main',
@@ -158,18 +159,27 @@ export class DriverMainComponent {
     });
   }
 
-  endRide() {
-    let that = this;
-    this.rideService.endRide(this.ride.id).subscribe({
-      next: (res) => {
-        that.started = false;
-        that.currentActiveRide = false;
-      },
-      error: (error) => {
-        // if (error instanceof HttpErrorResponse) {
-        //   this.hasError = true;
-        // }
-      },
-    });
-  }
+    endRide() {
+      let that = this;
+      this.rideService.endRide(this.ride.id).subscribe({
+        next: (res) => {
+          that.started = false;
+          that.currentActiveRide = false;
+        },
+        error: (error) => {
+        }
+      });
+    }
+
+    sendPanic() {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "panic-component";
+      dialogConfig.height = "350px";
+      dialogConfig.width = "600px";
+      dialogConfig.data = this.ride;
+      this.currentActiveRide = false;
+      const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
+      let that = this;
+    }
 }
