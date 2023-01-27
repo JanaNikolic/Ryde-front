@@ -191,7 +191,7 @@ export class CreateRideComponent implements OnInit {
     );
     if (this.driverArrive == 0) {
       this.subscription.unsubscribe();
-    } 
+    }
   }
 
   initializeWebSocketConnection() {
@@ -275,6 +275,11 @@ export class CreateRideComponent implements OnInit {
 
   addFriend() {
     const divFriends = document.getElementById('friends') as HTMLElement | null;
+    const errorField = document.getElementById('no-user-error') as HTMLElement;
+    errorField.style.display = 'none';
+    const alreadyAddedError = document.getElementById('already-added-error') as HTMLElement;
+    alreadyAddedError.style.display = 'none';
+
     if (this.friendEmail.valid && divFriends != null) {
       let letter = this.friendEmail.value;
       console.log(letter);
@@ -282,29 +287,37 @@ export class CreateRideComponent implements OnInit {
       this.passengerService.getPassengerByEmail(letter).subscribe({
         next: (res) => {
           console.log(res);
+          console.log(this.friendList);
 
-          this.friendList.push(res);
-          letter = letter.toUpperCase().substring(0, 1);
-
-          const f = document.createElement('span');
-          f.style.height = '40px';
-          f.style.width = '40px';
-          f.style.display = 'inline-block';
-          f.style.borderRadius = '50%';
-          f.style.border = '1px solid #01acac';
-          f.style.margin = '0 5px';
-          f.style.color = '#D9D9D9';
-          f.style.fontSize = '30px';
-          f.style.fontWeight = '300';
-          f.style.fontFamily = 'Outfit';
-
-          f.textContent = letter;
-          divFriends.appendChild(f);
-
+          if (!this.friendList.find(e => e.id === res.id)) {
+            this.friendList.push(res);
+            letter = letter.toUpperCase().substring(0, 1);
+  
+            const f = document.createElement('span');
+            f.style.height = '40px';
+            f.style.width = '40px';
+            f.style.display = 'inline-block';
+            f.style.borderRadius = '50%';
+            f.style.border = '1px solid #01acac';
+            f.style.margin = '0 5px';
+            f.style.color = '#D9D9D9';
+            f.style.fontSize = '30px';
+            f.style.fontWeight = '300';
+            f.style.fontFamily = 'Outfit';
+  
+            f.textContent = letter;
+            divFriends.appendChild(f);
+          } else {
+            alreadyAddedError.style.display = 'block';
+          }
           this.friendEmail.setValue('');
         },
         error: (error) => {
           // passenger not found
+          const errorField = document.getElementById(
+            'no-user-error'
+          ) as HTMLElement;
+          errorField.style.display = 'block';
         },
       });
     }

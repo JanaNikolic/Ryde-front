@@ -323,17 +323,17 @@ input[type="email"] {
   border-radius: 10px;
   border: 1px solid #01acab;
   height: 30px;
-  width: 230px;
+  width: 200px;
   padding: 0 10px;
   background-color: rgba(0, 0, 0, 0.4);
+  padding-right: 50px;
 }
 
 #addFriend {
   position: absolute;
-  top: -5px;
   bottom: 0;
   right: 0;
-  height: 30px;
+  height: 32px;
   background-color: #01acac;
   border-radius: 10px;
   padding: 0 10px;
@@ -537,4 +537,18 @@ input[type="email"] {
 .price {
   font-weight: 600!important;
   font-size: 30px!important;
+}
+
+small {
+  color: red;
+  margin-top: 0.5vh;
+  display: none;
+}
+
+.popup-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  justify-content: space-evenly;
 }
