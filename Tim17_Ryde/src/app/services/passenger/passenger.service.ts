@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { Passenger } from 'src/app/model/Passenger';
 import { pagePassenger } from 'src/app/model/Passenger';
+import { UserResponse } from 'src/app/model/response/UserResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,5 +30,9 @@ export class PassengerService {
       responseType: 'text',
     };
     return this.http.post<Passenger>(environment.apiHost + '/api/passenger',passenger, options);
+  }
+
+  getPassengerByEmail(email: string): Observable<UserResponse> {
+    return this.http.get<UserResponse>(environment.apiHost + '/api/passenger/get/' + email);
   }
 }

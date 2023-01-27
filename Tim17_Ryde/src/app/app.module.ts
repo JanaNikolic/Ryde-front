@@ -22,6 +22,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminMainComponent } from './components/admin-main/admin-main.component';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { CreateRideComponent } from './components/create-ride/create-ride.component';
+import {NgxMatTimepickerModule} from 'ngx-mat-timepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SearchingForDriverComponent } from './components/searching-for-driver/searching-for-driver.component';
 import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { AcceptRideComponent } from './components/accept-ride/accept-ride.component';
 import { RejectRideComponent } from './components/reject-ride/reject-ride.component';
@@ -49,6 +53,8 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
     DriverRideHistoryComponent,
     AdminNavbarComponent,
     DriverProfileComponent,
+    CreateRideComponent,
+    SearchingForDriverComponent,
     DriverMainComponent,
     AcceptRideComponent,
     RejectRideComponent,
@@ -68,6 +74,9 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    MatNativeDateModule,
+    NgxMatTimepickerModule.setLocale('en-GB'),
+    MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule
   ],
