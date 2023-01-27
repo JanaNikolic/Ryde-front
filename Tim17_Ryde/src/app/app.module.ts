@@ -35,6 +35,7 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     PanicNotificationComponent,
     PassengerProfileComponent,
     EditPassengerComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     AppRoutingModule,
