@@ -13,16 +13,16 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $Tim17_Ryde-primary: mat.define-palette(mat.$teal-palette, 900);
-$Tim17_Ryde-accent: mat.define-palette(mat.$yellow-palette, A200, A100, A400);
+$Tim17_Ryde-accent: mat.define-palette(mat.$cyan-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $Tim17_Ryde-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$Tim17_Ryde-theme: mat.define-light-theme((
+$Tim17_Ryde-theme: mat.define-dark-theme((
   color: (
-    primary: $Tim17_Ryde-primary,
+    primary: $Tim17_Ryde-accent,
     accent: $Tim17_Ryde-accent,
     warn: $Tim17_Ryde-warn,
   )

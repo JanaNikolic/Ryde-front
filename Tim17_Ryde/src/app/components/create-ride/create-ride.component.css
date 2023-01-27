@@ -1,0 +1,540 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  color: #d9d9d9;
+  margin-top: 5vh;
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+.form-container {
+  flex: 1;
+  height: fit-content;
+  padding: 1.3vh;
+  /* background: #161619aa; */
+  /* mix-blend-mode: normal; */
+  /* border-radius: 5px; */
+
+  /* margin-right: 5vh; */
+  width: 90%;
+  height: 20%;
+  margin: auto;
+  text-align: center;
+}
+
+.left-container {
+  position: relative;
+  z-index: 100;
+  margin-left: 3vw;
+  margin-top: 60px;
+  height: fit-content;
+  width: 30%;
+  float: left;
+  background: linear-gradient(
+    174.79deg,
+    #101111 88.31%,
+    rgba(1, 172, 171, 0.2) 116.35%
+  );
+  border-image: linear-gradient(to top, #01acac 40%, rgba(0, 0, 0, 0)) 1;
+  border-width: 0px 4px 4px 4px;
+  border-style: solid;
+  border-color: #01acac52;
+  box-shadow: 5px 4px 40px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+}
+
+mat-form-field {
+  display: flex;
+  margin: 0 2vh;
+  border-radius: 20px !important;
+  font-size: 1.8vh;
+}
+
+host ::ng-deep .mat-radio-container {
+  display: none;
+}
+
+.radio + img {
+  cursor: pointer;
+}
+
+.mat-radio-checked + img {
+  outline: 2px solid #f00;
+}
+
+.map {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  margin-top: 60px;
+  /* margin-left: 2vw;
+    flex: 1; */
+  height: 100%;
+  width: 100%;
+  /* float: right; */
+
+  border-radius: 5px;
+}
+
+.submit {
+  position: relative;
+  margin: 2vh 0;
+  width: 60%;
+  padding: 2.5vh;
+  border-radius: 2vh;
+  background-color: #01acab !important;
+  border-width: 0;
+
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5vh;
+  line-height: 17px;
+
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  color: #d9d9d9 !important;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.radio-button,
+.car-labels {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 36px;
+  margin: 0;
+  /* margin-block-start: ; */
+}
+
+.radio-button input,
+.car-labels label {
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align: center;
+}
+
+.car-labels {
+  gap: 70px;
+}
+
+.standard {
+  background-image: url("src/assets/images/standard-aqua.png");
+  width: 55px;
+  height: 50px;
+  /* margin-inline-end: 2vw; */
+}
+
+.luxury {
+  background-image: url("src/assets/images/luxury-aqua.png");
+  width: 62px;
+  height: 47px;
+  /* margin-inline-start: 2vw;
+    margin-inline-end: 2vw; */
+}
+
+.van {
+  background-image: url("src/assets/images/van-aqua.svg");
+  width: 50px;
+  height: 55px;
+  /* margin-inline-start: 2vw; */
+}
+
+.radio-button input:active + .vehicletype-cc {
+  opacity: 0.9;
+}
+
+.radio-button input:checked + .vehicletype-cc {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+}
+
+.vehicletype-cc {
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
+  /* margin-inline-start: 3vw;
+    margin-inline-end: 1vw; */
+  /* width: 100px;
+    height: 70px; */
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  -moz-filter: brightness(1.8) grayscale(1) opacity(0.7);
+  filter: brightness(1.8) grayscale(1) opacity(0.7);
+}
+
+.vehicletype-cc:hover {
+  transform: scale(1.1);
+  -webkit-filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+  -moz-filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+  filter: brightness(1.2) grayscale(0.5) opacity(0.9);
+}
+
+.text {
+  width: 60px;
+  padding: 0;
+  color: #d9d9d9;
+  /* margin-right: 2vw; */
+  font-size: 20px;
+  line-height: 47px;
+  align-items: center;
+  text-align: center;
+  text-transform: capitalize;
+
+  /* margin-inline-start: 20px;
+    margin-inline-end: 10px; */
+
+  /* margin-left: 3.7vw;
+    margin-right: 3vw; */
+}
+.text:nth-child(2) {
+  margin-left: 20px;
+  margin-right: 5px;
+}
+
+.text:first-child {
+  margin-left: 80px;
+}
+
+.text:last-child {
+  /* margin-left: 4vw; */
+  margin-right: 50px;
+}
+
+h2 {
+  color: #d9d9d9;
+  margin: 1vh 0;
+}
+
+.date-picker {
+  display: inline-flex;
+  width: 48%;
+  margin: 0;
+  margin-inline-end: 1vw;
+}
+
+.time-picker {
+  display: inline-flex;
+  width: 48%;
+  margin: 0;
+}
+
+.split {
+  display: flex;
+  margin: 0 2vh;
+}
+
+.section {
+  color: #d9d9d9;
+  margin-bottom: 2vh;
+}
+
+img {
+  height: 25px;
+}
+
+body {
+  color: #d9d9d9 !important;
+}
+
+.checkbox {
+  color: #d9d9d9;
+  margin-left: 2vw;
+  margin-right: 2vw;
+
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5vh;
+  line-height: 17px;
+}
+
+p {
+  color: #d9d9d9;
+  font-size: 20px;
+  line-height: 16px;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+}
+
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.5em;
+}
+
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+.add {
+  background-image: url("src/assets/images/plus.png");
+  height: 35px;
+  width: 35px;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-color: DodgerBlue; */
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: inline-flex;
+}
+
+#friends > span:first-child {
+  display: ruby-text-container;
+}
+
+.popup {
+  margin-top: 2vh;
+  position: relative;
+  display: none;
+}
+
+input[type="email"] {
+  font-family: "Outfit";
+  font-size: 16px;
+  color: #d9d9d9;
+  border-radius: 10px;
+  border: 1px solid #01acab;
+  height: 30px;
+  width: 230px;
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#addFriend {
+  position: absolute;
+  top: -5px;
+  bottom: 0;
+  right: 0;
+  height: 30px;
+  background-color: #01acac;
+  border-radius: 10px;
+  padding: 0 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+#addFriend:hover {
+  transform: none;
+}
+
+.circle {
+  margin: 10px 5px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #01acac;
+  display: inline-block;
+}
+
+#firends {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 10%;
+}
+
+.adresses {
+  display: flex;
+  text-align: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.ping {
+  margin: 0;
+  display: flex;
+  width: 2vh;
+  height: 15vh;
+  flex-direction: column;
+  margin-left: 10%;
+  margin-top: 0.5vh;
+}
+
+.smallElipse {
+  /* Ellipse 1 */
+  margin-top: 0.3vw;
+  margin-bottom: 0.6vw;
+  margin-left: 2vh;
+  width: 0.6vh;
+  height: 0.6vh;
+  border-radius: 20px;
+
+  background: #d9d9d9;
+}
+
+.pin {
+  margin-top: 1vh;
+  width: 3.5vh;
+  height: 3.5vh;
+  margin-left: 0.5vh;
+  background-blend-mode: color, normal;
+}
+
+.bigElipse {
+  margin-top: 1vw;
+  margin-left: 1.6vh;
+  margin-bottom: 1vw;
+  border-radius: 20px;
+  width: 1.5vh;
+  height: 1.5vh;
+
+  background: #d9d9d9;
+}
+
+.locations {
+  background: rgba(217, 217, 217, 0.3);
+  border-radius: 10px;
+  height: 35px;
+  width: 80%;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 2px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  line-height: 35px;
+}
+
+.location-info {
+  margin: 0;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 80%;
+  margin-inline-start: auto;
+}
+
+.passenger-title {
+  margin-left: 21%;
+}
+.subtitles {
+  margin-top: 12px;
+  margin-bottom: 10px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.2em;
+  text-transform: capitalize;
+  height: 25px;
+  color: #d9d9d9;
+}
+
+#profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-left: 20%;
+  margin-right: 5%;
+}
+
+#profile-info {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: #d9d9d9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: end;
+  width: 45%;
+}
+#passenger-info {
+  display: flex;
+  flex-direction: row;
+}
+
+#panic {
+  width: 60%;
+  margin: auto;
+  background: #ff0000;
+  border-radius: 30px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  text-align: center;
+  letter-spacing: 0.15em;
+  padding: 10px 0px;
+  text-transform: capitalize;
+  border: 0;
+  color: #d9d9d9;
+}
+
+#buttons {
+  position: relative;
+  /* top: -5%; */
+  display: flex;
+  justify-content: flex-start;
+  height: 10vh;
+  flex-direction: column;
+}
+
+.vehicle-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: end;
+  width: 74%;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 2vh;
+}
+
+.vehicle-info p {
+  line-height: 34px;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.width-25 {
+  width: 25%;
+}
+
+.price {
+  font-weight: 600!important;
+  font-size: 30px!important;
+}
