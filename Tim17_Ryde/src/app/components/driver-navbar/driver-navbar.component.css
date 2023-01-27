@@ -39,6 +39,7 @@ a {
 
 a:hover {
     background-color: #01acac33;
+    opacity: 80%;;
 }
 
 #menu-icon {
