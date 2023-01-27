@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { Passenger } from 'src/app/model/Passenger';
 import { pagePassenger } from 'src/app/model/Passenger';
+import { PassengerUpdateResponse } from 'src/app/model/response/PassengerUpdateResponse';
 import { KilometersResponse, MoneyResponse, RideCountResponse } from 'src/app/model/Ride';
 @Injectable({
   providedIn: 'root'
@@ -34,12 +35,14 @@ export class PassengerService {
     return this.http.get<pagePassenger>(environment.apiHost + '/api/passenger');
   }
 
-
-
   add(passenger: any): Observable<any> {
     const options: any = {
       responseType: 'text',
     };
     return this.http.post<Passenger>(environment.apiHost + '/api/passenger',passenger, options);
+  }
+
+  edit(passengerId:number, editRequest:PassengerUpdateResponse):Observable<Passenger>{
+    return this.http.put<Passenger>(environment.apiHost + '/api/passenger/' + passengerId, editRequest);
   }
 }

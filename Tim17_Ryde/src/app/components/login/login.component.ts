@@ -45,6 +45,8 @@ export class LoginComponent {
             this.router.navigate(['/admin-main']);
           } else if (this.authService.getRole() == "ROLE_DRIVER"){
             this.router.navigate(['/driver-main'])
+          } else if (this.authService.getRole() == "ROLE_PASSENGER"){
+            this.router.navigate(['/home'])
           }
         },
         error: (error) => {

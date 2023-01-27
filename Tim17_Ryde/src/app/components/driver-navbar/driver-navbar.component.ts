@@ -9,7 +9,7 @@ import { DriverService } from 'src/app/services/driver/driver.service';
   styleUrls: ['./driver-navbar.component.css']
 })
 export class DriverNavbarComponent {
-  driver: boolean = false;
+  driverId: number = 0;
   workingHour: WorkingHourResponse = {
     id: 0,
     start: "",
@@ -20,17 +20,8 @@ export class DriverNavbarComponent {
   constructor(public authService: AuthService, public driverService: DriverService){}
 
   ngOnInit(): void {
-    
+    this.driverId = this.authService.getId();
     this.toggle = document.getElementById("toggle");
-    if (this.authService.getRole() === "ROLE_DRIVER") this.driver = true;
-    else {
-      
-      let nav = document.getElementById("navigation");
-      this.driver = false;
-      if (nav != null) {
-        nav.style.paddingRight = '10%';
-      }
-    }
     this.getActive();
   }
 

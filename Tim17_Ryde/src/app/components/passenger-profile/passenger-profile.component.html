@@ -53,7 +53,7 @@
                     <p class="accent">#</p>
                 </div>
                 <div class="comparison">
-                    <p><span class="accent">15</span> more than last month</p>
+                    <p><span class="accent">{{averageRideCount}}</span>  on average</p>
                 </div>
             </div>
             <div id="monthly-count">
@@ -63,7 +63,7 @@
                     <p class="accent">km</p>
                 </div>
                 <div class="comparison">
-                    <p><span class="accent">15</span> more than last month</p>
+                    <p><span class="accent">{{averageKilometers}}</span>  on average</p>
                 </div>
             </div>
             <div id="monthly-count">
@@ -73,9 +73,18 @@
                     <p class="accent">RSD</p>
                 </div>
                 <div class="comparison">
-                    <p><span class="accent">15</span> more than last month</p>
+                    <p><span class="accent">{{averageMoney}}</span>  on average</p>
                 </div>
             </div>
+        </div>
+        <div class="chart-container">
+            <canvas  id="MyChart" ></canvas>
+        </div>
+        <div class="chart-container-left">
+            <canvas  id="MoneyChart" ></canvas>
+        </div>
+        <div class="chart-container-right">
+            <canvas  id="DistanceChart" ></canvas>
         </div>
     </div>
 </body>

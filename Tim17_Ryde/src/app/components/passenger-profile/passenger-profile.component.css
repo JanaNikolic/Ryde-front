@@ -284,10 +284,11 @@ color: #01ACAB;
 }
 
 .comparison p {
-    inline-size: 100px;
+    inline-size: 110px;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 500;
+    text-align: center;
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: lowercase;
@@ -296,12 +297,13 @@ color: #01ACAB;
 .accent {
     color: #01ACAB;
     margin: 0;
+    margin-right: 5px;
 }
 
 .num {
-    font-family: 'Raleway';
+    font-family: 'Outfit';
 font-style: normal;
-font-weight: 600;
+font-weight: 500;
 font-size: 48px;
 line-height: 40px;
 margin: 0;
@@ -309,4 +311,28 @@ margin: 0;
 
 .monthly-count h3 {
     text-align: center;
+}
+
+.chart-container {
+    margin: 5%;
+    margin-left: 0;
+    width: 40%;
+}
+
+#statistics {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chart-container-left {
+    margin: 0 3% 10% 7%;
+    width: 40%;
+    height: 50%;
+}
+
+.chart-container-right {
+    margin: 0 7% 10% 0;
+    width: 40%;
+    height: 50%;
 }

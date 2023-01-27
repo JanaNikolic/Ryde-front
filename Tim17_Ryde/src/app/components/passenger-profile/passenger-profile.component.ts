@@ -1,11 +1,15 @@
 import { formatDate, Location } from '@angular/common';
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { LocationForRide } from 'src/app/model/LocationForRide';
-import { Locations } from 'src/app/model/Locations';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import {Chart, registerables} from 'chart.js';
+import { Passenger } from 'src/app/model/Passenger';
 import { FavoriteRidePage, FavoriteRideResponse } from 'src/app/model/response/FavoriteRidePage';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { RideService } from 'src/app/services/ride/ride.service';
+import { EditPassengerComponent } from '../edit-passenger/edit-passenger.component';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-passenger-profile',
@@ -13,6 +17,7 @@ import { RideService } from 'src/app/services/ride/ride.service';
   styleUrls: ['./passenger-profile.component.css']
 })
 export class PassengerProfileComponent {
+  passenger! : Passenger;
   name = "";
   email = "";
   address = "";
@@ -20,10 +25,16 @@ export class PassengerProfileComponent {
   totalRideCount = 0;
   totalKilometers = 0;
   totalMoney = 0;
-
+  averageRideCount = 0;
+  averageKilometers = 0;
+  averageMoney = 0;
+  chartRides!: Chart;
+  chartMoney!: Chart;
+  chartDistance!: Chart;
   locations: FavoriteRideResponse[] = []; 
 
-  constructor(private rideService: RideService, private passengerService: PassengerService, private authService:AuthService, @Inject(LOCALE_ID) private locale: string) {}
+  constructor(private route: ActivatedRoute, private matDialog: MatDialog, private rideService: RideService, 
+    private passengerService: PassengerService, private authService:AuthService, @Inject(LOCALE_ID) private locale: string) {}
 
   ngOnInit() : void {
     this.rideService.getFavorites().subscribe({
@@ -32,42 +43,198 @@ export class PassengerProfileComponent {
       }
     })
 
-    this.passengerService.getPassenger(this.authService.getId()).subscribe({
+    this.chartRides = new Chart('MyChart', {
+      type: 'bar',
+      data: {
+        labels: [0, 0, 0],
+        datasets: [{
+          barThickness: 50,
+          label: 'Rides per day',
+          
+          data: [0, 0, 0],
+          backgroundColor: ['#01ACAB'],
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMin: 0,
+            suggestedMax: 8,
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+            ticks: {
+              // forces step size to be 50 units
+              stepSize: 1,
+            }
+             
+          }, 
+          x: {
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+          }
+        },
+        aspectRatio:2.5
+      }
+    });
+
+    this.chartMoney = new Chart('MoneyChart', {
+      type: 'line',
+      data: {
+        labels: [0, 0, 0],
+        datasets: [{
+          label: 'Money spent',
+          data: [0, 0, 0],
+          backgroundColor: ['#01ACAB'],
+          borderColor: ['#01ACAB'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMax: 3000,
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+            ticks: {
+              stepSize: 100,
+            }
+             
+          }, 
+          x: {
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+          }
+        },
+        aspectRatio:2.5
+      }
+    });
+
+    this.chartDistance = new Chart('DistanceChart', {
+      type: 'line',
+      data: {
+        labels: [0, 0, 0],
+        datasets: [{
+          label: 'Distance crossed',
+          data: [0, 0, 0],
+          backgroundColor: ['#01ACAB'],
+          borderColor: ['#01ACAB'],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMax: 30,
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+            ticks: {
+              stepSize: 2,
+            }
+             
+          }, 
+          x: {
+            grid: {
+              color: ['#D9D9D9'],
+              lineWidth: 0.2
+            },
+          }
+        },
+        aspectRatio:2.5
+      }
+    });
+
+    this.route.params.subscribe((params) => {
+    this.passengerService.getPassenger(+params['passengerId']).subscribe({
       next: (res) => {
+        this.passenger = res;
         this.name = res.name + " " + res.surname;
         this.email = res.email;
         this.address = res.address;
         this.phoneNumber = res.telephoneNumber;
       } 
     })
+  });
+
     let date = new Date();
-    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    let lastDay = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 6);
 
-    let start: string = formatDate(firstDay,'yyyy-MM-dd',this.locale)
+    let start: string = formatDate(firstDay,'yyyy-MM-dd',this.locale);
 
-    let end: string = formatDate(lastDay,'yyyy-MM-dd',this.locale)
+    let end: string = formatDate(lastDay,'yyyy-MM-dd',this.locale);
 
-    this.passengerService.getRidesPerDay(start, end, this.authService.getId()).subscribe({
-      next: (res) => {
+    this.route.params.subscribe((params) => {
+    this.passengerService.getRidesPerDay(start, end, +params['passengerId']).subscribe({
+       next: (res) => {
         this.totalRideCount = res.totalCount;
+        this.averageRideCount = parseFloat(res.averageCount.toFixed(2));
+        this.updateChartRides(Array.from(Object.keys(res.countsByDay)), Array.from(Object.values(res.countsByDay)));
       }
     })
+  });
 
-    this.passengerService.getKilometersPerDay(start, end, this.authService.getId()).subscribe({
+  this.route.params.subscribe((params) => {
+    this.passengerService.getKilometersPerDay(start, end, +params['passengerId']).subscribe({
       next: (res) => {
-        this.totalKilometers = res.totalCount;
+        this.totalKilometers = parseFloat(res.totalCount.toFixed(2));
+        this.averageKilometers = parseFloat(res.averageCount.toFixed(2));
+        this.updateChartDistance(Array.from(Object.keys(res.kilometersByDay)), Array.from(Object.values(res.kilometersByDay)));
       }
     })
+  });
 
-    this.passengerService.getMoneyPerDay(start, end, this.authService.getId()).subscribe({
+  this.route.params.subscribe((params) => {
+    this.passengerService.getMoneyPerDay(start, end, +params['passengerId']).subscribe({
       next: (res) => {
         this.totalMoney = res.totalCount;
+        this.averageMoney = parseFloat(res.averageCount.toFixed(2));
+        this.updateChartMoney(Array.from(Object.keys(res.money)), Array.from(Object.values(res.money)));
       }
     })
+  });
+}
+
+  updateChartRides(labelData: any, mainData: any) {
+    this.chartRides.data.labels = labelData;
+    this.chartRides.data.datasets[0].data = mainData
+    this.chartRides.update();
   }
 
-  editProfile() {}
+  updateChartMoney(labelData: any, mainData: any) {
+    this.chartMoney.data.labels = labelData;
+    this.chartMoney.data.datasets[0].data = mainData
+    this.chartMoney.update();
+  }
+
+  updateChartDistance(labelData: any, mainData: any) {
+    this.chartDistance.data.labels = labelData;
+    this.chartDistance.data.datasets[0].data = mainData
+    this.chartDistance.update();
+  }
+
+  editProfile() {
+    const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "edit-profile";
+      dialogConfig.height = "600px";
+      dialogConfig.width = "350px";
+      dialogConfig.data = this.passenger;
+
+      const modalDialog = this.matDialog.open(EditPassengerComponent, dialogConfig);
+  }
   deleteFavorite(locationId:number) {}
   orderRide(locationId:number) {}
 }

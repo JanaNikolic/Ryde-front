@@ -5,6 +5,7 @@ import { environment } from 'src/app/environment/environment';
 import { Driver } from 'src/app/model/Driver';
 import { pageNote } from 'src/app/model/Note';
 import { Note } from 'src/app/model/Note';
+import { PasswordChangeRequest } from 'src/app/model/request/PasswordChangeRequest';
 
 
 @Injectable({
@@ -30,5 +31,9 @@ import { Note } from 'src/app/model/Note';
     createNote(note: any, userId:Number): Observable<any> {
       
       return this.http.post<Note>(environment.apiHost + '/api/user/'+ userId + "/note",note);
+    }
+
+    changePassword(userId:number, request:PasswordChangeRequest):Observable<string>{
+      return this.http.put<string>(environment.apiHost + '/api/user/'+ userId + "/changePassword", request);
     }
 }

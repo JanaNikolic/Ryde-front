@@ -22,15 +22,12 @@ export class RejectRideComponent {
   }
 
   sendRejection() {
-    let reason = document.getElementById("reason");
-    if (reason != null) {
-      this.rejection.reason = this.givenReason;
-      this.rideService.rejectRide(this.data.id, this.rejection).subscribe({
-        next: (res) => {
-          console.log(res);
-        }
-      });
-      this.dialogRef.close();
-    }
+    this.rejection.reason = this.givenReason;
+    this.rideService.rejectRide(this.data.id, this.rejection).subscribe({
+      next: (res) => {
+        console.log(res);
+      }
+    });
+    this.dialogRef.close();
   }
 }

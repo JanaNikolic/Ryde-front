@@ -33,6 +33,8 @@ import { AdminStatisticsComponent } from './components/admin-statistics/admin-st
 import { PanicComponent } from './components/panic/panic.component';
 import { PanicNotificationComponent } from './components/panic-notification/panic-notification.component';
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
+import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
     StatisticsComponent,
     PanicComponent,
     PanicNotificationComponent,
-    PassengerProfileComponent
+    PassengerProfileComponent,
+    EditPassengerComponent,
+    ChangePasswordComponent
   ],
   imports: [
     AppRoutingModule,
@@ -71,7 +75,7 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
     MaterialModule,
     HttpClientModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     {

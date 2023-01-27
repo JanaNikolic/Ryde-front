@@ -9,27 +9,19 @@ import { DriverService } from 'src/app/services/driver/driver.service';
   styleUrls: ['./registered-user-navbar.component.css']
 })
 export class RegisteredUserNavbarComponent {
-  driver: boolean = false;
   workingHour: WorkingHourResponse = {
     id: 0,
     start: "",
     end: ""
   }
+
   toggle: any;
+  passengerId:number = 0;
   checked: Boolean = false;
   constructor(public authService: AuthService, public driverService: DriverService){}
 
   ngOnInit(): void {
-    
-    if (this.authService.getRole() === "ROLE_DRIVER") this.driver = true;
-    else {
-      
-      let nav = document.getElementById("navigation");
-      this.driver = false;
-      if (nav != null) {
-        nav.style.paddingRight = '10%';
-      }
-    }
+    this.passengerId = this.authService.getId();
   }
 
 
