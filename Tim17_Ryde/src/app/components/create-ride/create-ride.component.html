@@ -109,7 +109,7 @@
           <div id="friends">
             <button class="add" type="button" (click)="openPopup()"></button>
           </div>
-          <div>
+          <div class="popup-div">
             <label class="popup" id="popup">
               <input
                 [formControl]="friendEmail"
@@ -121,6 +121,8 @@
                 Add
               </button>
             </label>
+            <small id="no-user-error">User with this email doesn't exist</small>
+            <small id="already-added-error">User with this email is already added</small>
           </div>
         </div>
 
