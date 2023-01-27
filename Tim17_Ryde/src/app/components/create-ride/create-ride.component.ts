@@ -9,7 +9,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
-import { isEmpty, Observable } from 'rxjs';
+import { interval, isEmpty, Observable, Subscription } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { environment } from 'src/app/environment/environment';
@@ -55,6 +55,7 @@ export class CreateRideComponent implements OnInit {
   isLoaded: boolean = false;
   private serverUrl = environment.apiHost + '/example-endpoint';
   private stompClient: any;
+  private subscription!: Subscription;
   rideId: number = 0;
   currentRide: RideResponse = {
     id: 0,
@@ -79,6 +80,13 @@ export class CreateRideComponent implements OnInit {
   model: string = 'Model';
   price: string = '250 RSD';
   time: string = '7 minutes';
+  driverArrive: number = 0;
+  dateNow: Date = new Date();
+  milliSecondsInASecond = 1000;
+  hoursInADay = 24;
+  minutesInAnHour = 60;
+  SecondsInAMinute = 60;
+  arrivalTime: any;
 
   constructor(
     private mapService: MapService,
@@ -97,7 +105,6 @@ export class CreateRideComponent implements OnInit {
 
   ngOnInit(): void {
     this.passengerId = this.authService.getId();
-    
 
     this.CreateRideForm = this.formBuilder.group({
       departure: new FormControl('', {
@@ -155,6 +162,36 @@ export class CreateRideComponent implements OnInit {
     //     }
     //   }
     // );
+    // if (this.currentRide.status === 'ACCEPTED') {
+    //   this.arrivalTime = new Date(this.currentRide.startTime);
+    //   console.log(this.arrivalTime);
+
+    //   this.subscription = interval(1000).subscribe((x) => {
+    //     this.getTimeDifference();
+    //   });
+    // }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  getTimeDifference() {
+    const timeDifference = this.arrivalTime.getTime() - new Date().getTime();
+    this.allocateTimeUnits(timeDifference);
+  }
+
+  allocateTimeUnits(timeDifference: number) {
+    // this.secondsToDday = Math.floor(
+    //   (timeDifference / this.milliSecondsInASecond) % this.SecondsInAMinute
+    // );
+    this.driverArrive = Math.floor(
+      (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
+        this.SecondsInAMinute
+    );
+    if (this.driverArrive == 0) {
+      this.subscription.unsubscribe();
+    } 
   }
 
   initializeWebSocketConnection() {
@@ -179,18 +216,28 @@ export class CreateRideComponent implements OnInit {
           // this.openModal();
           // if (this.currentRide.status === "ACCEPTED")
           console.log(this.currentRide);
-          if (this.currentRide.status === "ACCEPTED" || this.currentRide.status === "STARTED") {
+          if (this.currentRide.status === 'ACCEPTED') {
+            this.dialogRef.closeAll();
+
+            this.openCurrentRide();
+
+            this.arrivalTime = new Date(this.currentRide.startTime);
+            console.log(this.arrivalTime);
+
+            this.subscription = interval(1000).subscribe((x) => {
+              this.getTimeDifference();
+            });
+          } else if (this.currentRide.status === 'STARTED') {
             this.dialogRef.closeAll();
             this.openCurrentRide();
-          } else if (this.currentRide.status === "REJECTED") {
+          } else if (this.currentRide.status === 'REJECTED') {
             // Open snack bar => try again
             this.dialogRef.closeAll();
-          } else if (this.currentRide.status === "FINISHED") {
+          } else if (this.currentRide.status === 'FINISHED') {
             // Open snack bar => Finished
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
           }
-          
 
           // If rejected => False
         }
@@ -366,7 +413,7 @@ export class CreateRideComponent implements OnInit {
         this.name = res.name + ' ' + res.surname;
         this.email = res.email;
       },
-      error: (error) => {}
+      error: (error) => {},
     });
 
     this.driverService.getVehicle(this.currentRide.driver.id).subscribe({
@@ -374,7 +421,7 @@ export class CreateRideComponent implements OnInit {
         this.licensePlate = res.licenseNumber;
         this.model = res.model;
       },
-      error: (error) => {}
+      error: (error) => {},
     });
   }
 }
