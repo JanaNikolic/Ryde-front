@@ -45,7 +45,8 @@
 
             <div *ngFor="let driver of drivers1">
                 <div class="driverInfo">
-                    <img id="image" [src]="driver.profilePicture">
+                    <img *ngIf="driver.profilePicture" class="image" [src]="driver.profilePicture">
+                    <img *ngIf="!driver.profilePicture" class="image" src="../../../assets/images/profile_picture.jpg">
                     <span [ngClass]="driver.active ? 'greenDot' : 'redDot'" class="dot"></span>
                     <p> {{driver.name}}</p>
                     <img (click)="getNotesOfUser(driver.id!, driver.name)" id="noteImg" src="assets/images/notes.png">
@@ -63,7 +64,8 @@
 
             <div *ngFor="let passenger of passengers">
                 <div class="driverInfo">
-                    <img id="image" [src]="passenger.profilePicture">
+                    <img *ngIf="passenger.profilePicture" class="image" [src]="passenger.profilePicture">
+                    <img *ngIf="!passenger.profilePicture" class="image" src="../../../assets/images/profile_picture.jpg">
                     <span [ngClass]="passenger.active ? 'greenDot' : 'redDot'" class="dot"></span>
                     <p> {{passenger.name}}</p>
                     <img (click)="getNotesOfUser(passenger.id!, passenger.name)" id="noteImg"

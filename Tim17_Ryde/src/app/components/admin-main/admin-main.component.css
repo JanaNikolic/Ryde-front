@@ -40,7 +40,7 @@ p{
 .inline{
     display: inline-block;
 }
-#image{
+.image{
     
     display:inline-block; /* added */
     vertical-align:middle;

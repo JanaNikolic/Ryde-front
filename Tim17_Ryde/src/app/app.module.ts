@@ -29,6 +29,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 import { NgxMaterialRatingModule } from 'ngx-material-rating';
 import { ReviewsDriverComponent } from './components/reviews-driver/reviews-driver.component';
+import { PassengerHistoryComponent } from './components/passenger-history/passenger-history.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ReviewsDriverComponent } from './components/reviews-driver/reviews-driv
     DriverProfileComponent,
     StatisticsComponent,
     AdminStatisticsComponent,
-    ReviewsDriverComponent
+    ReviewsDriverComponent,
+    PassengerHistoryComponent
   ],
   imports: [
     AppRoutingModule,

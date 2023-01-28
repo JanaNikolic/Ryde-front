@@ -18,7 +18,7 @@
                 <div *ngFor="let driverReview of driverReviews">
                     <div class="singleReview">
                     <h3>{{driverReview.passenger.email}}</h3>
-                    <ngx-material-rating class="float-right" [(ngModel)]="driverReview.rating"
+                    <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="driverReview.rating"
                         [max]="5" [color]="'primary'"></ngx-material-rating>
                     <p>
                         {{driverReview.comment}}
@@ -33,7 +33,7 @@
             <hr>
             <h2>Vehicle reviews:</h2>
             <div class="scrollable">
-                <div *ngFor="let vehicleReview of driverReviews">
+                <div *ngFor="let vehicleReview of vehicleReviews">
                     <div class="singleReview">
                     <h3>{{vehicleReview.passenger.email}}</h3>
                     <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="vehicleReview.rating"

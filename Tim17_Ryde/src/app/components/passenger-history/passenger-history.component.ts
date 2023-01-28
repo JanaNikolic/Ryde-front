@@ -1,28 +1,32 @@
 import { Component } from '@angular/core';
-import { Ride } from 'src/app/model/Ride';
-import { LocationDTO } from 'src/app/model/Ride';
-import { DriverService } from 'src/app/services/driver/driver.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { RideService } from 'src/app/services/ride/ride.service';
+import { Driver } from 'src/app/model/Driver';
 import { Locations } from 'src/app/model/Locations';
 import { Passenger } from 'src/app/model/Passenger';
+import { Review, RideReview } from 'src/app/model/Review';
+import { LocationDTO, Ride } from 'src/app/model/Ride';
+import { DriverService } from 'src/app/services/driver/driver.service';
+import { MapService } from 'src/app/services/map/map.service';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { ReviewService } from 'src/app/services/review/review.service';
-import { RideReview } from 'src/app/model/Review';
-import { Review } from 'src/app/model/Review';
-import { MapService } from 'src/app/services/map/map.service';
-import { Driver } from 'src/app/model/Driver';
+import { RideService } from 'src/app/services/ride/ride.service';
 
 @Component({
-  selector: 'app-driver-ride-history',
-  templateUrl: './driver-ride-history.component.html',
-  styleUrls: ['./driver-ride-history.component.css']
+  selector: 'app-passenger-history',
+  templateUrl: './passenger-history.component.html',
+  styleUrls: ['./passenger-history.component.css']
 })
-
-export class DriverRideHistoryComponent {
+export class PassengerHistoryComponent {
+  disableCreateReviews = false;
+  vehicleRating:number = 1;
+  driverRating:number = 1;
+  currentRideId:number = 0;
+  showReviews:Boolean = true;
+  showCreateDriverReview:Boolean = false;
+  showCreateVehicleReview:Boolean = false;
   value: number = 1;
   max: number = 5;
-
   constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService) { }
   rides: Ride[] = [];
   sortCriteria: string = '';
@@ -32,8 +36,7 @@ export class DriverRideHistoryComponent {
     driverReview: this.review,
     vehicleReview: this.review
   }
-
-  passengers: Passenger[] = [];
+  passenger!:Passenger;
   driver: Driver = {
     id: 1,
     name: '',
@@ -47,7 +50,7 @@ export class DriverRideHistoryComponent {
     active: false,
     activeRide: false
   };
-
+  passengers: Passenger[] = [];
   loc: Locations = {
     address: '',
     latitude: 10,
@@ -72,11 +75,15 @@ export class DriverRideHistoryComponent {
     passengers: this.passengers,
     driver:this.driver
   }
-
+ 
+  CreateReviewForm = new FormGroup({
+    comment: new FormControl('', [ Validators.maxLength(250)]),
+  })
 
   ngOnInit(): void {
+    this.driver.email ='';
     this.route.params.subscribe((params) => {
-      this.driverService.getDriverRides(+params['driverId'])
+      this.passengerService.getPassengerRides(+params['passengerId'])
         .subscribe(
           (pageRide) => {
             
@@ -87,43 +94,48 @@ export class DriverRideHistoryComponent {
               ride.estimatedTimeInMinutes = Math.round(time2/60000 *100)/100;}
             }); 
             this.rides.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
-            
+           
           }
         );
-
     });
   }
-
-
-
   showHistoryDetails(rideId: number) {
+    this.currentRideId = rideId;
+    this.showCreateVehicleReview = false;
+    this.showCreateDriverReview = false;
+    this.showReviews = true;
+    
     this.rideService.getRide(rideId)
       .subscribe(
         (ride) => {
           this.singleRide = ride;
-          this.passengers = this.singleRide.passengers;
+          this.driver = this.singleRide.driver;
           this.mapService.setFromAddress(this.singleRide.locations[0].departure.address + ", Novi Sad");
           this.mapService.setToAddress(this.singleRide.locations[0].destination.address + ", Novi Sad");
-          console.log(this.singleRide);
+
+          
+          
+
+          
+
+          const time = new Date().valueOf() - new Date(this.singleRide.endTime.split("T")[0]).valueOf();
+          if(time >  259200000){
+            this.disableCreateReviews = true;
+          }
+          else{
+            this.disableCreateReviews = false;
+          }
         }
       )
-
     this.reviewService.getRideReviews(rideId)
       .subscribe(
         (rideReview) => {
           this.rideReview = rideReview;
-
           console.log(this.rideReview.vehicleReview[0].rating);
           this.rideReview.driverReview.sort((a, b) => (a.rating > b.rating ? -1 : 1));
           this.rideReview.vehicleReview.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-
         }
       )
-
-
-
-
-
   }
   sortBy() {
     if (this.sortCriteria == "dateAsc") {
@@ -145,6 +157,56 @@ export class DriverRideHistoryComponent {
       this.rides.sort((a, b) => (a.totalCost > b.totalCost ? -1 : 1));
     }
 
+  }
+
+  showCreateDriverReviewForm(){
+    this.showCreateVehicleReview = false;
+    this.showReviews = false;
+    this.showCreateDriverReview = true;
+  }
+
+  showCreateVehicleReviewForm(){
+    
+    this.showReviews = false;
+    this.showCreateDriverReview = false;
+    this.showCreateVehicleReview = true;
+  }
+
+  createVehicleReview(){
+    if (!this.CreateReviewForm.valid) {
+      alert("Max 250 characters!");
+    }
+    else{
+      
+      let ReviewCreate: Review = {
+        
+        comment: this.CreateReviewForm.value.comment as string,
+        rating: this.vehicleRating,
+        passenger: this.passenger
+      }
+      
+      
+      this.reviewService.postVehicleReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
+      });
+       //TO DO ReviewCreate.Passenger?
+    }
+
+  }
+  createDriverReview(){
+    if (!this.CreateReviewForm.valid) {
+      alert("Max 250 characters!");
+    }
+    else{
+      let ReviewCreate: Review = {
+        
+        comment: this.CreateReviewForm.value.comment as string,
+        rating: this.vehicleRating,
+        passenger: this.passenger //TO DO da dobavim passengera preko tokena
+      }
+      this.reviewService.postDriverReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
+      });
+      //TO DO ReviewCreate.Passenger?
+    }
   }
 
 }

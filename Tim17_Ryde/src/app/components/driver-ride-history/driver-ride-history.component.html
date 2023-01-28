@@ -56,26 +56,8 @@
             <app-map class="mapa2"></app-map>
         </div>
         <div class="below-map">
-        <h3>Ride information</h3>
-        <div class="left-side-info">
-            <p class="margin-top">From: </p>
-            <p class="margin-top">To: </p>
-            <p class="margin-top">Start time: </p>
-            <p *ngIf="singleRide.status=='FINISHED'" class="margin-top">End time: </p>
-            <p class="margin-top">Duration: </p>
-            <p class="margin-top">Price: </p>
-            <p *ngIf="!(singleRide.status=='FINISHED')" class="margin-top">Status:</p>
-        </div>
-        <div class="right-side-info">
-            <p class="margin-top">{{singleRide.locations[0].departure.address}} </p>
-            <p class="margin-top">{{singleRide.locations[0].destination.address}}</p>
-            <p class="margin-top">{{singleRide.startTime}}</p>
-            <p *ngIf="singleRide.status=='FINISHED'" class="margin-top">{{singleRide.endTime}}</p>
-            <p class="margin-top">{{singleRide.estimatedTimeInMinutes}} min</p>
-            <p class="margin-top">{{singleRide.totalCost}} rsd</p>
-            <p *ngIf="!(singleRide.status=='FINISHED')" class="margin-top">{{singleRide.status}}</p>
-        </div>
-        <hr>
+    
+
         <h3>Passengers</h3>
         <div *ngFor="let passenger of passengers">
             <div class="left-side-info">
@@ -86,43 +68,29 @@
             </div>
         </div>
         <hr>
-        <h3>Vehicle reviews:</h3>
-        <div *ngIf="singleRide.status=='FINISHED'" class="scrollableReviews">
+        <h2>Vehicle reviews:</h2>
+        <div class="scrollableReviews">
         <div *ngFor="let vehicleReviews of rideReview.vehicleReview">
-            <div class="left-side-info">
-                <p class="margin-bottom">Vehicle rating:</p>
-                <p class="margin-top">Comment:</p>
-                <p class="margin-top">Passenger:</p>
-
-            </div>
-            <div class="right-side-info">
-
-                <p class="margin-top"><ngx-material-rating [readonly]="true" [(ngModel)]="vehicleReviews.rating"
-                        [max]="5" [color]="'accent'">
-                    </ngx-material-rating></p>
-                <p class="margin-top">{{vehicleReviews.comment}}</p>
-                <p class="margin-top">{{vehicleReviews.passenger.email}}</p>
-            </div>
-            <hr>
+            <div class="singleReview">
+                <h3>{{vehicleReviews.passenger.email}}</h3>
+                <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="vehicleReviews.rating"
+                    [max]="5" [color]="'primary'"></ngx-material-rating>
+                <p>
+                    {{vehicleReviews.comment}}
+                </p>
+                </div>
         </div>
         </div>
-        <h3>Driver reviews:</h3>
-        <div *ngIf="singleRide.status=='FINISHED'" class="scrollableReviews">
+        <h2>Driver reviews:</h2>
+        <div class="scrollableReviews">
             <div *ngFor="let driverReviews of rideReview.driverReview">
-                <div class="left-side-info">
-                    <p class="margin-bottom">Driver rating</p>
-                    <p class="margin-top">Comment:</p>
-                    <p class="margin-top">passenger:</p>
-
-                </div>
-                <div class="right-side-info">
-                    <p class="margin-top"><ngx-material-rating [readonly]="true" [(ngModel)]="driverReviews.rating"
-                        [max]="5" [color]="'accent'">
-                    </ngx-material-rating></p>
-                    <p class="margin-top">{{driverReviews.comment}}</p>
-                    <p class="margin-top">{{driverReviews.passenger.email}}</p>
-                </div>
-                <hr>
+                <div class="singleReview">
+                    <h3>{{driverReviews.passenger.email}}</h3>
+                    <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="driverReviews.rating"
+                        [max]="5" [color]="'primary'"></ngx-material-rating>
+                    <p>
+                        {{driverReviews.comment}}
+                    </p>
             </div>
         </div>
     </div>

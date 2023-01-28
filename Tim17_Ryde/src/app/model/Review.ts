@@ -1,7 +1,7 @@
 import { Passenger } from "./Passenger"
 
 export interface Review{
-    id:number,
+    id?:number,
     rating:number,
     comment:string,
     passenger:Passenger

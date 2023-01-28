@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { Review } from 'src/app/model/Review';
 import { ReviewService } from 'src/app/services/review/review.service';
@@ -12,13 +13,14 @@ Chart.register(...registerables);
 })
 export class ReviewsDriverComponent {
 
-  constructor( private reviewService: ReviewService){}
+  constructor( private reviewService: ReviewService, private route: ActivatedRoute){}
 
   driverReviews:Review[] = [];
   vehicleReviews:Review[] = [];
 
   ngOnInit(): void {
-    this.reviewService.getDriverReviews(1001)
+    this.route.params.subscribe((params) => {
+    this.reviewService.getDriverReviews(+params['driverId'])
       .subscribe(
         (driverReviews) => {
           this.driverReviews = driverReviews.results;
@@ -94,7 +96,8 @@ export class ReviewsDriverComponent {
         }
 
       )
-      this.reviewService.getVehicleReviews(1001)
+    
+      this.reviewService.getVehicleReviews(+params['driverId'])
       .subscribe(
         (vehicleReviews) => {
           this.vehicleReviews = vehicleReviews.results;
@@ -167,6 +170,7 @@ export class ReviewsDriverComponent {
           });
         }
       )
+    });
 
 
 

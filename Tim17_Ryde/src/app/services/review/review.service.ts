@@ -21,4 +21,11 @@ export class ReviewService {
   getVehicleReviews(vehicleId:number):Observable<pageReview>{
     return this.http.get<pageReview>(environment.apiHost+'/api/review/vehicle/' + vehicleId);
   }
+
+  postDriverReview(rideId: number, review: any): Observable<any>{
+    return this.http.post<Review>(environment.apiHost + '/api/review/' + rideId + '/driver', review);
+  }
+  postVehicleReview(rideId: number, review: any): Observable<any>{
+    return this.http.post<Review>(environment.apiHost + '/api/review/' + rideId + '/vehicle', review);
+  }
 }
