@@ -21,7 +21,7 @@ export class NavbarComponent {
       if (event.url == "/register") {
         if (that.navigation  != null) {
           that.navigation.setAttribute("style", "float: left;");
-          that.navigation.style.marginLeft = "10%";
+          that.navigation.style.marginLeft = "7%";
         }
       } else {
         if (that.navigation  != null) {

@@ -2,7 +2,7 @@
     background-color: #101111;
     width: 100%;
     position: absolute;
-    height: 60px;
+    height: 40px;
     left: 0px;
     top: 0px;
     z-index: 2;
@@ -25,13 +25,13 @@ li {
 a {
     display: inline-block;
     width: 120px;
-    line-height: 60px;
+    line-height: 40px;
     text-align: center;
     text-decoration: none;
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: #FFFFFF;
@@ -49,26 +49,22 @@ a:hover {
     display: inline;
     float: right;
     height: 100%;
+    padding-right: 10%;
 }
 
 #name {
-    top: 12px;
+    top: 15%;
     position: relative;
-    height: 36px;
     overflow: hidden;
     padding-left: 10%;
 }
 
-#toggle {
-    padding: 0px 60px;
+img {
+    height: 30px;
 }
 
-.mat-slide-toggle-content {
-    display: inline-block;
-    padding: 0px 60px;
-    margin: auto;
-    height: 100%;
-    float: right;
+img:hover {
+    cursor: pointer;
 }
 
 :host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {

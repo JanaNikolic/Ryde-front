@@ -36,6 +36,10 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
 import { PanicComponent } from './components/panic/panic.component';
 import { PanicNotificationComponent } from './components/panic-notification/panic-notification.component';
+import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
+import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +66,11 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
     AdminStatisticsComponent,
     StatisticsComponent,
     PanicComponent,
-    PanicNotificationComponent
+    PanicNotificationComponent,
+    PassengerProfileComponent,
+    EditPassengerComponent,
+    ChangePasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     AppRoutingModule,
@@ -78,7 +86,7 @@ import { PanicNotificationComponent } from './components/panic-notification/pani
     NgxMatTimepickerModule.setLocale('en-GB'),
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     {

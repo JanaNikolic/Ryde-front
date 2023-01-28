@@ -189,6 +189,7 @@ color: #D9D9D9;
 .button {
     width: 60%;
     margin: auto;
+    border: 0;
     background: #01acac;
     border-radius: 30px;
     font-family: 'Raleway';

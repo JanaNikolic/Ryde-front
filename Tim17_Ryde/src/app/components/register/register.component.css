@@ -2,8 +2,8 @@
     position: absolute;
     top: 0px;
     right: 15%;
-    width: 650px;
-    height: 1040px;
+    width: 30%;
+    height: 90%;
     background: #101111;
     border-width: 0px 2px 2px 2px;
     border-style: solid;
@@ -22,30 +22,29 @@ body {
 }
 
 h1{
-    padding-left: 32px;
+    padding-left: 22px;
     margin-bottom: 0px;
     text-align: center;
-    padding-top: 5%;
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 600;
-    font-size: 100px;
-    line-height: 126px;
+    font-size: 72px;
+    line-height: 84px;
     letter-spacing: 0.35em;
     color: rgba(217, 217, 217, 0.8);
 }
 
 
 .infoInput{
-    padding: 12px;
-    width: 65%;
+    padding: 7px;
+    width: 70%;
     display: flex;
     margin: auto;
     font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 12px;
+    line-height: 12px;
     letter-spacing: 0.05em;
     border-width: 0;
     background: rgba(217, 217, 217, 0.8);
@@ -60,49 +59,53 @@ p {
 
 .textLabel {
     text-align: left;
-    margin-left: 17.5%;
-    margin-bottom: 0.5vh;
+    margin-left: 14%;
     font-family: 'Outfit';
     font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 25px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
     display: flex;
     padding: 10px 0px;
     letter-spacing: 0.15em;
-}
-
-.shortInfoInput {
-    position: relative;
-    width: 8.8vw;
-    height: 5%;
-    background: #AFBAA3;
-    border-radius: 25px;
 }
 
 input:hover {
     background: #D9D9D9;
 }
 
+.ng-invalid{
+    border-width: 1px;
+    border-color: red;
+}
+input:hover {
+    background: #D9D9D9;
+}
+#login-warning {
+    text-align: center;
+    color: #D9D9D9;}
+
 .whiteBtn {
-    padding: 12px;
+    padding: 10px;
     background: #01ACAB;
     border-radius: 30px;
     display: block;
     margin: auto;
     width: 65%;
-    margin-top: 40px;
+    margin-top: 20px;
     letter-spacing: 0.15em;
     cursor: pointer;
     font-family: 'Outfit';
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 12px;
     color: #FFFFFF;
-    line-height: 25px;
-/* identical to box height */
-    letter-spacing: 0.15em;
+    line-height: 14px;
     text-transform: capitalize;
+}
+
+button:hover {
+    transform: scale(1.05);
 }
 
 

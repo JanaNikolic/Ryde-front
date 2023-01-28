@@ -13,6 +13,10 @@ import { CreateRideComponent } from './components/create-ride/create-ride.compon
 import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { StatisticsComponent } from './components/statistics-component/statistics.component';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
+import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
+import { NotLoggedInGuard } from './guard/NotLoggedInGuard';
+import { DriverGuard } from './guard/DriverGuard';
+import { PassengerGuard } from './guard/PassengerGuard';
 
 
 const routes: Routes = [
@@ -25,16 +29,41 @@ const routes: Routes = [
   canActivate: [LoginGuard],
   loadChildren: () =>
     import('../app/services/auth/auth.module').then((m) => m.AuthModule),},
-  {path: 'createDriver', component:CreateDriverComponent},
+  {path: 'createDriver', component:CreateDriverComponent,
+  canActivate: [NotLoggedInGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
   {path: 'get-started', component:UnregisteredUserComponent},
   {path: 'home', component:MainComponent},
-  {path: 'admin-main', component:AdminMainComponent},
-  {path: 'driver-ride-history/:driverId', component:DriverRideHistoryComponent},
-  {path: 'driver-profile/:driverId', component:DriverProfileComponent},
-  {path: 'get-ryde', component:CreateRideComponent},
-  {path: 'driver-main', component:DriverMainComponent},
-  {path: 'statistics', component:StatisticsComponent},
-  {path: 'admin-statistics', component:AdminStatisticsComponent},
+  {path: 'admin-main', component:AdminMainComponent,
+  canActivate: [NotLoggedInGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'driver-ride-history/:driverId', component:DriverRideHistoryComponent,
+  canActivate: [NotLoggedInGuard, DriverGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'driver-profile/:driverId', component:DriverProfileComponent,
+  canActivate: [NotLoggedInGuard, DriverGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'driver-main', component:DriverMainComponent,
+  canActivate: [NotLoggedInGuard, DriverGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'statistics', component:StatisticsComponent,
+  canActivate: [NotLoggedInGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'admin-statistics', component:AdminStatisticsComponent,
+  canActivate: [NotLoggedInGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'passenger-profile/:passengerId', component:PassengerProfileComponent,
+  canActivate: [NotLoggedInGuard, PassengerGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'get-ryde', component:CreateRideComponent}
 ];
 
 @NgModule({

@@ -62,7 +62,18 @@ export class DriverMainComponent {
 
   ngOnInit() {
     this.driverId = this.authService.getId();
+    this.getActiveRide();
     this.initializeWebSocketConnection();
+  }
+
+  getActiveRide() {
+    this.rideService.getActive(this.driverId).subscribe({
+      next: (res) => {
+        this.ride = res;
+        this.currentActiveRide = true;
+        this.setPassenger();
+      }
+    })
   }
 
   initializeWebSocketConnection() {
@@ -107,19 +118,17 @@ export class DriverMainComponent {
     const modalDialog = this.matDialog.open(AcceptRideComponent, dialogConfig);
     let that = this;
 
-    modalDialog.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('closed');
-        if (result === 'accepted') {
-          that.currentActiveRide = true;
-          this.departure = this.ride.locations[0].departure.address;
-          this.destination = this.ride.locations[0].destination.address;
-          that.setPassenger();
-        } else {
-          that.openRejection();
+      modalDialog.afterClosed().subscribe(result => {
+        if (result) {
+          console.log("closed");
+          if (result === "accepted") {
+            that.currentActiveRide = true;
+            that.setPassenger();
+          } else {
+            that.openRejection();
+          }
         }
-      }
-    });
+      });
   }
 
   openRejection() {
@@ -134,13 +143,14 @@ export class DriverMainComponent {
     let that = this;
   }
 
-  setPassenger() {
-    console.log(this.currentActiveRide);
-    this.passengerService.getPassenger(this.ride.passengers[0].id).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.name = res.name + ' ' + res.surname;
-        this.email = res.email;
+    setPassenger() {
+      console.log(this.currentActiveRide);
+      this.passengerService.getPassenger(this.ride.passengers[0].id).subscribe({
+        next: (res) => {
+          this.departure = this.ride.locations[0].departure.address;
+          this.destination = this.ride.locations[0].destination.address;
+          this.name = res.name + " " + res.surname;
+          this.email = res.email;
       },
     });
   }
