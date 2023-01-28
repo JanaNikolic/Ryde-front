@@ -1,107 +1,107 @@
-<p>driver-profile works!</p>
-<div class="container">
-    <div class="left-container">
-        <h1>History</h1>
-        <div class="scrollable">
-            <div *ngFor="let ride of rides">
-                <div [routerLink]="['/driver-ride-history/' + driver.id]" class="all-rides">
-                    <div top-div>
-                        <div class="inlineTop1">
-                            <h3>{{ride.startTime[0]}}-{{ride.startTime[1]}}-{{ride.startTime[2]}}</h3>
-                        </div>
-                        <div class="lineGreen"></div>
-                        <div class="inlineTop2">
-                            <p>{{ride.locations[0].departure.address}}</p>
-                            <p class="center">To</p>
-                            <p>{{ride.locations[0].destination.address}}</p>
-                        </div>
-                    </div>
-                    <div class="bottom-div">
-                        <div class="inline">
-                            <p>Start</p>
-                            <p>{{ride.startTime[3]}}:{{ride.startTime[4]}}</p>
-                        </div>
-                        <div class="inline">
-                            <p>End</p>
-                            
+<body>
+    <div id="title-pic">
+        <div id="title">It's not about the destination,<br>it's about the journey. </div>
+    </div>
+    <div id="main-info">
+        <div id="statisticInfo">
+            <h1>Overall stats</h1>
+            <div id="statistics">
+                <div id="monthly">
+                    <div id="monthly-count">
+                        <h3>Total Rides</h3>
+                        <div class="count">
+                            <p class="num">{{totalRides}}</p>
+                            <p class="accent">#</p>
                         </div>
 
-                        <div class="inline">
-                            <p>Duration</p>
-                            <p>{{ride.estimatedTimeInMinutes}}</p>
+                    </div>
+                    <div id="monthly-count">
+                        <h3>Total Kilometers</h3>
+                        <div class="count">
+                            <p class="num">{{totalKilometers}}</p>
+                            <p class="accent">km</p>
                         </div>
-                        <div class="inline">
-                            <p>Price</p>
-                            <p>{{ride.totalCost}}rsd</p>
+
+                    </div>
+                    <div id="monthly-count">
+                        <h3>Total Money Earned</h3>
+                        <div class="count">
+                            <p class="num">{{totalEarnings}}</p>
+                            <p class="accent">RSD</p>
                         </div>
+
+                    </div>
+                </div>
+                <div id="monthly">
+                    <div id="monthly-count">
+                        <h3>Avg Rides</h3>
+                        <div class="count">
+                            <p class="num">{{averageRides}}</p>
+                            <p class="accent">#</p>
+                        </div>
+
+                    </div>
+                    <div id="monthly-count">
+                        <h3>Avg Kilometers</h3>
+                        <div class="count">
+                            <p class="num">{{averageKilometers}}</p>
+                            <p class="accent">km</p>
+                        </div>
+
+                    </div>
+                    <div id="monthly-count">
+                        <h3>Avg Money Earned</h3>
+                        <div class="count">
+                            <p class="num">{{averageEarnings}}</p>
+                            <p class="accent">RSD</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-    <div class="right-container">
-        <div>
-            <img id="image" [src]="driver.profilePicture" alt="picture">
         </div>
-        <hr>
-        <div class="inlineRight">
-            <p class="pointer" (click)="showDriverInfo()">Profile</p>
-        </div>
-        <div class="inlineRight line">
-            <p class="pointer" (click)="showVehicleInfo()">Car</p>
-        </div>
-        <div class="inlineRight">
-            <p class="pointer" (click)="showStatistics()">Statistics</p>
-        </div>
-        <hr>
-        <div *ngIf="driverInfo">
-
-            <div class="left-side-info">
-                <p class="margin-top">Name: </p>
-                <p class="margin-top">Surname: </p>
-                <p class="margin-top">Email: </p>
-                <p class="margin-top">Address: </p>
-                <p class="margin-top">Phone number: </p>
-
-
+        <div id="profile-card">
+            <img *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+            <img *ngIf="driver.profilePicture" [src]="driver.profilePicture">
+            <div id="profile-info">
+                <h2>{{driver.name}}</h2>
+                <h3>{{driver.email}}</h3>
+                <p>Phone: {{driver.telephoneNumber}}</p>
+                <p>Address: {{driver.address}}</p>
+                <button id="edit">Edit Profile</button>
             </div>
-            <div class="right-side-info">
-                <p class="margin-top">{{driver.name}}</p>
-                <p class="margin-top">{{driver.surname}}</p>
-                <p class="margin-top">{{driver.email}}</p>
-                <p class="margin-top">{{driver.address}}</p>
-                <p class="margin-top">{{driver.telephoneNumber}}</p>
-
-            </div>
-        </div>
-        <div *ngIf="vehicleInfo">
-
-            <div class="left-side-info">
-                <p class="margin-top">Model: </p>
-                <p class="margin-top">Type of vehicle: </p>
-                <p class="margin-top">Licence number: </p>
-                <p class="margin-top">Number of seats: </p>
-                <p class="margin-top">Baby friendly: </p>
-                <p class="margin-top">Pet friendly: </p>
-
-
-            </div>
-            <div class="right-side-info">
-                <p class="margin-top">{{vehicle.model}}</p>
-                <p class="margin-top">{{vehicle.vehicleType}}</p>
-                <p class="margin-top">{{vehicle.licenseNumber}}</p>
-                <p class="margin-top">{{vehicle.passengerSeats}}</p>
-                <p class="margin-top">{{vehicle.babyTransport}}</p>
-                <p class="margin-top">{{vehicle.petTransport}}</p>
-
-            </div>
-        </div>
-        <div *ngIf="statisticInfo">
-            
-            <app-statistics></app-statistics>
-
         </div>
     </div>
+    <div class="container">
+        <div class="calendar">
+            <form (ngSubmit)="Submit()">
+                <mat-form-field class="example-form-field" appearance="fill">
+                    <mat-label>First campaign</mat-label>
+                    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
 
-</div>
+                        <input matStartDate placeholder="Start date" formControlName="start">
+                        <input matEndDate placeholder="End date" formControlName="end">
+
+                    </mat-date-range-input>
+
+                    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                    <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="chart-inline">
+            <canvas id="ridesPerDay"></canvas>
+        </div>
+        <div class="chart-inline">
+            <canvas id="earningsPerDay"></canvas>
+        </div>
+        <div class="chart-inline">
+            <canvas id="kilometersPerDay"></canvas>
+        </div>
+        <app-reviews-driver></app-reviews-driver>
+    </div>
+
+</body>
