@@ -26,6 +26,7 @@ import { RideService } from 'src/app/services/ride/ride.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TmplAstRecursiveVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'app-create-ride',
@@ -246,9 +247,11 @@ export class CreateRideComponent implements OnInit {
           console.log(this.currentRide);
           if (this.currentRide.status === 'ACCEPTED') {
             this.dialogRef.closeAll();
-
+            this.currentActiveRide = true;
             this.openCurrentRide();
-
+            this.snackBar.open('Your ride was accepted by driver!', '', {
+              duration: 2000,
+            });
             this.arrivalTime = new Date(this.currentRide.startTime);
             console.log(this.arrivalTime);
 
@@ -256,18 +259,25 @@ export class CreateRideComponent implements OnInit {
               this.getTimeDifference();
             });
           } else if (this.currentRide.status === 'STARTED') {
+            this.currentActiveRide = true;
+            this.snackBar.open('Your ride has started!', '', {duration: 2000,});
             this.dialogRef.closeAll();
             this.openCurrentRide();
           } else if (this.currentRide.status === 'REJECTED') {
-            // Open snack bar => try again
-            this.dialogRef.closeAll();
-          } else if (this.currentRide.status === 'FINISHED') {
-            // Open snack bar => Finished
+            this.snackBar.open('Your ride was rejected! Try again.', '', {duration: 3000,});
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
-          }
+          } else if (this.currentRide.status === 'FINISHED') {
+            this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
+            this.dialogRef.closeAll();
+            this.currentActiveRide = false;
+          } else if (this.currentRide.status === 'CANCELED') {
+            this.snackBar.open('Your ride has been canceled!', '', {duration: 2000,});
+            this.dialogRef.closeAll();
+            this.currentActiveRide = false;
 
           // If rejected => False
+          }
         }
       );
     }
@@ -426,7 +436,8 @@ export class CreateRideComponent implements OnInit {
           this.initializeWebSocketConnection();
         },
         error: (error) => {
-          console.log(error.message);
+          this.snackBar.open('No available drivers!', '', {duration: 2000,});
+          this.dialogRef.closeAll();
         },
       });
 
