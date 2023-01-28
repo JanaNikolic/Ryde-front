@@ -52,7 +52,6 @@ export class ReviewsDriverComponent {
             data: {
               labels: [1, 2, 3, 4, 5],
               datasets: [{
-                label: 'reviews',
                 data: [numOf1, numOf2, numOf3, numOf4, numOf5],
                 backgroundColor: ['#01ACAB'],
                 
@@ -84,7 +83,7 @@ export class ReviewsDriverComponent {
               responsive: true,
               plugins: {
                 legend: {
-                  position: 'right',
+                  display: false,
                 },
                 title: {
                   display: true,
@@ -128,7 +127,6 @@ export class ReviewsDriverComponent {
             data: {
               labels: [1, 2, 3, 4, 5],
               datasets: [{
-                label: 'reviews',
                 data: [numOf1, numOf2, numOf3, numOf4, numOf5],
                 backgroundColor: ['#01ACAB'],
                 borderColor: [
@@ -159,7 +157,7 @@ export class ReviewsDriverComponent {
               responsive: true,
               plugins: {
                 legend: {
-                  position: 'right',
+                  display: false,
                 },
                 title: {
                   display: true,

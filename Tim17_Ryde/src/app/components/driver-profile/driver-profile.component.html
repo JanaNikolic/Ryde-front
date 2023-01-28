@@ -3,104 +3,104 @@
         <div id="title">It's not about the destination,<br>it's about the journey. </div>
     </div>
     <div id="main-info">
-        <div id="statisticInfo">
-            <h1>Overall stats</h1>
+    <div id="car-info">
+        <h1>Car Information</h1>
+        <div class="car-cards">
+                <div id="model" class="car-card">
+                    <p>Model: </p>
+                    <p>{{model}}</p>
+                    <p>Number of seats:</p>
+                    <p>{{numOfSeats}}</p>
+                </div>
+                <div id="type" class="car-card">
+                    <p>Vehicle type:</p>
+                    <p>{{type}}</p>
+                    <p>Baby safe: {{babyTransport}}</p>
+                    <p>Pet safe: {{petTransport}}</p>
+                </div>
+                <div id="registration" class="car-card">
+                    <p>License plates:</p>
+                    <p>{{registration}}</p>
+                </div>
+    </div>
+    </div>
+    <div id="profile-card">
+        <img *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+        <img *ngIf="driver.profilePicture" [src]="driver.profilePicture">
+        <div id="profile-info">
+            <h2>{{driver.name}}</h2>
+            <h3>{{driver.email}}</h3>
+            <p>Phone: {{driver.telephoneNumber}}</p>
+            <p>Address: {{driver.address}}</p>
+            <button id="edit">Edit Profile</button>
+        </div>
+    </div>
+    </div>
+    <div class="calendar">
+        <form (ngSubmit)="Submit()">
+            <mat-form-field class="example-form-field" appearance="fill">
+                <mat-label>First campaign</mat-label>
+                <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
+
+                    <input matStartDate placeholder="Start date" formControlName="start">
+                    <input matEndDate placeholder="End date" formControlName="end">
+
+                </mat-date-range-input>
+
+                <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+                <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+
+            </mat-form-field>
+        </form>
+    </div>
             <div id="statistics">
                 <div id="monthly">
                     <div id="monthly-count">
-                        <h3>Total Rides</h3>
-                        <div class="count">
-                            <p class="num">{{totalRides}}</p>
-                            <p class="accent">#</p>
-                        </div>
-
-                    </div>
-                    <div id="monthly-count">
-                        <h3>Total Kilometers</h3>
-                        <div class="count">
-                            <p class="num">{{totalKilometers}}</p>
-                            <p class="accent">km</p>
-                        </div>
-
-                    </div>
-                    <div id="monthly-count">
-                        <h3>Total Money Earned</h3>
-                        <div class="count">
-                            <p class="num">{{totalEarnings}}</p>
-                            <p class="accent">RSD</p>
-                        </div>
-
-                    </div>
+                        <h3>Rides</h3>
+                <div class="count">
+                    <p class="num">{{totalRides}}</p>
+                    <p class="accent">#</p>
                 </div>
-                <div id="monthly">
-                    <div id="monthly-count">
-                        <h3>Avg Rides</h3>
-                        <div class="count">
-                            <p class="num">{{averageRides}}</p>
-                            <p class="accent">#</p>
-                        </div>
-
-                    </div>
-                    <div id="monthly-count">
-                        <h3>Avg Kilometers</h3>
-                        <div class="count">
-                            <p class="num">{{averageKilometers}}</p>
-                            <p class="accent">km</p>
-                        </div>
-
-                    </div>
-                    <div id="monthly-count">
-                        <h3>Avg Money Earned</h3>
-                        <div class="count">
-                            <p class="num">{{averageEarnings}}</p>
-                            <p class="accent">RSD</p>
-                        </div>
-
-                    </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageRides}}</span>  on average</p>
                 </div>
             </div>
-
-        </div>
-        <div id="profile-card">
-            <img *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
-            <img *ngIf="driver.profilePicture" [src]="driver.profilePicture">
-            <div id="profile-info">
-                <h2>{{driver.name}}</h2>
-                <h3>{{driver.email}}</h3>
-                <p>Phone: {{driver.telephoneNumber}}</p>
-                <p>Address: {{driver.address}}</p>
-                <button id="edit">Edit Profile</button>
+            <div id="monthly-count">
+                <h3>Kilometers</h3>
+                <div class="count">
+                    <p class="num">{{totalKilometers}}</p>
+                    <p class="accent">km</p>
+                </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageKilometers}}</span>  on average</p>
+                </div>
+            </div>
+            <div id="monthly-count">
+                <h3>Money Spent</h3>
+                <div class="count">
+                    <p class="num">{{totalEarnings}}</p>
+                    <p class="accent">RSD</p>
+                </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageEarnings}}</span>  on average</p>
+                </div>
+            </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="ridesPerDay"></canvas>
+            </div>
+            <div class="chart-container-left">
+                <canvas id="earningsPerDay"></canvas>
+            </div>
+            <div class="chart-container-right">
+                <canvas id="kilometersPerDay"></canvas>
             </div>
         </div>
-    </div>
+        
     <div class="container">
-        <div class="calendar">
-            <form (ngSubmit)="Submit()">
-                <mat-form-field class="example-form-field" appearance="fill">
-                    <mat-label>First campaign</mat-label>
-                    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
-
-                        <input matStartDate placeholder="Start date" formControlName="start">
-                        <input matEndDate placeholder="End date" formControlName="end">
-
-                    </mat-date-range-input>
-
-                    <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-                    <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
-
-                </mat-form-field>
-            </form>
-        </div>
-        <div class="chart-inline">
-            <canvas id="ridesPerDay"></canvas>
-        </div>
-        <div class="chart-inline">
-            <canvas id="earningsPerDay"></canvas>
-        </div>
-        <div class="chart-inline">
-            <canvas id="kilometersPerDay"></canvas>
-        </div>
+        
+        
         <app-reviews-driver></app-reviews-driver>
     </div>
 

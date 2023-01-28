@@ -36,7 +36,9 @@ export class ChangePasswordComponent {
         let snackBarRef = this.snackBar.open('Edit successful!', "", {duration: 2000});
         localStorage.removeItem("user");
       }
-    })
+    })}
 
-  }
+    cancel() {
+      this.dialogRef.close();
+    }
 }

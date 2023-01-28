@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Interceptor } from './auth/interceptor/interceptor.interceptor';
 import { CommonModule } from '@angular/common'
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -34,7 +33,6 @@ import { StatisticsComponent } from './components/statistics-component/statistic
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
-
 import { NgxMaterialRatingModule } from 'ngx-material-rating';
 import { ReviewsDriverComponent } from './components/reviews-driver/reviews-driver.component';
 import { PassengerHistoryComponent } from './components/passenger-history/passenger-history.component';
