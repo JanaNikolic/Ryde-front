@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
 import { interval, isEmpty, Observable, Subscription } from 'rxjs';
@@ -27,6 +27,7 @@ import { DriverService } from 'src/app/services/driver/driver.service';
 import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TmplAstRecursiveVisitor } from '@angular/compiler';
+import { PanicComponent } from '../panic/panic.component';
 
 @Component({
   selector: 'app-create-ride',
@@ -108,7 +109,8 @@ export class CreateRideComponent implements OnInit {
     private rideService: RideService,
     private driverService: DriverService,
     private route: ActivatedRoute,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public matDialog: MatDialog,
   ) {}
 
   imageStandard: any = 'assets/images/standard.png';
@@ -503,5 +505,16 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.reset(this.CreateRideForm.value);
       this.CreateRideForm.controls['date'].setValue(new Date());
     }
+  }
+  panic() {
+    const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "panic-component";
+      dialogConfig.height = "350px";
+      dialogConfig.width = "600px";
+      dialogConfig.data = this.currentRide;
+      this.currentActiveRide = false;
+      const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
+      let that = this;
   }
 }

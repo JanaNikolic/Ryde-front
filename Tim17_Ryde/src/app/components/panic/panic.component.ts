@@ -34,4 +34,8 @@ export class PanicComponent {
       this.dialogRef.close();
     }
   }
+
+  close() {
+    this.dialogRef.close();
+  }
 }

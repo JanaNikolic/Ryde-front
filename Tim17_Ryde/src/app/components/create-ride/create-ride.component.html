@@ -184,7 +184,7 @@
       <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive == 0">Your driver will arrive soon</p>
     </div>
     <div id="buttons" *ngIf="currentRide.status == 'STARTED'">
-      <button id="panic">PANIC</button>
+      <button id="panic" type="button" (click)="panic()">PANIC</button>
     </div>
   </div>
 </div>

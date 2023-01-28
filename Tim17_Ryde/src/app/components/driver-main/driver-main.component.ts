@@ -15,6 +15,7 @@ import { UserResponse } from 'src/app/model/response/UserResponse';
 import { RejectRideComponent } from '../reject-ride/reject-ride.component';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { PanicComponent } from '../panic/panic.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-driver-main',
@@ -57,7 +58,8 @@ export class DriverMainComponent {
     public matDialog: MatDialog,
     public passengerService: PassengerService,
     public rideService: RideService,
-    public driverService: DriverService
+    public driverService: DriverService,
+    public snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -72,6 +74,9 @@ export class DriverMainComponent {
         this.ride = res;
         this.currentActiveRide = true;
         this.setPassenger();
+      },
+      error: (error) => {
+        this.currentActiveRide = false;
       }
     })
   }
@@ -94,7 +99,12 @@ export class DriverMainComponent {
         '/topic/driver/' + this.driverId,
         (message: { body: string }) => {
           this.handleResult(message);
-          this.openModal();
+          if (this.ride.status === "PENDING") {
+            this.openModal();
+          } else if (this.ride.status === "FINISHED") {
+            this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
+            this.currentActiveRide = false;
+          }          
         }
       );
     }
@@ -188,7 +198,8 @@ export class DriverMainComponent {
       dialogConfig.height = "350px";
       dialogConfig.width = "600px";
       dialogConfig.data = this.ride;
-      this.currentActiveRide = false;
+      // this.currentActiveRide = false;
+      this.getActiveRide();
       const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
       let that = this;
     }
