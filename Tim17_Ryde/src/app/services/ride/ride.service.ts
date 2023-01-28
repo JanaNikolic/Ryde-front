@@ -10,8 +10,9 @@ import { KilometersResponse, MoneyResponse, Ride } from 'src/app/model/Ride';
 import { RideCountResponse } from 'src/app/model/Ride';
 import { PanicResponse } from 'src/app/model/response/PanicResponse';
 import { PanicRequest } from 'src/app/model/request/PanicRequest';
-import { FavoriteRidePage } from 'src/app/model/response/FavoriteRidePage';
+import { FavoriteRidePage, FavoriteRideResponse } from 'src/app/model/response/FavoriteRidePage';
 import { RideRequest } from 'src/app/model/request/RideRequest';
+import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -67,5 +68,9 @@ export class RideService {
 
   postRide(ride: RideRequest):Observable<RideResponse> {
     return this.http.post<RideResponse>(environment.apiHost + '/api/ride', ride);
+  }
+
+  postFavoriteRide(ride: FavoriteRideRequest): Observable<FavoriteRideResponse> {
+    return this.http.post<FavoriteRideResponse>(environment.apiHost + "/api/ride/favorites", ride);
   }
 }

@@ -24,6 +24,7 @@ import { UserResponse } from 'src/app/model/response/UserResponse';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
+import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
 
 @Component({
   selector: 'app-create-ride',
@@ -275,7 +276,9 @@ export class CreateRideComponent implements OnInit {
     const divFriends = document.getElementById('friends') as HTMLElement | null;
     const errorField = document.getElementById('no-user-error') as HTMLElement;
     errorField.style.display = 'none';
-    const alreadyAddedError = document.getElementById('already-added-error') as HTMLElement;
+    const alreadyAddedError = document.getElementById(
+      'already-added-error'
+    ) as HTMLElement;
     alreadyAddedError.style.display = 'none';
 
     if (this.friendEmail.valid && divFriends != null) {
@@ -287,10 +290,10 @@ export class CreateRideComponent implements OnInit {
           console.log(res);
           console.log(this.friendList);
 
-          if (!this.friendList.find(e => e.id === res.id)) {
+          if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
             letter = letter.toUpperCase().substring(0, 1);
-  
+
             const f = document.createElement('span');
             f.style.height = '40px';
             f.style.width = '40px';
@@ -302,7 +305,7 @@ export class CreateRideComponent implements OnInit {
             f.style.fontSize = '30px';
             f.style.fontWeight = '300';
             f.style.fontFamily = 'Outfit';
-  
+
             f.textContent = letter;
             divFriends.appendChild(f);
           } else {
@@ -321,81 +324,71 @@ export class CreateRideComponent implements OnInit {
     }
   }
 
+  formValidate(): RideRequest {
+    const format: string = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+    let fromAddress: string = this.CreateRideForm.get('departure')?.value;
+    let toAddress: string = this.CreateRideForm.get('destination')?.value;
+    let vehicleType: string = this.CreateRideForm.get('vehicleType')?.value;
+    let pets: boolean = this.CreateRideForm.get('petTransport')?.value;
+    let babies: boolean = this.CreateRideForm.get('babyTransport')?.value;
+    let time: any = this.CreateRideForm.controls['selectedTime']?.value;
+
+    if (pets == null) pets = false;
+    if (babies == null) babies = false;
+
+    if (time >= DateTime.local().toFormat('HH:mm')) {
+      // if date disabled then same date
+      time = DateTime.local().set({
+        hour: +time.split(':')[0],
+        minutes: time.split(':')[1],
+      });
+      time = time.toFormat(format);
+      // else next day
+    }
+
+    let departure: Locations = {
+      address: fromAddress,
+      latitude: 0,
+      longitude: 0,
+    };
+
+    let destination: Locations = {
+      address: toAddress,
+      latitude: 0,
+      longitude: 0,
+    };
+
+    let ride: RideRequest = {
+      locations: [
+        {
+          departure: departure,
+          destination: destination,
+        },
+      ],
+      passengers: this.friendList,
+      vehicleType: vehicleType,
+      babyTransport: babies,
+      petTransport: pets,
+      scheduledTime: time,
+    };
+    console.log(this.CreateRideForm);
+    this.CreateRideForm.reset(this.CreateRideForm.value);
+    this.CreateRideForm.controls['date'].setValue(new Date());
+    console.log(this.CreateRideForm);
+    return ride;
+  }
+
   createRide() {
     if (this.CreateRideForm.valid) {
-      const format: string = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+      const ride: RideRequest = this.formValidate();
 
-      let fromAddress: string = this.CreateRideForm.get('departure')?.value;
-      let toAddress: string = this.CreateRideForm.get('destination')?.value;
-      let vehicleType: string = this.CreateRideForm.get('vehicleType')?.value;
-      let pets: boolean = this.CreateRideForm.get('petTransport')?.value;
-      let babies: boolean = this.CreateRideForm.get('babyTransport')?.value;
-      let time: any = this.CreateRideForm.controls['selectedTime']?.value;
-
-      this.selectedFromAddress = fromAddress;
-      this.selectedToAddress = toAddress;
+      this.selectedFromAddress = ride.locations[0].departure.address;
+      this.selectedToAddress = ride.locations[0].destination.address;
 
       this.mapService.setFromAddress(this.selectedFromAddress + ', Novi Sad');
 
       this.mapService.setToAddress(this.selectedToAddress + ', Novi Sad');
-
-      // this.mapService.setFromAddress(fromAddress + ", Novi Sad");
-
-      // this.mapService.setToAddress(toAddress + ", Novi Sad");
-
-      if (pets == null) pets = false;
-      if (babies == null) babies = false;
-
-      if (time >= DateTime.local().toFormat('HH:mm')) {
-        // if date disabled then same date
-        time = DateTime.local().set({
-          hour: +time.split(':')[0],
-          minutes: time.split(':')[1],
-        });
-        time = time.toFormat(format);
-        // else next day
-      }
-
-      // console.log(fromAddress);
-      // console.log(toAddress);
-      // console.log(vehicleType);
-      // console.log(pets);
-      // console.log(babies);
-      // console.log(time);
-
-      let departure: Locations = {
-        address: fromAddress,
-        latitude: 0,
-        longitude: 0,
-      };
-
-      let destination: Locations = {
-        address: toAddress,
-        latitude: 0,
-        longitude: 0,
-      };
-
-      // let passengers: UserResponse[] = [];
-
-      // for (let f in this.friendList) {
-      //   // TODO
-      //   const passenger: UserResponse = ;
-      //   passengers.push(passenger);
-      // }
-
-      let ride: RideRequest = {
-        locations: [
-          {
-            departure: departure,
-            destination: destination,
-          },
-        ],
-        passengers: this.friendList,
-        vehicleType: vehicleType,
-        babyTransport: babies,
-        petTransport: pets,
-        scheduledTime: time,
-      };
 
       this.rideService.postRide(ride).subscribe({
         next: (res) => {
@@ -434,5 +427,40 @@ export class CreateRideComponent implements OnInit {
       },
       error: (error) => {},
     });
+  }
+
+  addFavorite() {
+    if (this.CreateRideForm.valid) {
+      // console.log(this.CreateRideForm);
+      const fav = document.getElementById('favorite') as HTMLElement;
+      fav.style.backgroundImage = "url('assets/images/favorite_fill.svg')";
+      const ride: RideRequest = this.formValidate();
+      // console.log(this.CreateRideForm);
+      //TODO Enable only one click
+
+      // TODO add input for favouriteName
+      let favoriteRide: FavoriteRideRequest = {
+        favoriteName: 'Favorite',
+        locations: ride.locations,
+        passengers: [],
+        vehicleType: ride.vehicleType,
+        babyTransport: ride.babyTransport,
+        petTransport: ride.petTransport,
+      };
+
+      this.rideService.postFavoriteRide(favoriteRide).subscribe({
+        next: (res) => {
+          // this.rideId = res.id;
+          console.log(res);
+        },
+        error: (error) => {
+          console.log(error.message);
+          
+          // more than 10 favourites
+        },
+      });
+      this.CreateRideForm.reset(this.CreateRideForm.value);
+      this.CreateRideForm.controls['date'].setValue(new Date());
+    }
   }
 }
