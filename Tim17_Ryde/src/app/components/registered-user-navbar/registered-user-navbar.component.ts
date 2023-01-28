@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { WorkingHourResponse } from 'src/app/model/response/WorkingHourResponse';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { DriverService } from 'src/app/services/driver/driver.service';
 
 @Component({
   selector: 'app-registered-user-navbar',
@@ -6,9 +9,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./registered-user-navbar.component.css']
 })
 export class RegisteredUserNavbarComponent {
-  ngOnInit(): void {
-    
+  workingHour: WorkingHourResponse = {
+    id: 0,
+    start: "",
+    end: ""
   }
+
+  toggle: any;
+  passengerId:number = 0;
+  checked: Boolean = false;
+  constructor(public authService: AuthService, public driverService: DriverService){}
+
+  ngOnInit(): void {
+    this.passengerId = this.authService.getId();
+  }
+
 
   logout() {
     localStorage.removeItem("user");

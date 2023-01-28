@@ -1,0 +1,21 @@
+
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">Someone is panicking!:</h1>
+    </header>
+    <section id="modal-body">
+        <div id="passenger-info">
+            <img id= "profile-pic" src="assets/images/avatar.png" alt="profilePic">
+            <div id="profile-info">
+                <p id="name">{{name}}</p>
+                <p id="email">{{email}}</p>
+            </div>
+        </div>
+        <div id="reason">
+            <p>Reason:  {{reason}}</p>
+        </div>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-action-button" (click)="close()">Close</button>
+    </footer>
+</div>

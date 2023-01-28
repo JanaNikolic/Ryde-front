@@ -1,7 +1,7 @@
 <body>
     <div class="container">
         <div id="login" class="center">
-            <h1>Login</h1>
+            <a id = "home" [routerLink]="['/home']"><h1>RYDE</h1></a>
             <form [formGroup]="LoginForm"
              (ngSubmit)="login()">
              <div *ngIf="hasError" id="login-warning"
@@ -16,19 +16,19 @@
                     <input type="Password" formControlName="Password" class="infoInput" name="Password" id="password" placeholder="Password:">
 
                 </p>
-                <p id="forgotPass">Forgot password?</p>
+                <p id="forgotPass" (click)="resetPassword()">Forgot password?</p>
             <p>
-                <button type="submit" value="LOGIN" class="whiteBtn">LOGIN</button>
+                <button id= "loginBtn" type="submit" value="LOGIN" class="whiteBtn">SIGN IN</button>
             </p>
             </form>
-
-            
-            <hr>
-            <p id="noAccount">Don't Have An Account?</p>
+            <p id="or">or</p>
             <p>
                 <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
 
-                    [routerLink]="['/register']">REGISTER</button>
+                    [routerLink]="['/register']">Sign in with Google</button>
+                <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
+
+                [routerLink]="['/register']">Sign in with Facebook</button>
 
             </p>
         </div>

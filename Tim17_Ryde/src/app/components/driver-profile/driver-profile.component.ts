@@ -81,7 +81,7 @@ export class DriverProfileComponent {
       this.driverService.getDriver(+params['driverId'])
       .subscribe(
         (driver) => {    
-          console.log(driver)
+          
   
           this.driver = driver;
           

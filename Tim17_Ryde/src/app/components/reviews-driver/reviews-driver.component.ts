@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { Review } from 'src/app/model/Review';
+import { ReviewResponse } from 'src/app/model/Review';
 import { ReviewService } from 'src/app/services/review/review.service';
 
 Chart.register(...registerables);
@@ -15,8 +15,8 @@ export class ReviewsDriverComponent {
 
   constructor( private reviewService: ReviewService, private route: ActivatedRoute){}
 
-  driverReviews:Review[] = [];
-  vehicleReviews:Review[] = [];
+  driverReviews:ReviewResponse[] = [];
+  vehicleReviews:ReviewResponse[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {

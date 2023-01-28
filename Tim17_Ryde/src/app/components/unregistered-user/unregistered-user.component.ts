@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin, map } from 'rxjs';
@@ -36,7 +36,7 @@ export class UnregisteredUserComponent implements OnInit {
   private destinationLat: number = 0;
   private destinationLng: number = 0;
 
-  constructor(private renderer: Renderer2, private router: Router, private mapService: MapService, private unregisteredUserSerivce: UnregisteredUserService) {
+  constructor(private router: Router, private mapService: MapService, private unregisteredUserSerivce: UnregisteredUserService) {
 
     // this.renderer.addClass(document.body, 'black');
 

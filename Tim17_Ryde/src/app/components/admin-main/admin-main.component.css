@@ -222,20 +222,6 @@ h2{
     border-radius: 10px;
 }
 
-
-
 .map {
-    margin-top: 3%;
-    margin-right: 5%;
-    
-    
-    float: left;
-    margin-bottom: 51%;
-}
-
-#map {
-    border-radius: 5px;
-    float: right;
-    height: 100%;
-    width: 100%;
+    margin-left: -2%;
 }

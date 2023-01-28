@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
 
 @NgModule({
   imports: [
@@ -44,6 +45,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatRadioModule,
     MatSelectModule,
     MatRippleModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   exports: [
     MatButtonModule,
@@ -68,6 +71,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatSelectModule,
     MatSortModule,
     MatRippleModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
 })
 export class MaterialModule {}

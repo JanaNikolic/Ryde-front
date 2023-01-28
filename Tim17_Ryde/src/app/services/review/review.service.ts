@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
-import { pageReview, Review } from 'src/app/model/Review';
+import { pageReview, ReviewResponse, ReviewRequest } from 'src/app/model/Review';
 import { RideReview } from 'src/app/model/Review';
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class ReviewService {
   }
 
   postDriverReview(rideId: number, review: any): Observable<any>{
-    return this.http.post<Review>(environment.apiHost + '/api/review/' + rideId + '/driver', review);
+    return this.http.post<ReviewResponse>(environment.apiHost + '/api/review/' + rideId + '/driver', review);
   }
   postVehicleReview(rideId: number, review: any): Observable<any>{
-    return this.http.post<Review>(environment.apiHost + '/api/review/' + rideId + '/vehicle', review);
+    return this.http.post<ReviewResponse>(environment.apiHost + '/api/review/' + rideId + '/vehicle', review);
   }
 }

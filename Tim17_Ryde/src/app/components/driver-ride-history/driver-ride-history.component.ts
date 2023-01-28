@@ -9,7 +9,7 @@ import { Passenger } from 'src/app/model/Passenger';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { ReviewService } from 'src/app/services/review/review.service';
 import { RideReview } from 'src/app/model/Review';
-import { Review } from 'src/app/model/Review';
+import { ReviewRequest, ReviewResponse } from 'src/app/model/Review';
 import { MapService } from 'src/app/services/map/map.service';
 import { Driver } from 'src/app/model/Driver';
 
@@ -26,7 +26,7 @@ export class DriverRideHistoryComponent {
   constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService) { }
   rides: Ride[] = [];
   sortCriteria: string = '';
-  review: Review[] = [];
+  review: ReviewResponse[] = [];
 
   rideReview: RideReview = {
     driverReview: this.review,

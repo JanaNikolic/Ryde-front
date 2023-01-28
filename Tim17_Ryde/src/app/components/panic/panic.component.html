@@ -1,0 +1,14 @@
+
+<div id="modal-content-wrapper">
+    <header id="modal-header">
+        <h1 id="modal-title">Please state your reason for panicking:</h1>
+    </header>
+    <section id="modal-body">
+        <mat-form-field>
+            <input [(ngModel)]="givenReason" id="reason" type="text" placeholder="Reason" matInput>
+        </mat-form-field>
+    </section>
+    <footer id="modal-footer">
+        <button mat-raised-button id="modal-action-button" (click)="sendPanic()">Submit</button>
+    </footer>
+</div>

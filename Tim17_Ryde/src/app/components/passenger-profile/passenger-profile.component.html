@@ -1,0 +1,101 @@
+<body>
+    <div id="title-pic">
+        <div id="title">It's not about the destination,<br>it's about the journey. </div>
+    </div>
+    <div id="main-info">
+    <div id="favorite-rides">
+        <h1>Favorite Rides</h1>
+        <div class="favorite-ride-cards">
+        <div *ngFor="let location of locations">
+            <div class="favorite-location">
+                <div class="location-info">
+                    <div class="ping">
+                        <span class="bigElipse"></span>
+                        <span class="smallElipse"></span>
+                        <span class="smallElipse"></span>
+                        <img class="pin" src="assets/images/pin.svg" alt="pin" width="80px" height="80px">
+                    </div>
+                    <div class="depdest">
+                    <p id= "departure"class="locations">{{location.locations[0].departure.address}}</p>
+                    <p id= "destination" class="locations">{{location.locations[0].destination.address}}</p>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>{{location.favoriteName}}</p>
+                    <div class="icons">
+                    <img (click)="deleteFavorite(location)" class="icon"
+                        src="assets/images/delete.svg">
+                    <img (click)="orderRide(location.id)" class="icon"
+                        src="assets/images/order.svg">    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="profile-card">
+    <img src="../../../assets/images/profile_picture.jpg">
+    <div id="profile-info">
+        <h2>{{name}}</h2>
+        <h3>{{email}}</h3>
+        <p>Phone: {{phoneNumber}}</p>
+        <p>Address: {{address}}</p>
+        <button id="edit" (click)="editProfile()">Edit Profile</button>
+    </div>
+</div>
+    </div>
+    <mat-form-field>
+        <mat-label>Date range for graphs</mat-label>
+        <mat-date-range-input [rangePicker]="picker" [formGroup]="range">
+          <input matStartDate matInput placeholder="Start date" formControlName="start">
+          <input matEndDate matInput placeholder="End date" formControlName="end" (dateChange)="onChange()">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    <div id="statistics">
+        <div id="monthly">
+            <div id="monthly-count">
+                <h3>Rides</h3>
+                <div class="count">
+                    <p class="num">{{totalRideCount}}</p>
+                    <p class="accent">#</p>
+                </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageRideCount}}</span>  on average</p>
+                </div>
+            </div>
+            <div id="monthly-count">
+                <h3>Kilometers</h3>
+                <div class="count">
+                    <p class="num">{{totalKilometers}}</p>
+                    <p class="accent">km</p>
+                </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageKilometers}}</span>  on average</p>
+                </div>
+            </div>
+            <div id="monthly-count">
+                <h3>Money Spent</h3>
+                <div class="count">
+                    <p class="num">{{totalMoney}}</p>
+                    <p class="accent">RSD</p>
+                </div>
+                <div class="comparison">
+                    <p><span class="accent">{{averageMoney}}</span>  on average</p>
+                </div>
+            </div>
+        </div>
+        <div class="chart-container">
+            <canvas  id="MyChart" ></canvas>
+        </div>
+        <div class="chart-container-left">
+            <canvas  id="MoneyChart" ></canvas>
+        </div>
+        <div class="chart-container-right">
+            <canvas  id="DistanceChart" ></canvas>
+        </div>
+    </div>
+    
+      
+</body>

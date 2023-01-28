@@ -1,18 +1,23 @@
 import { Passenger } from "./Passenger"
 
-export interface Review{
-    id?:number,
+export interface ReviewResponse{
+    id:number,
     rating:number,
     comment:string,
     passenger:Passenger
 }
 
+export interface ReviewRequest{
+    rating:number,
+    comment:string
+}
+
 export interface RideReview{
-    vehicleReview: Review[],
-    driverReview:Review[]
+    vehicleReview: ReviewResponse[],
+    driverReview:ReviewResponse[]
 }
 
 export interface pageReview{
     count:number
-    results:Review[]
+    results:ReviewResponse[]
 }

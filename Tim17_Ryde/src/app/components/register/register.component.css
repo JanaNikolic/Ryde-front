@@ -1,70 +1,86 @@
-.register-page {
-    margin: 0;
-    /* position: relative; */
-    /* height: 95vh; */
-    height: 100%;
-    font-size: 2vh;
-}
+
 .red-border-class{
     border-color: red;
 }
 .error{
-    text-align: left;
-    margin-left: 10%;
-    display: block;
+
+    width: fit-content;
     color: red;
     line-height: 14px;
     font-size:80%;
 }
-.left{
-    float: left;
-    
-}
-.right{
-    margin-left: 52%;
-}
-.noError{
-    display: block;
-    opacity: 0;
-    line-height: 14px;
-    font-size:80%;
-}
-.container {
-    position: absolute;
-    width: 40vw;
-    /* height: 80vh; */
-    height: fit-content;
-    left: 50vw;
-    top: 50vh;
-    margin-top: 2vh;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
-}
 
-h1 {
-    padding-top: 2vh;
-    padding-bottom: 2%;
-    font-family: 'Outfit', sans-serif;
+.label{
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ margin-right: 14%;
+ font-family: 'Outfit';
     font-style: normal;
-    font-weight: 700;
-    font-size: 5vh;
-    line-height: 5vh;
-    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    display: flex;
+    padding: 10px 0px;
     letter-spacing: 0.15em;
 
-    color: #FFFFFF;
 }
 
-input {
-    padding: 1.3vh;
-    font-family: 'Outfit', sans-serif;
+
+.container{
+
+    position: absolute;
+    top: 0px;
+    right: 15%;
+    width: 30%;
+    height: 90%;
+    background: #101111;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-image:
+        linear-gradient(to top,
+        #4E4D4D 40%,
+            rgba(0, 0, 0, 0)) 1;
+    box-shadow: 5px 4px 29px 53px rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+body {
+    width: 100%;
+    background-image: url("../../../assets/images/RydeBackground.png");     
+    background-size: 100%;
+}
+
+h1{
+    padding-left: 22px;
+    margin-bottom: 0px;
+    text-align: center;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 84px;
+    letter-spacing: 0.35em;
+    color: rgba(217, 217, 217, 0.8);
+}
+
+
+.infoInput{
+    padding: 7px;
+    width: 70%;
+    display: flex;
+    margin: auto;
+    font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
-    font-size: 1.7vh;
-    line-height: 1.5vh;
+    font-size: 12px;
+    line-height: 12px;
     letter-spacing: 0.05em;
+
+    border-width: 0;
+    background: rgba(217, 217, 217, 0.8);
+    border-radius: 10px;
+
 }
 
 p {
@@ -73,80 +89,53 @@ p {
     margin: auto;
 }
 
-hr {
-    width: 50%;
-    margin-top: 5%;
-    margin-bottom: 0;
-}
-
-label {
-    text-align: left;
-}
-
-.form {
-    margin-left: 15vh;
-    margin-right: 15vh;
-}
-
 .textLabel {
     text-align: left;
-    margin-left: 5vh;
-    margin-top: 1vh;
-    margin-bottom: 0.5vh;
-}
+    margin-left: 14%;
+    
 
-.shortInfoInput {
-    position: relative;
-    width: 8.8vw;
-    height: 5%;
-    background: #D9D9D9;
-    opacity: 0.8;
-    border-radius: 25px;
-}
-
-.right-margin {
-    margin-right: 13vh;
-}
-
-.left-margin {
-    margin-left: 1.5vh;
-}
-
-.infoInput {
-    position: relative;
-    width: 20vw;
-    height: 5%;
-    opacity: 0.8;
-    background: #D9D9D9;
-    border-radius: 25px;
 }
 
 input:hover {
     background: #D9D9D9;
 }
 
-.whiteBtn {
-    padding: 1.5vh;
-    border-radius: 25px;
-    border-width: 0;
-    background-color: #01ACAB;
-    width: 50%;
-    margin-top: 5vh;
-    margin-bottom: 2vh;
 
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 15px;
+.ng-invalid{
+    border-width: 1px;
+    border-color: red;
 
-
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-
-    color: #000000;
-    cursor: pointer;
 }
+input:hover {
+    background: #D9D9D9;
+}
+#login-warning {
+    text-align: center;
+    color: #D9D9D9;}
+
+.whiteBtn {
+    padding: 10px;
+    background: #01ACAB;
+    border-radius: 30px;
+    display: block;
+    margin: auto;
+    width: 65%;
+    margin-top: 20px;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    color: #FFFFFF;
+    line-height: 14px;
+    text-transform: capitalize;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
 
 @media only screen and (max-width: 650px) {
     .register-page {

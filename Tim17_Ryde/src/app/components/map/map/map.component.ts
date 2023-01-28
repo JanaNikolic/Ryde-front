@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 
@@ -69,7 +69,7 @@ export class MapComponent implements AfterViewInit {
     });
 
     const tiles = L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
       {
         maxZoom: 18,
         minZoom: 3,
@@ -78,6 +78,7 @@ export class MapComponent implements AfterViewInit {
       }
     );
     tiles.addTo(this.map);
+    
 
     // this.addCurrentLocation();
 

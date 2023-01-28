@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Driver } from 'src/app/model/Driver';
 import { Locations } from 'src/app/model/Locations';
 import { Passenger } from 'src/app/model/Passenger';
-import { Review, RideReview } from 'src/app/model/Review';
+import { ReviewRequest,ReviewResponse, RideReview } from 'src/app/model/Review';
 import { LocationDTO, Ride } from 'src/app/model/Ride';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { MapService } from 'src/app/services/map/map.service';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
@@ -27,10 +28,10 @@ export class PassengerHistoryComponent {
   showCreateVehicleReview:Boolean = false;
   value: number = 1;
   max: number = 5;
-  constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService) { }
+  constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService, private authService: AuthService) { }
   rides: Ride[] = [];
   sortCriteria: string = '';
-  review: Review[] = [];
+  review: ReviewResponse[] = [];
 
   rideReview: RideReview = {
     driverReview: this.review,
@@ -178,11 +179,11 @@ export class PassengerHistoryComponent {
     }
     else{
       
-      let ReviewCreate: Review = {
+      let ReviewCreate: ReviewRequest = {
         
         comment: this.CreateReviewForm.value.comment as string,
         rating: this.vehicleRating,
-        passenger: this.passenger
+
       }
       
       
@@ -197,11 +198,11 @@ export class PassengerHistoryComponent {
       alert("Max 250 characters!");
     }
     else{
-      let ReviewCreate: Review = {
+      let ReviewCreate: ReviewRequest = {
         
         comment: this.CreateReviewForm.value.comment as string,
-        rating: this.vehicleRating,
-        passenger: this.passenger //TO DO da dobavim passengera preko tokena
+        rating: this.driverRating,
+        
       }
       this.reviewService.postDriverReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
       });
