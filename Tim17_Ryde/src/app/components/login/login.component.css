@@ -2,7 +2,7 @@
     position: absolute;
     left: 15%;
     width: 25%;
-    height: 80%;
+    height: fit-content;
     background: #101111;
     border-width: 0px 2px 2px 2px;
     border-style: solid;
@@ -12,6 +12,7 @@
             rgba(0, 0, 0, 0)) 1;
     box-shadow: 5px 4px 29px 53px rgba(0, 0, 0, 0.6);
     border-radius: 5px;
+    padding-bottom: 5vh;
 }
 .container{
     position: relative;

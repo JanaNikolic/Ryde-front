@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
 import { interval, isEmpty, Observable, Subscription } from 'rxjs';
 import * as SockJS from 'sockjs-client';
@@ -73,14 +73,14 @@ export class CreateRideComponent implements OnInit {
     driver: { id: 0, email: '' },
   };
   currentActiveRide: boolean = false;
-  departure: string = 'Adresa 123';
-  destination: string = 'Adresa 12';
-  name: string = 'Mika Mikic';
-  email: string = 'mika@mikic.com';
-  licensePlate: string = 'NS-069-PA';
-  model: string = 'Model';
-  price: string = '250 RSD';
-  time: string = '7 minutes';
+  departure: string = '';
+  destination: string = '';
+  name: string = '';
+  email: string = '';
+  licensePlate: string = '';
+  model: string = '';
+  price: string = '';
+  time: string = '';
   driverArrive: number = 0;
   dateNow: Date = new Date();
   milliSecondsInASecond = 1000;
@@ -88,6 +88,13 @@ export class CreateRideComponent implements OnInit {
   minutesInAnHour = 60;
   SecondsInAMinute = 60;
   arrivalTime: any;
+  favorite = {
+    departure: '',
+    destination: '',
+    vehicleType: '',
+    babyTransport: false,
+    petTransport: false,
+  };
 
   constructor(
     private mapService: MapService,
@@ -97,7 +104,8 @@ export class CreateRideComponent implements OnInit {
     private authService: AuthService,
     private passengerService: PassengerService,
     private rideService: RideService,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private route: ActivatedRoute
   ) {}
 
   imageStandard: any = 'assets/images/standard.png';
@@ -126,6 +134,24 @@ export class CreateRideComponent implements OnInit {
     this.selectedFromAddress = this.CreateRideForm.get('departure');
     this.selectedToAddress = this.CreateRideForm.get('destination');
 
+    this.CreateRideForm.controls['vehicleType'].setValue('STANDARD');
+
+    this.route.queryParams.subscribe((params) => {
+      this.favorite.departure = params['departure'];
+      this.favorite.destination = params['destination'];
+      this.favorite.petTransport = params['petTransport'] === 'true';
+      this.favorite.babyTransport = params['babyTransport'] === 'true';
+      this.favorite.vehicleType = params['vehicleType'];
+    });
+
+    this.mapService.selectedFromAddress$.subscribe((data) => {
+      this.CreateRideForm.controls['departure'].setValue(data.display_name);
+    });
+
+    this.mapService.selectedToAddress$.subscribe((data) => {
+      this.CreateRideForm.controls['destination'].setValue(data.display_name);
+    });
+
     this.selectedTime = this.CreateRideForm.get('selectedTime');
 
     const today = new Date();
@@ -134,16 +160,19 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.controls['date'].disable();
     }
 
-    this.CreateRideForm.controls['vehicleType'].setValue('STANDARD');
-
-    this.mapService.selectedFromAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['departure'].setValue(data.display_name);
-      console.log(data.display_name);
-    });
-
-    this.mapService.selectedToAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['destination'].setValue(data.display_name);
-    });
+    this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
+    this.CreateRideForm.controls['destination'].setValue(
+      this.favorite.destination
+    );
+    this.CreateRideForm.controls['petTransport'].setValue(
+      this.favorite.petTransport
+    );
+    this.CreateRideForm.controls['babyTransport'].setValue(
+      this.favorite.babyTransport
+    );
+    this.CreateRideForm.controls['vehicleType'].setValue(
+      this.favorite.vehicleType
+    );
 
     // this.selectedFromAddress.valueChanges.subscribe(
     //   (value: string) => {
@@ -173,17 +202,12 @@ export class CreateRideComponent implements OnInit {
     // }
   }
 
-
-
   getTimeDifference() {
     const timeDifference = this.arrivalTime.getTime() - new Date().getTime();
     this.allocateTimeUnits(timeDifference);
   }
 
   allocateTimeUnits(timeDifference: number) {
-    // this.secondsToDday = Math.floor(
-    //   (timeDifference / this.milliSecondsInASecond) % this.SecondsInAMinute
-    // );
     this.driverArrive = Math.floor(
       (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
         this.SecondsInAMinute
@@ -451,11 +475,11 @@ export class CreateRideComponent implements OnInit {
       this.rideService.postFavoriteRide(favoriteRide).subscribe({
         next: (res) => {
           // this.rideId = res.id;
-          console.log(res);
+          // console.log(res);
         },
         error: (error) => {
           console.log(error.message);
-          
+          // disable click
           // more than 10 favourites
         },
       });
