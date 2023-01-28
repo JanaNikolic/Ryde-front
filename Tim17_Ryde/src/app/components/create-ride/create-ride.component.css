@@ -545,3 +545,27 @@ small {
   margin: auto;
   justify-content: space-evenly;
 }
+
+.favorite {
+  display: flex;
+  justify-content: end;
+  margin: 0.5vh 1vw;
+}
+
+#favorite {
+  height: 30px;
+  background-image: url("src/assets/images/favorite.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  background-size: cover;
+}
+
+#favorite:hover {
+  background-image: url("src/assets/images/favorite_fill.svg");
+}
