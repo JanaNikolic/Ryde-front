@@ -25,6 +25,7 @@ import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
 import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-ride',
@@ -95,6 +96,9 @@ export class CreateRideComponent implements OnInit {
     babyTransport: false,
     petTransport: false,
   };
+  favoriteName: FormControl = new FormControl('', {
+    validators: [Validators.required, Validators.minLength(3)],
+  });
 
   constructor(
     private mapService: MapService,
@@ -105,7 +109,8 @@ export class CreateRideComponent implements OnInit {
     private passengerService: PassengerService,
     private rideService: RideService,
     private driverService: DriverService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar
   ) {}
 
   imageStandard: any = 'assets/images/standard.png';
@@ -160,19 +165,22 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.controls['date'].disable();
     }
 
-    this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
-    this.CreateRideForm.controls['destination'].setValue(
-      this.favorite.destination
-    );
-    this.CreateRideForm.controls['petTransport'].setValue(
-      this.favorite.petTransport
-    );
-    this.CreateRideForm.controls['babyTransport'].setValue(
-      this.favorite.babyTransport
-    );
-    this.CreateRideForm.controls['vehicleType'].setValue(
-      this.favorite.vehicleType
-    );
+    if (this.favorite.departure.length > 0) {
+      this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
+      this.CreateRideForm.controls['destination'].setValue(
+        this.favorite.destination
+      );
+      this.CreateRideForm.controls['petTransport'].setValue(
+        this.favorite.petTransport
+      );
+      this.CreateRideForm.controls['babyTransport'].setValue(
+        this.favorite.babyTransport
+      );
+      this.CreateRideForm.controls['vehicleType'].setValue(
+        this.favorite.vehicleType
+      );
+    }
+    
 
     // this.selectedFromAddress.valueChanges.subscribe(
     //   (value: string) => {
@@ -455,14 +463,10 @@ export class CreateRideComponent implements OnInit {
 
   addFavorite() {
     if (this.CreateRideForm.valid) {
-      // console.log(this.CreateRideForm);
       const fav = document.getElementById('favorite') as HTMLElement;
       fav.style.backgroundImage = "url('assets/images/favorite_fill.svg')";
       const ride: RideRequest = this.formValidate();
-      // console.log(this.CreateRideForm);
-      //TODO Enable only one click
 
-      // TODO add input for favouriteName
       let favoriteRide: FavoriteRideRequest = {
         favoriteName: 'Favorite',
         locations: ride.locations,
@@ -474,15 +478,20 @@ export class CreateRideComponent implements OnInit {
 
       this.rideService.postFavoriteRide(favoriteRide).subscribe({
         next: (res) => {
-          // this.rideId = res.id;
-          // console.log(res);
+          fav.setAttribute('disabled', '');
+          this.snackBar.open('Succesfuly added favorite route!', '', {
+            duration: 2000,
+          });
         },
         error: (error) => {
           console.log(error.message);
-          // disable click
-          // more than 10 favourites
+          fav.setAttribute('disabled', '');
+          this.snackBar.open('You already have 10 favorite routes!', '', {
+            duration: 2000,
+          });
         },
       });
+
       this.CreateRideForm.reset(this.CreateRideForm.value);
       this.CreateRideForm.controls['date'].setValue(new Date());
     }
