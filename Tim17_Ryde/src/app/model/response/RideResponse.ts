@@ -10,10 +10,11 @@ export interface RideResponse{
     estimatedTimeInMinutes: number,
     babyTransport: boolean,
     petTransport: boolean,
-    status: boolean,
+    status: string,
     locations:LocationDTO[],
     passengers:UserResponse[],
-    scheduledTime: string;
+    scheduledTime: string,
+    driver: UserResponse
 }
 
 export interface LocationDTO{

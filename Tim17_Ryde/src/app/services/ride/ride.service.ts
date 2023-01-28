@@ -11,6 +11,7 @@ import { RideCountResponse } from 'src/app/model/Ride';
 import { PanicResponse } from 'src/app/model/response/PanicResponse';
 import { PanicRequest } from 'src/app/model/request/PanicRequest';
 import { FavoriteRidePage } from 'src/app/model/response/FavoriteRidePage';
+import { RideRequest } from 'src/app/model/request/RideRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -62,5 +63,9 @@ export class RideService {
 
   deleteFavorite(favoriteId:number): Observable<string>{
     return this.http.delete<string>(environment.apiHost + "/api/ride/favorites/" + favoriteId);
+  }
+
+  postRide(ride: RideRequest):Observable<RideResponse> {
+    return this.http.post<RideResponse>(environment.apiHost + '/api/ride', ride);
   }
 }

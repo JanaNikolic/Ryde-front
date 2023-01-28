@@ -7,6 +7,7 @@ import { Passenger } from 'src/app/model/Passenger';
 import { pagePassenger } from 'src/app/model/Passenger';
 import { PassengerUpdateResponse } from 'src/app/model/response/PassengerUpdateResponse';
 import { KilometersResponse, MoneyResponse, RideCountResponse } from 'src/app/model/Ride';
+import { UserResponse } from 'src/app/model/response/UserResponse';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,5 +45,9 @@ export class PassengerService {
 
   edit(passengerId:number, editRequest:PassengerUpdateResponse):Observable<Passenger>{
     return this.http.put<Passenger>(environment.apiHost + '/api/passenger/' + passengerId, editRequest);
+  }
+
+  getPassengerByEmail(email: string): Observable<UserResponse> {
+    return this.http.get<UserResponse>(environment.apiHost + '/api/passenger/get/' + email);
   }
 }

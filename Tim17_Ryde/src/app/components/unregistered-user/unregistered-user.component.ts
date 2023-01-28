@@ -36,7 +36,7 @@ export class UnregisteredUserComponent implements OnInit {
   private destinationLat: number = 0;
   private destinationLng: number = 0;
 
-  constructor(private renderer: Renderer2, private router: Router, private mapService: MapService, private unregisteredUserSerivce: UnregisteredUserService) {
+  constructor(private router: Router, private mapService: MapService, private unregisteredUserSerivce: UnregisteredUserService) {
 
     // this.renderer.addClass(document.body, 'black');
 

@@ -9,6 +9,7 @@ import { AdminMainComponent } from './components/admin-main/admin-main.component
 import { LoginGuard } from './guard/login.guard';
 import { DriverRideHistoryComponent } from './components/driver-ride-history/driver-ride-history.component';
 import { DriverProfileComponent } from './components/driver-profile/driver-profile.component';
+import { CreateRideComponent } from './components/create-ride/create-ride.component';
 import { DriverMainComponent } from './components/driver-main/driver-main.component';
 import { StatisticsComponent } from './components/statistics-component/statistics.component';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
@@ -16,6 +17,7 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
 import { NotLoggedInGuard } from './guard/NotLoggedInGuard';
 import { DriverGuard } from './guard/DriverGuard';
 import { PassengerGuard } from './guard/PassengerGuard';
+
 
 const routes: Routes = [
   {path: '', component:MainComponent},
@@ -60,7 +62,8 @@ const routes: Routes = [
   {path: 'passenger-profile/:passengerId', component:PassengerProfileComponent,
   canActivate: [NotLoggedInGuard, PassengerGuard],
   loadChildren: () =>
-  import('../app/services/auth/auth.module').then((m) => m.AuthModule)}
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'get-ryde', component:CreateRideComponent}
 ];
 
 @NgModule({
