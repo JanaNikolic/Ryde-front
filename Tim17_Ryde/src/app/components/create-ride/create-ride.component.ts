@@ -96,10 +96,7 @@ export class CreateRideComponent implements OnInit {
     babyTransport: false,
     petTransport: false,
   };
-  favoriteName: FormControl = new FormControl('', {
-    validators: [Validators.required, Validators.minLength(3)],
-  });
-
+  
   constructor(
     private mapService: MapService,
     private router: Router,
