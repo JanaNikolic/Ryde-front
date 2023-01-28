@@ -26,9 +26,12 @@
     "leaflet": "^1.9.3",
     "leaflet-routing-machine": "^3.2.12",
     "leaflet.locatecontrol": "^0.79.0",
+    "ngx-material-rating": "^2.0.0",
+
     "ngx-mat-timepicker": "^15.1.2",
     "ngx-material-timepicker": "^5.5.3",
     "net": "^1.0.2",
+
     "rxjs": "~7.5.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",

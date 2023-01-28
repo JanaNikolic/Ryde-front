@@ -319,7 +319,7 @@ export class MapComponent implements AfterViewInit {
                   (vehicle) => {
 
                     this.vehicle = vehicle
-                    if (driver.active == true) {
+                    if (driver.active == true && driver.activeRide == false) {
                       L.marker([vehicle.currentLocation?.latitude as number, vehicle.currentLocation?.longitude as number],
                         { icon: this.greenCarIcon }).addTo(this.map);
                     }

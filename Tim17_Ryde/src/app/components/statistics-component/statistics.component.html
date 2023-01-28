@@ -1,53 +1,27 @@
-<form (ngSubmit)="Submit()">
-    <mat-form-field class="example-form-field" appearance="fill">
-        <mat-label>First campaign</mat-label>
-        <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
+<div class="calendar">
+    <form (ngSubmit)="Submit()">
+        <mat-form-field class="example-form-field" appearance="fill">
+            <mat-label>First campaign</mat-label>
+            <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker">
 
-            <input matStartDate placeholder="Start date" formControlName="start">
-            <input matEndDate placeholder="End date" formControlName="end">
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
 
-        </mat-date-range-input>
+            </mat-date-range-input>
 
-        <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-        <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-        <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
 
-    </mat-form-field>
-</form>
-<div >
+        </mat-form-field>
+    </form>
+</div>
+<div class="inline">
     <canvas id="ridesPerDay"></canvas>
 </div>
-<div >
+<div class="inline">
     <canvas id="earningsPerDay"></canvas>
 </div>
-<div>
+<div class="inline">
     <canvas id="kilometersPerDay"></canvas>
-</div>
-<div>
-    <div class="row">
-        <h4>Total rides:</h4>
-        <h2>{{totalRides}}</h2>
-    </div>
-    <div class="row">
-        <h4>Total earnings:</h4>
-        <h2>{{totalEarnings}}</h2>
-    </div>
-    <div class="row">
-        <h4>Total kilometers:</h4>
-        <h2>{{totalKilometers}}</h2>
-    </div>
-</div>
-<div>
-    <div class="row">
-        <h4>Avg rides:</h4>
-        <h2>{{averageRides}}</h2>
-    </div>
-    <div class="row">
-        <h4>Avg earnings:</h4>
-        <h2>{{averageEarnings}}</h2>
-    </div>
-    <div class="row">
-        <h4>Avg kilometers:</h4>
-        <h2>{{averageKilometers}}</h2>
-    </div>
 </div>

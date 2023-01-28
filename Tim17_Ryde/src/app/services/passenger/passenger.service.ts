@@ -5,9 +5,13 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
 import { Passenger } from 'src/app/model/Passenger';
 import { pagePassenger } from 'src/app/model/Passenger';
+
+import { pageRide } from 'src/app/model/Ride';
+
 import { PassengerUpdateResponse } from 'src/app/model/response/PassengerUpdateResponse';
 import { KilometersResponse, MoneyResponse, RideCountResponse } from 'src/app/model/Ride';
 import { UserResponse } from 'src/app/model/response/UserResponse';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,11 +47,16 @@ export class PassengerService {
     return this.http.post<Passenger>(environment.apiHost + '/api/passenger',passenger, options);
   }
 
+
+  getPassengerRides(passengerId:number):Observable<pageRide>{
+    return this.http.get<pageRide>(environment.apiHost + '/api/passenger/' + passengerId + '/ride')
+  }
   edit(passengerId:number, editRequest:PassengerUpdateResponse):Observable<Passenger>{
     return this.http.put<Passenger>(environment.apiHost + '/api/passenger/' + passengerId, editRequest);
   }
 
   getPassengerByEmail(email: string): Observable<UserResponse> {
     return this.http.get<UserResponse>(environment.apiHost + '/api/passenger/get/' + email);
+
   }
 }

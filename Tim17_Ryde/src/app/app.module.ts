@@ -34,12 +34,18 @@ import { StatisticsComponent } from './components/statistics-component/statistic
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { AdminStatisticsComponent } from './components/admin-statistics/admin-statistics.component';
+
+import { NgxMaterialRatingModule } from 'ngx-material-rating';
+import { ReviewsDriverComponent } from './components/reviews-driver/reviews-driver.component';
+import { PassengerHistoryComponent } from './components/passenger-history/passenger-history.component';
+
 import { PanicComponent } from './components/panic/panic.component';
 import { PanicNotificationComponent } from './components/panic-notification/panic-notification.component';
 import { PassengerProfileComponent } from './components/passenger-profile/passenger-profile.component';
 import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+
 
 @NgModule({
   declarations: [
@@ -65,12 +71,18 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     DriverNavbarComponent,
     AdminStatisticsComponent,
     StatisticsComponent,
+
+    AdminStatisticsComponent,
+    ReviewsDriverComponent,
+    PassengerHistoryComponent,
+
     PanicComponent,
     PanicNotificationComponent,
     PassengerProfileComponent,
     EditPassengerComponent,
     ChangePasswordComponent,
     ResetPasswordComponent
+
   ],
   imports: [
     AppRoutingModule,
@@ -87,6 +99,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    NgxMaterialRatingModule
+
   ],
   providers: [
     {
@@ -94,6 +108,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
       useClass: Interceptor,
       multi: true,
     },
+
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,15 @@ input{
     color: black;
 }
 
+.calendar{
+    text-align: center;
+}
+
 .row{
     display:inline-block;
     width: 49%;
+}
+.inline{
+    display: inline-block;
+    width: 33%;
 }

@@ -1,3 +1,4 @@
+import { Driver } from "./Driver";
 import { Locations } from "./Locations";
 import { Passenger } from "./Passenger";
 
@@ -7,8 +8,10 @@ export interface Ride{
     endTime: string,
     totalCost: number,
     estimatedTimeInMinutes: number,
+    status: string;
     locations:LocationDTO[],
-    passengers:Passenger[];
+    passengers:Passenger[],
+    driver:Driver;
 }
 export interface pageRide{
     count:number

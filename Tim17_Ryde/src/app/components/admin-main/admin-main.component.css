@@ -40,7 +40,7 @@ p{
 .inline{
     display: inline-block;
 }
-#image{
+.image{
     
     display:inline-block; /* added */
     vertical-align:middle;
@@ -218,7 +218,7 @@ h2{
     color: #053132;
     width: 80%;
     text-align: center;
-    background-color: #AFBAA3;
+    background-color: rgba(217, 217, 217, 0.8);
     border-radius: 10px;
 }
 

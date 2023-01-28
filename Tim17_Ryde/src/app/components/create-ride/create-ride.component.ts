@@ -172,9 +172,7 @@ export class CreateRideComponent implements OnInit {
     // }
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+
 
   getTimeDifference() {
     const timeDifference = this.arrivalTime.getTime() - new Date().getTime();

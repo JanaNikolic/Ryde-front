@@ -9,6 +9,7 @@ export interface Driver{
     password:string;
     blocked:Boolean;
     active:Boolean;
+    activeRide:Boolean;
 }
 export interface pageDriver{
     count:number
