@@ -38,8 +38,9 @@
 
 
         <button *ngIf="driversInfo&&showButtons" type="submit" value="REGISTER" class="whiteBtn"
-            [routerLink]="['/createDriver']" id="regBtn">Create
-            driver</button>
+            [routerLink]="['/createDriver']" id="regBtn">Create driver</button>
+            <button *ngIf="driversInfo&&showButtons" type="submit" value="updates" class="updates-button"
+             id="updateBtn" (click)="showUpdates()">Driver updates</button>
 
         <div *ngIf="driversInfo" class=leftContainer>
 
@@ -51,6 +52,7 @@
                     <p> {{driver.name}}</p>
                     <img (click)="getNotesOfUser(driver.id!, driver.name)" id="noteImg" src="assets/images/notes.png">
                     <div class="buttons">
+                        <button class="detailBtn" [routerLink]="['/driver-ride-history/' + driver.id]">history</button>
                         <button class="detailBtn" [routerLink]="['/driver-profile/' + driver.id]">Details</button>
                         <button class="blockBtn" (click)="blockUser(driver.id!)" *ngIf="!driver.blocked">Block</button>
                         <button class="blockBtn" (click)="unblockUser(driver.id!)"
@@ -79,6 +81,15 @@
                             *ngIf="passenger.blocked">Unblock</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div *ngIf="updatesInfo" class="leftContainer">
+            <div *ngFor="let updateRequest of updateRequests">
+                <div (click)="confirmUpdate(updateRequest.id)" class="driverInfo clickable">
+                <p>{{updateRequest.driver.email}}'s request</p>
+            </div>
+
             </div>
         </div>
     </div>

@@ -43,6 +43,8 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
 import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { EditDriverComponent } from './components/edit-driver/edit-driver.component';
+import { UpdateConfirmationComponent } from './components/update-confirmation/update-confirmation.component';
 
 
 @NgModule({
@@ -79,7 +81,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     PassengerProfileComponent,
     EditPassengerComponent,
     ChangePasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    EditDriverComponent,
+    UpdateConfirmationComponent
 
   ],
   imports: [
