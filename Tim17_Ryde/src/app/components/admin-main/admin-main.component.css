@@ -1,25 +1,11 @@
 
 .whiteBtn{
     margin: auto;
-    padding: 12px;
-    border-radius: 10px;
-    background-color: #D9D9D9;
-    width: 90%;
-    margin-top: 10px;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    font-size: 32px;
-    border-width: 0;
-    font-family: 'Roboto';
-    font-style: normal;
-}
-.updates-button{
-    margin: auto;
     padding: 8px;
     border-radius: 10px;
     background-color: #D9D9D9;
     width: 90%;
-    margin-top: 10px;
+    margin-top: 8px;
     letter-spacing: 0.15em;
     cursor: pointer;
     font-size: 20px;
@@ -27,6 +13,7 @@
     font-family: 'Roboto';
     font-style: normal;
 }
+
 button{
     cursor: pointer;
 }
@@ -157,6 +144,7 @@ p{
 }
 .chooseBtn{
     margin: 4%;
+    margin-bottom: 6px;
     padding: 6px;
     border-radius: 10px;
     background-color: #D9D9D9;
@@ -185,7 +173,7 @@ h2{
     width: 25%;
     height: fit-content;
     padding: 2%;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-bottom: 1%;
     margin-left: 5%;
     background: #161619aa;
@@ -232,14 +220,18 @@ h2{
 }
 .driverInfo{
     margin: auto;
-    margin-top: 10%;
+    margin-top: 8%;
     color: #053132;
-    width: 80%;
+    width: 90%;
     text-align: center;
     background-color: rgba(217, 217, 217, 0.8);
     border-radius: 10px;
 }
 
 .map {
-    margin-left: -2%;
+    margin-left: -1%;
+    width: 70%;
+}
+.map-container-small{
+    
 }
