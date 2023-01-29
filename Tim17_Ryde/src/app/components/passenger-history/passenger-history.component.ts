@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Driver } from 'src/app/model/Driver';
 import { Locations } from 'src/app/model/Locations';
 import { Passenger } from 'src/app/model/Passenger';
+import { RideResponse } from 'src/app/model/response/RideResponse';
+import { UserResponse } from 'src/app/model/response/UserResponse';
 import { ReviewRequest,ReviewResponse, RideReview } from 'src/app/model/Review';
 import { LocationDTO, Ride } from 'src/app/model/Ride';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -28,7 +30,7 @@ export class PassengerHistoryComponent {
   showCreateVehicleReview:Boolean = false;
   value: number = 1;
   max: number = 5;
-  constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService, private authService: AuthService) { }
+  constructor(private driverService: DriverService, private reviewService: ReviewService, private rideService: RideService, private passengerService: PassengerService, private route: ActivatedRoute, private mapService: MapService, private authService: AuthService, private router: Router) { }
   rides: Ride[] = [];
   sortCriteria: string = '';
   review: ReviewResponse[] = [];
@@ -51,7 +53,7 @@ export class PassengerHistoryComponent {
     active: false,
     activeRide: false
   };
-  passengers: Passenger[] = [];
+  passengers: UserResponse[] = [];
   loc: Locations = {
     address: '',
     latitude: 10,
@@ -65,8 +67,10 @@ export class PassengerHistoryComponent {
   }
   locc: LocationDTO[] = [this.location];
 
-  singleRide: Ride = {
-    id: 1,
+  driverResponse: UserResponse = { id: 0, email: '' }
+
+  singleRide: RideResponse = {
+    id: 0,
     startTime: '',
     endTime: '',
     status: '',
@@ -74,7 +78,11 @@ export class PassengerHistoryComponent {
     estimatedTimeInMinutes: 0,
     locations: this.locc,
     passengers: this.passengers,
-    driver:this.driver
+    driver: this.driverResponse,
+    babyTransport: false,
+    petTransport: false,
+    scheduledTime: '',
+    vehicleType: ''
   }
  
   CreateReviewForm = new FormGroup({
@@ -110,7 +118,8 @@ export class PassengerHistoryComponent {
       .subscribe(
         (ride) => {
           this.singleRide = ride;
-          this.driver = this.singleRide.driver;
+          // this.driverRes = this.singleRide.driver;
+          this.driverResponse = this.singleRide.driver;
           this.mapService.setFromAddress(this.singleRide.locations[0].departure.address + ", Novi Sad");
           this.mapService.setToAddress(this.singleRide.locations[0].destination.address + ", Novi Sad");
 
@@ -207,6 +216,23 @@ export class PassengerHistoryComponent {
       this.reviewService.postDriverReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
       });
       //TO DO ReviewCreate.Passenger?
+    }
+  }
+
+  orderRide() {
+    if (this.singleRide != undefined && this.singleRide.id !== 0) {
+      this.router.navigate([
+        '/get-ryde'],
+        {
+          queryParams: {
+            departure: this.singleRide.locations[0].departure.address,
+            destination: this.singleRide.locations[0].destination.address,
+            vehicleType: this.singleRide.vehicleType,
+            petTransport: this.singleRide.petTransport,
+            babyTransport: this.singleRide.babyTransport,
+          },
+        },
+      );
     }
   }
 

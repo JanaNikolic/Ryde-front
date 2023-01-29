@@ -21,8 +21,8 @@ export class RideService {
   constructor(private http: HttpClient) { }
 
 
-  getRide(rideId:number):Observable<Ride>{
-    return this.http.get<Ride>(environment.apiHost+'/api/ride/' + rideId);
+  getRide(rideId:number):Observable<RideResponse>{
+    return this.http.get<RideResponse>(environment.apiHost+'/api/ride/' + rideId);
   }
   getRidesPerDay(from:string, to:string):Observable<RideCountResponse>{
     return this.http.get<RideCountResponse>(environment.apiHost+"/api/ride/rideCount?" + "startDate="+ from + "&endDate=" + to);  

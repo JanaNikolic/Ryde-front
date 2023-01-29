@@ -1,5 +1,4 @@
 import { Locations } from "../Locations";
-import { Passenger } from "../Passenger";
 import { UserResponse } from "./UserResponse";
 
 export interface RideResponse{
@@ -14,6 +13,7 @@ export interface RideResponse{
     locations:LocationDTO[],
     passengers:UserResponse[],
     scheduledTime: string,
+    vehicleType: string,
     driver: UserResponse
 }
 

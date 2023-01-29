@@ -50,6 +50,7 @@ export class DriverMainComponent {
     passengers: this.passengers,
     scheduledTime: '',
     driver: { id: this.driverId, email: '' },
+    vehicleType: ''
   };
 
   constructor(
