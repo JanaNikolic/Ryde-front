@@ -45,6 +45,8 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
 import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rate-driver-vehicle.component';
+import { BarRatingModule } from 'ngx-bar-rating';
 
 
 @NgModule({
@@ -81,7 +83,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     PassengerProfileComponent,
     EditPassengerComponent,
     ChangePasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    RateDriverVehicleComponent
 
   ],
   imports: [
@@ -99,7 +102,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxMaterialRatingModule
+    NgxMaterialRatingModule,
+    BarRatingModule
 
   ],
   providers: [
