@@ -74,7 +74,8 @@
                         src="assets/images/notes.png">
 
                     <div class="buttons">
-                        <button class="detailBtn" [routerLink]="['/driver-profile/' + passenger.id]">Details</button>
+                        <button class="detailBtn" [routerLink]="['/passenger-history/' + passenger.id]">history</button>
+                        <button class="detailBtn" [routerLink]="['/passenger-profile/' + passenger.id]">Details</button>
                         <button class="blockBtn" (click)="blockUser(passenger.id!)"
                             *ngIf="!passenger.blocked">Block</button>
                         <button class="blockBtn" (click)="unblockUser(passenger.id!)"
