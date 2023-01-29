@@ -1,0 +1,73 @@
+<div class="container">
+  <header id="modal-header">
+    <h1 id="modal-title">We hope you enjoied your ride!</h1>
+  </header>
+  <form [formGroup]="CreateReviewForm">
+    <section id="modal-body">
+      <h2>Rate your driver</h2>
+      <!-- <bar-rating
+        class="star"
+        [(ngModel)]="driverReview.rating"
+        formControlName="driverRating"
+        [max]="5"
+      ></bar-rating> -->
+      <ngx-material-rating
+        class="float-right"
+        [(ngModel)]="driverReview.rating"
+        formControlName="driverRating"
+        [max]="5"
+        [color]="'primary'"
+      ></ngx-material-rating>
+      <mat-form-field>
+        <input
+          [(ngModel)]="driverReview.comment"
+          formControlName="driverComment"
+          id="driverReview"
+          type="text"
+          placeholder="Leave your review..."
+          matInput
+        />
+      </mat-form-field>
+    </section>
+
+    <section id="modal-body">
+      <h2>Rate vehicle</h2>
+      <!-- <bar-rating
+        class="star"
+        [(ngModel)]="vehicleReview.rating"
+        [max]="5"
+      ></bar-rating> -->
+      <ngx-material-rating
+        formControlName="vehicleRating"
+        [(ngModel)]="vehicleReview.rating"
+        [max]="5"
+        [color]="'primary'"
+      ></ngx-material-rating>
+      <mat-form-field>
+        <input
+          [(ngModel)]="vehicleReview.comment"
+          formControlName="vehicleComment"
+          id="vehicleReview"
+          type="text"
+          placeholder="Leave your review..."
+          matInput
+        />
+      </mat-form-field>
+    </section>
+
+    <footer id="modal-footer">
+      <button
+        mat-raised-button
+        id="modal-action-button"
+        class="white-button"
+        (click)="close()"
+        type="button"
+      >
+        Later
+      </button>
+      <button mat-raised-button id="modal-action-button" (click)="sendReview()">
+        Submit
+      </button>
+    </footer>
+  </form>
+</div>

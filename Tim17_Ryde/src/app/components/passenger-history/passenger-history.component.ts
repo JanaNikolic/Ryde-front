@@ -99,7 +99,11 @@ export class PassengerHistoryComponent {
             this.rides = pageRide.results;
             this.rides.forEach(function (ride) {
               if (ride.status === "FINISHED"){
-              const time2 = new Date(ride.endTime).valueOf() - new Date(ride.startTime).valueOf();
+              let time2 = new Date(ride.endTime).valueOf() - new Date(ride.startTime).valueOf();
+              if (time2 < 0) {
+                time2 = 0;
+                ride.startTime = ride.endTime;
+              }
               ride.estimatedTimeInMinutes = Math.round(time2/60000 *100)/100;}
             }); 
             this.rides.sort((a, b) => (a.startTime > b.startTime ? -1 : 1));
