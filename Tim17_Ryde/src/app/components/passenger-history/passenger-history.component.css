@@ -246,3 +246,20 @@ h2{
     display:inline-block;
     color: #01ACAB;
 }
+
+.icon {
+    width: 30px;
+    height: 30px;
+    padding: 0px 3px;
+    filter: invert(89%) sepia(9%) saturate(9%) hue-rotate(43deg) brightness(92%) contrast(105%);
+}
+
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.flex-end {
+    display: flex;
+    justify-content: end;
+}

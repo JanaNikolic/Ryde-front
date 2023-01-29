@@ -74,6 +74,7 @@ export class CreateRideComponent implements OnInit {
     passengers: [],
     scheduledTime: '',
     driver: { id: 0, email: '' },
+    vehicleType: ''
   };
   currentActiveRide: boolean = false;
   departure: string = '';

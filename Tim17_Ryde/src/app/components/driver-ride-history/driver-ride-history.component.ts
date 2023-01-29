@@ -12,6 +12,8 @@ import { RideReview } from 'src/app/model/Review';
 import { ReviewRequest, ReviewResponse } from 'src/app/model/Review';
 import { MapService } from 'src/app/services/map/map.service';
 import { Driver } from 'src/app/model/Driver';
+import { UserResponse } from 'src/app/model/response/UserResponse';
+import { RideResponse } from 'src/app/model/response/RideResponse';
 
 @Component({
   selector: 'app-driver-ride-history',
@@ -33,19 +35,10 @@ export class DriverRideHistoryComponent {
     vehicleReview: this.review
   }
 
-  passengers: Passenger[] = [];
-  driver: Driver = {
-    id: 1,
-    name: '',
-    surname: '',
-    telephoneNumber: '',
-    email: '',
-    password: '',
-    profilePicture: '',
-    address: '',
-    blocked: false,
-    active: false,
-    activeRide: false
+  passengers: UserResponse[] = [];
+  driver: UserResponse = {
+    id: 0,
+    email: ''
   };
 
   loc: Locations = {
@@ -61,7 +54,7 @@ export class DriverRideHistoryComponent {
   }
   locc: LocationDTO[] = [this.location];
 
-  singleRide: Ride = {
+  singleRide: RideResponse = {
     id: 1,
     startTime: '',
     endTime: '',
@@ -70,7 +63,11 @@ export class DriverRideHistoryComponent {
     estimatedTimeInMinutes: 0,
     locations: this.locc,
     passengers: this.passengers,
-    driver:this.driver
+    driver: this.driver,
+    babyTransport: false,
+    petTransport: false,
+    scheduledTime: '',
+    vehicleType: ''
   }
 
 
