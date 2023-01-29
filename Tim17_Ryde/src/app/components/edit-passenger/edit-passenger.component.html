@@ -20,6 +20,9 @@
         <p class="textLabel"><label>Address</label></p>
             <input type="text" formControlName="address" class="infoInput" name="address" id="address" placeholder="Address">
             </form>
+            <p class="textLabel"><label>Photo</label></p>
+            <input type="file" class="infoInput" name="inputImage" id="inputImage"
+            (change)="inputImage($event)">
     </div>
     <p id="password-link" (click)="changePassword()">Change password -></p>
     <div id="modal-footer">

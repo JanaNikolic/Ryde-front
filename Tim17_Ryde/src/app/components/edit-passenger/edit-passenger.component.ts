@@ -15,9 +15,8 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
   styleUrls: ['./edit-passenger.component.css']
 })
 export class EditPassengerComponent {
-
+  image:string = "";
   editRequest: PassengerUpdateResponse = {
-    id: 0,
     name: "",
     surname: "",
     email: "",
@@ -51,8 +50,17 @@ export class EditPassengerComponent {
     this.editRequest.surname = this.EditForm.value.surname as string;
     this.editRequest.email = this.data.email;
     this.editRequest.telephoneNumber = this.EditForm.value.telephoneNumber as string;
+    if (this.image == ""){
+      this.editRequest.profilePicture = this.data.profilePicture as string;
+     
+    }
+    else{
+      this.editRequest.profilePicture = this.image;
+    }
+   console.log(this.editRequest);
     this.passengerService.edit(this.authService.getId(), this.editRequest).subscribe({
       next: (res) => {
+        console.log(res);
         let snackBarRef = this.snackBar.open('Edit successful!', "", {duration: 2000});
         this.dialogRef.close();
       }
@@ -62,6 +70,14 @@ export class EditPassengerComponent {
 
   cancel() {
     this.dialogRef.close();
+  }
+  inputImage(image: any) {
+    const file = image.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this.image = reader.result!.toString();
+    };
   }
 
   changePassword() {
