@@ -8,6 +8,7 @@
         fxLayout="colums"
         (ngSubmit)="createRide()"
       >
+      <span class="favorite"><button type="button" id="favorite" (click)="addFavorite()"></button></span>
         <mat-form-field appearance="fill">
           <mat-label>Departure</mat-label>
           <input
@@ -15,6 +16,7 @@
             type="text"
             formControlName="departure"
             id="departureInput"
+            [formControl]="selectedFromAddress"
           />
         </mat-form-field>
         <mat-form-field appearance="fill">
@@ -24,6 +26,7 @@
             type="text"
             formControlName="destination"
             id="destinationInput"
+            [formControl]="selectedToAddress"
           />
         </mat-form-field>
         <div class="split">
@@ -108,7 +111,7 @@
         <h2>Share ride with</h2>
         <div>
           <div id="friends">
-            <button class="add" type="button" (click)="openPopup()"></button>
+            <button class="add" id="addBtn" type="button" (click)="openPopup()"></button>
           </div>
           <div class="popup-div">
             <label class="popup" id="popup">

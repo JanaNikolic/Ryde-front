@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
 import { interval, isEmpty, Observable, Subscription } from 'rxjs';
 import * as SockJS from 'sockjs-client';
@@ -24,6 +24,8 @@ import { UserResponse } from 'src/app/model/response/UserResponse';
 import { PassengerService } from 'src/app/services/passenger/passenger.service';
 import { RideService } from 'src/app/services/ride/ride.service';
 import { DriverService } from 'src/app/services/driver/driver.service';
+import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-ride',
@@ -72,14 +74,14 @@ export class CreateRideComponent implements OnInit {
     driver: { id: 0, email: '' },
   };
   currentActiveRide: boolean = false;
-  departure: string = 'Adresa 123';
-  destination: string = 'Adresa 12';
-  name: string = 'Mika Mikic';
-  email: string = 'mika@mikic.com';
-  licensePlate: string = 'NS-069-PA';
-  model: string = 'Model';
-  price: string = '250 RSD';
-  time: string = '7 minutes';
+  departure: string = '';
+  destination: string = '';
+  name: string = '';
+  email: string = '';
+  licensePlate: string = '';
+  model: string = '';
+  price: string = '';
+  time: string = '';
   driverArrive: number = 0;
   dateNow: Date = new Date();
   milliSecondsInASecond = 1000;
@@ -87,7 +89,14 @@ export class CreateRideComponent implements OnInit {
   minutesInAnHour = 60;
   SecondsInAMinute = 60;
   arrivalTime: any;
-
+  favorite = {
+    departure: '',
+    destination: '',
+    vehicleType: '',
+    babyTransport: false,
+    petTransport: false,
+  };
+  
   constructor(
     private mapService: MapService,
     private router: Router,
@@ -96,7 +105,9 @@ export class CreateRideComponent implements OnInit {
     private authService: AuthService,
     private passengerService: PassengerService,
     private rideService: RideService,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private route: ActivatedRoute,
+    public snackBar: MatSnackBar
   ) {}
 
   imageStandard: any = 'assets/images/standard.png';
@@ -125,6 +136,24 @@ export class CreateRideComponent implements OnInit {
     this.selectedFromAddress = this.CreateRideForm.get('departure');
     this.selectedToAddress = this.CreateRideForm.get('destination');
 
+    this.CreateRideForm.controls['vehicleType'].setValue('STANDARD');
+
+    this.route.queryParams.subscribe((params) => {
+      this.favorite.departure = params['departure'];
+      this.favorite.destination = params['destination'];
+      this.favorite.petTransport = params['petTransport'] === 'true';
+      this.favorite.babyTransport = params['babyTransport'] === 'true';
+      this.favorite.vehicleType = params['vehicleType'];
+    });
+
+    this.mapService.selectedFromAddress$.subscribe((data) => {
+      this.CreateRideForm.controls['departure'].setValue(data.display_name);
+    });
+
+    this.mapService.selectedToAddress$.subscribe((data) => {
+      this.CreateRideForm.controls['destination'].setValue(data.display_name);
+    });
+
     this.selectedTime = this.CreateRideForm.get('selectedTime');
 
     const today = new Date();
@@ -133,16 +162,22 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.controls['date'].disable();
     }
 
-    this.CreateRideForm.controls['vehicleType'].setValue('STANDARD');
-
-    this.mapService.selectedFromAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['departure'].setValue(data.display_name);
-      console.log(data.display_name);
-    });
-
-    this.mapService.selectedToAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['destination'].setValue(data.display_name);
-    });
+    if (this.favorite.departure.length > 0) {
+      this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
+      this.CreateRideForm.controls['destination'].setValue(
+        this.favorite.destination
+      );
+      this.CreateRideForm.controls['petTransport'].setValue(
+        this.favorite.petTransport
+      );
+      this.CreateRideForm.controls['babyTransport'].setValue(
+        this.favorite.babyTransport
+      );
+      this.CreateRideForm.controls['vehicleType'].setValue(
+        this.favorite.vehicleType
+      );
+    }
+    
 
     // this.selectedFromAddress.valueChanges.subscribe(
     //   (value: string) => {
@@ -172,17 +207,12 @@ export class CreateRideComponent implements OnInit {
     // }
   }
 
-
-
   getTimeDifference() {
     const timeDifference = this.arrivalTime.getTime() - new Date().getTime();
     this.allocateTimeUnits(timeDifference);
   }
 
   allocateTimeUnits(timeDifference: number) {
-    // this.secondsToDday = Math.floor(
-    //   (timeDifference / this.milliSecondsInASecond) % this.SecondsInAMinute
-    // );
     this.driverArrive = Math.floor(
       (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
         this.SecondsInAMinute
@@ -275,7 +305,9 @@ export class CreateRideComponent implements OnInit {
     const divFriends = document.getElementById('friends') as HTMLElement | null;
     const errorField = document.getElementById('no-user-error') as HTMLElement;
     errorField.style.display = 'none';
-    const alreadyAddedError = document.getElementById('already-added-error') as HTMLElement;
+    const alreadyAddedError = document.getElementById(
+      'already-added-error'
+    ) as HTMLElement;
     alreadyAddedError.style.display = 'none';
 
     if (this.friendEmail.valid && divFriends != null) {
@@ -287,10 +319,10 @@ export class CreateRideComponent implements OnInit {
           console.log(res);
           console.log(this.friendList);
 
-          if (!this.friendList.find(e => e.id === res.id)) {
+          if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
             letter = letter.toUpperCase().substring(0, 1);
-  
+
             const f = document.createElement('span');
             f.style.height = '40px';
             f.style.width = '40px';
@@ -302,7 +334,7 @@ export class CreateRideComponent implements OnInit {
             f.style.fontSize = '30px';
             f.style.fontWeight = '300';
             f.style.fontFamily = 'Outfit';
-  
+
             f.textContent = letter;
             divFriends.appendChild(f);
           } else {
@@ -321,81 +353,71 @@ export class CreateRideComponent implements OnInit {
     }
   }
 
+  formValidate(): RideRequest {
+    const format: string = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+    let fromAddress: string = this.CreateRideForm.get('departure')?.value;
+    let toAddress: string = this.CreateRideForm.get('destination')?.value;
+    let vehicleType: string = this.CreateRideForm.get('vehicleType')?.value;
+    let pets: boolean = this.CreateRideForm.get('petTransport')?.value;
+    let babies: boolean = this.CreateRideForm.get('babyTransport')?.value;
+    let time: any = this.CreateRideForm.controls['selectedTime']?.value;
+
+    if (pets == null) pets = false;
+    if (babies == null) babies = false;
+
+    if (time >= DateTime.local().toFormat('HH:mm')) {
+      // if date disabled then same date
+      time = DateTime.local().set({
+        hour: +time.split(':')[0],
+        minutes: time.split(':')[1],
+      });
+      time = time.toFormat(format);
+      // else next day
+    }
+
+    let departure: Locations = {
+      address: fromAddress,
+      latitude: 0,
+      longitude: 0,
+    };
+
+    let destination: Locations = {
+      address: toAddress,
+      latitude: 0,
+      longitude: 0,
+    };
+
+    let ride: RideRequest = {
+      locations: [
+        {
+          departure: departure,
+          destination: destination,
+        },
+      ],
+      passengers: this.friendList,
+      vehicleType: vehicleType,
+      babyTransport: babies,
+      petTransport: pets,
+      scheduledTime: time,
+    };
+    console.log(this.CreateRideForm);
+    this.CreateRideForm.reset(this.CreateRideForm.value);
+    this.CreateRideForm.controls['date'].setValue(new Date());
+    console.log(this.CreateRideForm);
+    return ride;
+  }
+
   createRide() {
     if (this.CreateRideForm.valid) {
-      const format: string = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+      const ride: RideRequest = this.formValidate();
 
-      let fromAddress: string = this.CreateRideForm.get('departure')?.value;
-      let toAddress: string = this.CreateRideForm.get('destination')?.value;
-      let vehicleType: string = this.CreateRideForm.get('vehicleType')?.value;
-      let pets: boolean = this.CreateRideForm.get('petTransport')?.value;
-      let babies: boolean = this.CreateRideForm.get('babyTransport')?.value;
-      let time: any = this.CreateRideForm.controls['selectedTime']?.value;
-
-      this.selectedFromAddress = fromAddress;
-      this.selectedToAddress = toAddress;
+      this.selectedFromAddress = ride.locations[0].departure.address;
+      this.selectedToAddress = ride.locations[0].destination.address;
 
       this.mapService.setFromAddress(this.selectedFromAddress + ', Novi Sad');
 
       this.mapService.setToAddress(this.selectedToAddress + ', Novi Sad');
-
-      // this.mapService.setFromAddress(fromAddress + ", Novi Sad");
-
-      // this.mapService.setToAddress(toAddress + ", Novi Sad");
-
-      if (pets == null) pets = false;
-      if (babies == null) babies = false;
-
-      if (time >= DateTime.local().toFormat('HH:mm')) {
-        // if date disabled then same date
-        time = DateTime.local().set({
-          hour: +time.split(':')[0],
-          minutes: time.split(':')[1],
-        });
-        time = time.toFormat(format);
-        // else next day
-      }
-
-      // console.log(fromAddress);
-      // console.log(toAddress);
-      // console.log(vehicleType);
-      // console.log(pets);
-      // console.log(babies);
-      // console.log(time);
-
-      let departure: Locations = {
-        address: fromAddress,
-        latitude: 0,
-        longitude: 0,
-      };
-
-      let destination: Locations = {
-        address: toAddress,
-        latitude: 0,
-        longitude: 0,
-      };
-
-      // let passengers: UserResponse[] = [];
-
-      // for (let f in this.friendList) {
-      //   // TODO
-      //   const passenger: UserResponse = ;
-      //   passengers.push(passenger);
-      // }
-
-      let ride: RideRequest = {
-        locations: [
-          {
-            departure: departure,
-            destination: destination,
-          },
-        ],
-        passengers: this.friendList,
-        vehicleType: vehicleType,
-        babyTransport: babies,
-        petTransport: pets,
-        scheduledTime: time,
-      };
 
       this.rideService.postRide(ride).subscribe({
         next: (res) => {
@@ -434,5 +456,41 @@ export class CreateRideComponent implements OnInit {
       },
       error: (error) => {},
     });
+  }
+
+  addFavorite() {
+    if (this.CreateRideForm.valid) {
+      const fav = document.getElementById('favorite') as HTMLElement;
+      fav.style.backgroundImage = "url('assets/images/favorite_fill.svg')";
+      const ride: RideRequest = this.formValidate();
+
+      let favoriteRide: FavoriteRideRequest = {
+        favoriteName: 'Favorite',
+        locations: ride.locations,
+        passengers: [],
+        vehicleType: ride.vehicleType,
+        babyTransport: ride.babyTransport,
+        petTransport: ride.petTransport,
+      };
+
+      this.rideService.postFavoriteRide(favoriteRide).subscribe({
+        next: (res) => {
+          fav.setAttribute('disabled', '');
+          this.snackBar.open('Succesfuly added favorite route!', '', {
+            duration: 2000,
+          });
+        },
+        error: (error) => {
+          console.log(error.message);
+          fav.setAttribute('disabled', '');
+          this.snackBar.open('You already have 10 favorite routes!', '', {
+            duration: 2000,
+          });
+        },
+      });
+
+      this.CreateRideForm.reset(this.CreateRideForm.value);
+      this.CreateRideForm.controls['date'].setValue(new Date());
+    }
   }
 }

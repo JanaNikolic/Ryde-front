@@ -264,6 +264,8 @@ color: #01ACAB;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 39px;
 }
 
 #monthly {
