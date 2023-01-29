@@ -55,7 +55,7 @@ export class CreateRideComponent implements OnInit {
   });
   friendList: UserResponse[] = [];
 
-  passengerId: number | undefined;
+  passengerId: number = 0;
   isLoaded: boolean = false;
   private serverUrl = environment.apiHost + '/example-endpoint';
   private stompClient: any;
@@ -120,6 +120,8 @@ export class CreateRideComponent implements OnInit {
   ngOnInit(): void {
     this.passengerId = this.authService.getId();
 
+    this.getActiveRide();
+
     this.CreateRideForm = this.formBuilder.group({
       departure: new FormControl('', {
         validators: [Validators.required, Validators.minLength(5)],
@@ -131,7 +133,7 @@ export class CreateRideComponent implements OnInit {
       }),
       babyTransport: new FormControl(),
       petTransport: new FormControl(),
-      vehicleType: new FormControl(),
+      vehicleType: new FormControl('STANDARD'),
       date: new FormControl(new Date()),
       selectedTime: new FormControl(),
     });
@@ -165,7 +167,7 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.controls['date'].disable();
     }
 
-    if (this.favorite.departure.length > 0) {
+    if (this.favorite.departure == undefined || this.favorite.departure.length > 0) {
       this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
       this.CreateRideForm.controls['destination'].setValue(
         this.favorite.destination
@@ -210,6 +212,27 @@ export class CreateRideComponent implements OnInit {
     // }
   }
 
+  getActiveRide() {
+    this.rideService.getPassengerActive(this.passengerId).subscribe({
+      next: (res) => {
+        this.currentRide = res;
+        this.rideId = this.currentRide.id;
+        
+        this.openCurrentRide();
+
+        this.arrivalTime = new Date(this.currentRide.startTime);
+        this.subscription = interval(1000).subscribe((x) => {
+          this.getTimeDifference();
+        });
+
+        this.initializeWebSocketConnection();
+      },
+      error: (error) => {
+        this.currentActiveRide = false;
+      }
+    })
+  }
+
   getTimeDifference() {
     const timeDifference = this.arrivalTime.getTime() - new Date().getTime();
     this.allocateTimeUnits(timeDifference);
@@ -238,15 +261,13 @@ export class CreateRideComponent implements OnInit {
   }
 
   openSocket() {
-    if (this.isLoaded) {
+    if (this.isLoaded && this.rideId != 0) {
       this.stompClient.subscribe(
         '/topic/ride/' + this.rideId,
         (message: { body: string }) => {
           console.log(message);
           this.handleResult(message);
-          // this.openModal();
-          // if (this.currentRide.status === "ACCEPTED")
-          console.log(this.currentRide);
+          
           if (this.currentRide.status === 'ACCEPTED') {
             this.dialogRef.closeAll();
             this.currentActiveRide = true;
@@ -277,8 +298,6 @@ export class CreateRideComponent implements OnInit {
             this.snackBar.open('Your ride has been canceled!', '', {duration: 2000,});
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
-
-          // If rejected => False
           }
         }
       );
@@ -513,8 +532,8 @@ export class CreateRideComponent implements OnInit {
       dialogConfig.height = "350px";
       dialogConfig.width = "600px";
       dialogConfig.data = this.currentRide;
-      this.currentActiveRide = false;
       const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
       let that = this;
+      this.getActiveRide();
   }
 }

@@ -73,6 +73,12 @@ export class DriverMainComponent {
       next: (res) => {
         this.ride = res;
         this.currentActiveRide = true;
+        if (this.ride.status === "STARTED") {
+          this.started = true;  
+        } else {
+          this.started = false;
+        }
+        
         this.setPassenger();
       },
       error: (error) => {
@@ -104,7 +110,9 @@ export class DriverMainComponent {
           } else if (this.ride.status === "FINISHED") {
             this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
             this.currentActiveRide = false;
-          }          
+          } else if (this.ride.status === "ACCEPTED") {
+            this.started = false;
+          }
         }
       );
     }
@@ -150,6 +158,7 @@ export class DriverMainComponent {
     dialogConfig.data = this.ride;
 
     const modalDialog = this.matDialog.open(RejectRideComponent, dialogConfig);
+    this.started = false;
     let that = this;
   }
 

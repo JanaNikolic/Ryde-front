@@ -73,4 +73,8 @@ export class RideService {
   postFavoriteRide(ride: FavoriteRideRequest): Observable<FavoriteRideResponse> {
     return this.http.post<FavoriteRideResponse>(environment.apiHost + "/api/ride/favorites", ride);
   }
+
+  getPassengerActive(passengerId: number): Observable<RideResponse> {
+    return this.http.get<RideResponse>(environment.apiHost + "/api/ride/passenger/" + passengerId + "/active");
+  }
 }
