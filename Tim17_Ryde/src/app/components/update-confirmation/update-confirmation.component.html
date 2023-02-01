@@ -1,0 +1,33 @@
+<div id="modal-content-wrapper">
+    <div id="modal-header">
+        <img (click)="cancel()" id="backImg" src="assets/images/back2.png">
+        <h1 id="modal-title">Edit Profile</h1>
+    </div>
+    <div id="modal-body" >
+        <p class="textLabel"><label class="right-margin">Name:</label>
+        </p>
+        <p class="infoInput">{{name}}</p>
+        <p class="textLabel"><label class="right-margin">Surname</label></p>
+        <p class="infoInput">{{surname}}</p>
+           
+        <p class="textLabel"><label>Email</label></p>
+        <p class="infoInput">{{email}}</p>
+          
+        <p class="textLabel"><label>Phone Number</label></p>
+        <p class="infoInput">{{telephoneNumber}}</p>
+        
+        <p class="textLabel"><label>Address</label></p>
+        <p class="infoInput">{{address}}</p>
+           
+            <p class="textLabel"><label>Photo</label></p>
+            <img class="img" [src]="profilePicture">
+            
+            <p class="textLabel"><label>Document photo</label></p>
+            <img class="img" [src]="documentImage">
+          
+    <div id="modal-footer">
+        <button type="submit" mat-raised-button id="modal-action-button"  (click)="confirmation()">Confirm</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="rejection()" >Reject</button>
+    </div>
+</div>
+
