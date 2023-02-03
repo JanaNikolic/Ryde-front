@@ -182,7 +182,7 @@
       <p>{{ time }}</p>
       <p class="price">{{ price }}</p>
       <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive !== 0">Your driver will arrive in {{ driverArrive }} minutes</p>
-      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive == 0">Your driver will arrive soon</p>
+      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive <= 0">Your driver will arrive soon</p>
     </div>
     <div id="buttons" *ngIf="currentRide.status == 'STARTED'">
       <button id="panic" type="button" (click)="panic()">PANIC</button>

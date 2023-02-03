@@ -154,11 +154,14 @@ export class CreateRideComponent implements OnInit {
     });
 
     this.mapService.selectedFromAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['departure'].setValue(data.display_name);
+      const address = data.address;
+      console.log(address.road + " " + address.house_number + ", " + address.city_district);
+      this.CreateRideForm.controls['departure'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
     });
 
     this.mapService.selectedToAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['destination'].setValue(data.display_name);
+      const address = data.address;
+      this.CreateRideForm.controls['destination'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
     });
 
     this.selectedTime = this.CreateRideForm.get('selectedTime');
@@ -245,7 +248,8 @@ export class CreateRideComponent implements OnInit {
       (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
         this.SecondsInAMinute
     );
-    if (this.driverArrive == 0) {
+    if (this.driverArrive <= 0 || this.driverArrive >= this.currentRide.estimatedTimeInMinutes) {
+      this.driverArrive = 0;
       this.subscription.unsubscribe();
     }
   }
@@ -267,7 +271,7 @@ export class CreateRideComponent implements OnInit {
       this.stompClient.subscribe(
         '/topic/ride/' + this.rideId,
         (message: { body: string }) => {
-          console.log(message);
+          // console.log(message);
           this.handleResult(message);
           
           if (this.currentRide.status === 'ACCEPTED') {
@@ -278,7 +282,7 @@ export class CreateRideComponent implements OnInit {
               duration: 2000,
             });
             this.arrivalTime = new Date(this.currentRide.startTime);
-            console.log(this.arrivalTime);
+            // console.log(this.arrivalTime);
 
             this.subscription = interval(1000).subscribe((x) => {
               this.getTimeDifference();
@@ -347,12 +351,12 @@ export class CreateRideComponent implements OnInit {
 
     if (this.friendEmail.valid && divFriends != null) {
       let letter = this.friendEmail.value;
-      console.log(letter);
+      // console.log(letter);
 
       this.passengerService.getPassengerByEmail(letter).subscribe({
         next: (res) => {
-          console.log(res);
-          console.log(this.friendList);
+          // console.log(res);
+          // console.log(this.friendList);
 
           if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
@@ -436,7 +440,7 @@ export class CreateRideComponent implements OnInit {
       petTransport: pets,
       scheduledTime: time,
     };
-    console.log(this.CreateRideForm);
+    
     this.CreateRideForm.reset(this.CreateRideForm.value);
     this.CreateRideForm.controls['date'].setValue(new Date());
     console.log(this.CreateRideForm);
@@ -457,7 +461,7 @@ export class CreateRideComponent implements OnInit {
       this.rideService.postRide(ride).subscribe({
         next: (res) => {
           this.rideId = res.id;
-          console.log(res);
+          // console.log(res);
           this.initializeWebSocketConnection();
         },
         error: (error) => {
@@ -517,7 +521,7 @@ export class CreateRideComponent implements OnInit {
           });
         },
         error: (error) => {
-          console.log(error.message);
+          // console.log(error.message);
           fav.setAttribute('disabled', '');
           this.snackBar.open('You already have 10 favorite routes!', '', {
             duration: 2000,
