@@ -46,7 +46,8 @@ import { EditPassengerComponent } from './components/edit-passenger/edit-passeng
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rate-driver-vehicle.component';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { RoutingMapComponent } from './components/routing-map/routing-map.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rat
     EditPassengerComponent,
     ChangePasswordComponent,
     ResetPasswordComponent,
-    RateDriverVehicleComponent
+    RateDriverVehicleComponent,
+    RoutingMapComponent
 
   ],
   imports: [
@@ -103,6 +105,7 @@ import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rat
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialRatingModule,
+    LeafletModule
 
   ],
   providers: [

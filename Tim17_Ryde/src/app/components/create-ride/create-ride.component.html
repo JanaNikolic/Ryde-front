@@ -1,5 +1,6 @@
 <div class="container">
-  <app-map class="map"></app-map>
+  <app-map class="map" *ngIf="currentRide.status != 'ACCEPTED' && currentRide.status != 'STARTED'"></app-map>
+    <app-routing-map class="map" *ngIf="currentRide.status == 'ACCEPTED' || currentRide.status == 'STARTED'"></app-routing-map>
   <div class="left-container" *ngIf="currentActiveRide == false">
     <h1>Get a Ryde</h1>
     <div class="form-container">

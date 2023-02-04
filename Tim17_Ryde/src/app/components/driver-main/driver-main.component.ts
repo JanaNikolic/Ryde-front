@@ -76,6 +76,9 @@ export class DriverMainComponent {
         this.currentActiveRide = true;
         if (this.ride.status === "STARTED") {
           this.started = true;  
+          this.mapService.setFromAddress(this.ride.locations[0].departure.address);
+
+          this.mapService.setToAddress(this.ride.locations[0].destination.address);
         } else {
           this.started = false;
         }
@@ -109,10 +112,16 @@ export class DriverMainComponent {
           if (this.ride.status === "PENDING") {
             this.openModal();
           } else if (this.ride.status === "FINISHED") {
-            this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
-            this.currentActiveRide = false;
+              this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
+              this.currentActiveRide = false;
+              this.mapService.setFromAddress('');
+
+              this.mapService.setToAddress('');
           } else if (this.ride.status === "ACCEPTED") {
             this.started = false;
+            this.mapService.setFromAddress(this.ride.locations[0].departure.address);
+
+            this.mapService.setToAddress(this.ride.locations[0].destination.address);
           }
         }
       );

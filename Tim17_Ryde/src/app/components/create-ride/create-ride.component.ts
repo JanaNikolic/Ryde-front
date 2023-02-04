@@ -9,7 +9,7 @@ import {
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
-import { interval, isEmpty, Observable, Subscription } from 'rxjs';
+import { forkJoin, interval, isEmpty, map, Observable, Subscription } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { environment } from 'src/app/environment/environment';
@@ -458,21 +458,60 @@ export class CreateRideComponent implements OnInit {
 
       this.mapService.setToAddress(this.selectedToAddress + ', Novi Sad');
 
-      this.rideService.postRide(ride).subscribe({
-        next: (res) => {
-          this.rideId = res.id;
-          // console.log(res);
-          this.initializeWebSocketConnection();
-        },
-        error: (error) => {
-          this.snackBar.open('No available drivers!', '', {duration: 2000,});
-          this.dialogRef.closeAll();
-        },
-      });
+      forkJoin([this.mapService.search(ride.locations[0].departure.address), this.mapService.search(ride.locations[0].destination.address)])
+      .pipe(
+        map(([dep, des]) => { 
+          // console.log(dep);
+          // console.log(des);        
+          // this.departureLat = dep[0].boundingbox[0];
+          // this.departureLng = dep[0].boundingbox[2];
+    
+          // this.destinationLat = des[0].lat;
+          // this.destinationLng = des[0].lon;
 
-      // this.CreateRideForm.reset(this.CreateRideForm.value);
-      // console.log(this.selectedFromAddress);
-      this.openDialog();
+          ride.locations[0].departure.latitude = parseFloat(dep[0].lat);
+          ride.locations[0].departure.longitude = parseFloat(dep[0].lon);
+
+          ride.locations[0].destination.latitude = parseFloat(des[0].lat);
+          ride.locations[0].destination.longitude = parseFloat(des[0].lon);
+    
+          console.log(ride);
+          // console.log(dep[0].lat);
+          // console.log(dep[0].lon);
+          // console.log(parseFloat(des[0].lat));
+          // console.log(des[0].lon);
+
+          // console.log(this.departureLat);
+          // console.log(this.departureLng);
+          // console.log(this.destinationLat);
+          // console.log(this.destinationLng);
+          // console.log(this.currentRide.locations[0].departure.latitude);
+          // console.log(this.currentRide.locations[0].departure.longitude);
+
+          // console.log(this.currentRide.locations[0].destination.latitude);
+          // console.log(this.currentRide.locations[0].destination.longitude);
+
+
+          this.rideService.postRide(ride).subscribe({
+            next: (res) => {
+              this.rideId = res.id;
+              // console.log(res);
+              this.initializeWebSocketConnection();
+            },
+            error: (error) => {
+              this.snackBar.open('No available drivers!', '', {duration: 2000,});
+              this.dialogRef.closeAll();
+            },
+          });
+    
+          // this.CreateRideForm.reset(this.CreateRideForm.value);
+          // console.log(this.selectedFromAddress);
+          this.openDialog();
+        })
+      )
+      .subscribe();
+
+      
     }
   }
 
