@@ -1,12 +1,12 @@
 import { Locations } from "./Locations";
 
 export interface Vehicle{
-    id?:number,
+    id:number,
     driverId?:number,
     vehicleType:string,
     model:string,
     licenseNumber:string,
-    currentLocation?:Locations,
+    currentLocation:Locations,
     passengerSeats:number,
     babyTransport:boolean,
     petTransport:boolean,

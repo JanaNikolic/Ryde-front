@@ -1,6 +1,6 @@
 
-<body><app-map class="map">
-</app-map>
+<body>
+    <app-routing-map class="map"></app-routing-map>
 <div id="left-container" *ngIf="currentActiveRide">
     <h1>Current ride</h1>
         <div class="ping">
@@ -19,7 +19,8 @@
     </div>
     <p class="subtitles passenger-title">Passenger</p>
     <div id="passenger-info">
-        <img id= "profile-pic" src="assets/images/avatar.png" alt="profilePic">
+        <img id= "profile-pic" *ngIf="!passenger.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+        <img id= "profile-pic" *ngIf="passenger.profilePicture" [src]="passenger.profilePicture">
         <div id="profile-info">
             <p id="name">{{name}}</p>
             <p id="email">{{email}}</p>

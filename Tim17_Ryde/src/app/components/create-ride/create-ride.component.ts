@@ -9,7 +9,7 @@ import {
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
-import { interval, isEmpty, Observable, Subscription } from 'rxjs';
+import { forkJoin, interval, isEmpty, map, Observable, Subscription } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { environment } from 'src/app/environment/environment';
@@ -29,6 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TmplAstRecursiveVisitor } from '@angular/compiler';
 import { PanicComponent } from '../panic/panic.component';
 import { RateDriverVehicleComponent } from '../rate-driver-vehicle/rate-driver-vehicle.component';
+import { Driver } from 'src/app/model/Driver';
 
 @Component({
   selector: 'app-create-ride',
@@ -100,6 +101,18 @@ export class CreateRideComponent implements OnInit {
     babyTransport: false,
     petTransport: false,
   };
+  driver: Driver = {
+    name: '',
+    surname: '',
+    telephoneNumber: '',
+    email: '',
+    address: '',
+    password: '',
+    blocked: false,
+    active: false,
+    activeRide: false,
+    profilePicture: ''
+  };
   
   constructor(
     private mapService: MapService,
@@ -154,11 +167,14 @@ export class CreateRideComponent implements OnInit {
     });
 
     this.mapService.selectedFromAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['departure'].setValue(data.display_name);
+      const address = data.address;
+      console.log(address.road + " " + address.house_number + ", " + address.city_district);
+      this.CreateRideForm.controls['departure'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
     });
 
     this.mapService.selectedToAddress$.subscribe((data) => {
-      this.CreateRideForm.controls['destination'].setValue(data.display_name);
+      const address = data.address;
+      this.CreateRideForm.controls['destination'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
     });
 
     this.selectedTime = this.CreateRideForm.get('selectedTime');
@@ -184,34 +200,6 @@ export class CreateRideComponent implements OnInit {
         this.favorite.vehicleType
       );
     }
-    
-
-    // this.selectedFromAddress.valueChanges.subscribe(
-    //   (value: string) => {
-    //     if (value != null && value.length > 5) {
-    //       // console.log(value);
-    //       this.mapService.setFromAddress(value + ", Novi Sad");
-    //     }
-
-    //   }
-    // );
-
-    // this.selectedToAddress.valueChanges.subscribe(
-    //   (value: string) => {
-    //     if (value != null && value.length > 5) {
-    //       // this.destination = value;
-    //       this.mapService.setToAddress(value + ", Novi Sad");
-    //     }
-    //   }
-    // );
-    // if (this.currentRide.status === 'ACCEPTED') {
-    //   this.arrivalTime = new Date(this.currentRide.startTime);
-    //   console.log(this.arrivalTime);
-
-    //   this.subscription = interval(1000).subscribe((x) => {
-    //     this.getTimeDifference();
-    //   });
-    // }
   }
 
   getActiveRide() {
@@ -245,13 +233,13 @@ export class CreateRideComponent implements OnInit {
       (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
         this.SecondsInAMinute
     );
-    if (this.driverArrive == 0) {
+    if (this.driverArrive <= 0 || this.driverArrive >= this.currentRide.estimatedTimeInMinutes) {
+      this.driverArrive = 0;
       this.subscription.unsubscribe();
     }
   }
 
   initializeWebSocketConnection() {
-    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -267,7 +255,7 @@ export class CreateRideComponent implements OnInit {
       this.stompClient.subscribe(
         '/topic/ride/' + this.rideId,
         (message: { body: string }) => {
-          console.log(message);
+          // console.log(message);
           this.handleResult(message);
           
           if (this.currentRide.status === 'ACCEPTED') {
@@ -278,7 +266,6 @@ export class CreateRideComponent implements OnInit {
               duration: 2000,
             });
             this.arrivalTime = new Date(this.currentRide.startTime);
-            console.log(this.arrivalTime);
 
             this.subscription = interval(1000).subscribe((x) => {
               this.getTimeDifference();
@@ -303,6 +290,27 @@ export class CreateRideComponent implements OnInit {
             this.currentActiveRide = false;
             this.openReviewDialog();
           }
+
+          console.log(this.currentRide.scheduledTime);
+          if (this.currentRide.scheduledTime != null || this.currentRide.scheduledTime != '' || this.currentRide.scheduledTime != undefined ) {
+            if (this.currentRide.status === 'SCHEDULED' || this.currentRide.status === 'ACCEPTED') {
+              this.snackBar.open('Your ride will arrive in 15 minutes!', '', {
+                duration: 2000,
+              });
+              console.log("TIMER");
+              let i = 2;
+              const timerId = setInterval(() => {
+                if (i < 0 || this.currentRide.status != 'ACCEPTED') {
+                  clearInterval(timerId);
+                }
+                i = i - 1;
+                this.snackBar.open('Your ride will arrive in ' + (5*i+5) + ' minutes!', '', {
+                  duration: 2000,
+                });               
+              }, 1 * 10000);
+            }
+          }
+
         }
       );
     }
@@ -347,12 +355,10 @@ export class CreateRideComponent implements OnInit {
 
     if (this.friendEmail.valid && divFriends != null) {
       let letter = this.friendEmail.value;
-      console.log(letter);
+      // console.log(letter);
 
       this.passengerService.getPassengerByEmail(letter).subscribe({
         next: (res) => {
-          console.log(res);
-          console.log(this.friendList);
 
           if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
@@ -436,7 +442,7 @@ export class CreateRideComponent implements OnInit {
       petTransport: pets,
       scheduledTime: time,
     };
-    console.log(this.CreateRideForm);
+    
     this.CreateRideForm.reset(this.CreateRideForm.value);
     this.CreateRideForm.controls['date'].setValue(new Date());
     console.log(this.CreateRideForm);
@@ -454,21 +460,41 @@ export class CreateRideComponent implements OnInit {
 
       this.mapService.setToAddress(this.selectedToAddress + ', Novi Sad');
 
-      this.rideService.postRide(ride).subscribe({
-        next: (res) => {
-          this.rideId = res.id;
-          console.log(res);
-          this.initializeWebSocketConnection();
-        },
-        error: (error) => {
-          this.snackBar.open('No available drivers!', '', {duration: 2000,});
-          this.dialogRef.closeAll();
-        },
-      });
+      forkJoin([this.mapService.search(ride.locations[0].departure.address), this.mapService.search(ride.locations[0].destination.address)])
+      .pipe(
+        map(([dep, des]) => { 
 
-      // this.CreateRideForm.reset(this.CreateRideForm.value);
-      // console.log(this.selectedFromAddress);
-      this.openDialog();
+          ride.locations[0].departure.latitude = parseFloat(dep[0].lat);
+          ride.locations[0].departure.longitude = parseFloat(dep[0].lon);
+
+          ride.locations[0].destination.latitude = parseFloat(des[0].lat);
+          ride.locations[0].destination.longitude = parseFloat(des[0].lon);
+    
+          console.log(ride);
+          this.rideService.postRide(ride).subscribe({
+            next: (res) => {
+              this.rideId = res.id;
+              console.log(res);
+              
+              this.initializeWebSocketConnection();
+              if (res.scheduledTime != null && res.status == "SCHEDULED") {
+                this.snackBar.open('Ride sucessfuly ordered!', '', {duration: 2000,});
+              }
+            },
+            error: (error) => {
+              this.snackBar.open('No available drivers!', '', {duration: 2000,});
+              this.dialogRef.closeAll();
+            },
+          });
+    
+          if (ride.scheduledTime == null) {
+            this.openDialog();
+          }
+        })
+      )
+      .subscribe();
+
+      
     }
   }
 
@@ -481,6 +507,7 @@ export class CreateRideComponent implements OnInit {
       next: (res) => {
         this.name = res.name + ' ' + res.surname;
         this.email = res.email;
+        this.driver = res;
       },
       error: (error) => {},
     });
@@ -517,7 +544,7 @@ export class CreateRideComponent implements OnInit {
           });
         },
         error: (error) => {
-          console.log(error.message);
+          // console.log(error.message);
           fav.setAttribute('disabled', '');
           this.snackBar.open('You already have 10 favorite routes!', '', {
             duration: 2000,

@@ -48,7 +48,7 @@ export class LoginComponent {
           } else if (this.authService.getRole() == "ROLE_DRIVER"){
             this.router.navigate(['/driver-main'])
           } else if (this.authService.getRole() == "ROLE_PASSENGER"){
-            this.router.navigate(['/home'])
+            this.router.navigate(['/get-ryde'])
           }
         },
         error: (error) => {

@@ -56,6 +56,7 @@ export class CreateDriverComponent {
     babyTransport: Boolean(this.CreateDriverForm.value.babyTransport),
     petTransport: Boolean(this.CreateDriverForm.value.petTransport),
     currentLocation: this.location,
+    id: 0
   };
 
   driver: Driver = {
@@ -90,6 +91,7 @@ export class CreateDriverComponent {
         babyTransport: Boolean(this.CreateDriverForm.value.babyTransport),
         petTransport: Boolean(this.CreateDriverForm.value.petTransport),
         currentLocation: this.location,
+        id: 0
       };
       this.driver = {
         name: this.CreateDriverForm.value.name as string,

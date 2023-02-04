@@ -79,6 +79,7 @@ export class DriverProfileComponent {
     babyTransport: false,
     petTransport: false,
     currentLocation: null!,
+    id: 0
   };
   
 

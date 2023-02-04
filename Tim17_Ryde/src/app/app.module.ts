@@ -44,6 +44,8 @@ import { EditPassengerComponent } from './components/edit-passenger/edit-passeng
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rate-driver-vehicle.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { RoutingMapComponent } from './components/routing-map/routing-map.component';
 import { EditDriverComponent } from './components/edit-driver/edit-driver.component';
 import { UpdateConfirmationComponent } from './components/update-confirmation/update-confirmation.component';
 
@@ -85,9 +87,11 @@ import { UpdateConfirmationComponent } from './components/update-confirmation/up
     ChangePasswordComponent,
     ResetPasswordComponent,
     RateDriverVehicleComponent,
+    RoutingMapComponent,
     EditDriverComponent,
     UpdateConfirmationComponent,
-
+    EditDriverComponent,
+    UpdateConfirmationComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -105,6 +109,7 @@ import { UpdateConfirmationComponent } from './components/update-confirmation/up
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaterialRatingModule,
+    LeafletModule
 
   ],
   providers: [

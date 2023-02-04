@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';  
+import { HttpClient, HttpHeaders } from '@angular/common/http';  
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -36,6 +36,17 @@ export class MapService {
   reverseSearch(lat: number, lon: number): Observable<any> {
     return this.http.get(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&<params>`
+    );
+  }
+  
+  routing(departureLat: number, departureLng: number, destinationLat: number, destinationLng: number): Observable<any> {
+    return this.http.get(
+      `https://routing.openstreetmap.de/routed-car/route/v1/driving/${departureLng},${departureLat};${destinationLng},${destinationLat}?geometries=geojson&overview=false&alternatives=true&steps=true`, 
+      // {headers: new HttpHeaders({
+      //   'Access-Control-Allow-Origin': '*',
+      //   'Access-Control-Allow-Headers': 'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization', 
+      //   'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS',
+      //   'Authorization': 'Bearer '})}
     );
   }
 

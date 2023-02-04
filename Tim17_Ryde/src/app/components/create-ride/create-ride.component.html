@@ -1,5 +1,6 @@
 <div class="container">
-  <app-map class="map"></app-map>
+  <app-map class="map" *ngIf="currentRide.status != 'ACCEPTED' && currentRide.status != 'STARTED'"></app-map>
+    <app-routing-map class="map" *ngIf="currentRide.status == 'ACCEPTED' || currentRide.status == 'STARTED'"></app-routing-map>
   <div class="left-container" *ngIf="currentActiveRide == false">
     <h1>Get a Ryde</h1>
     <div class="form-container">
@@ -170,7 +171,8 @@
     </div>
     <p class="subtitles passenger-title">Driver</p>
     <div id="passenger-info">
-      <img id="profile-pic" src="assets/images/avatar.png" alt="profilePic" />
+      <img id="profile-pic" *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+      <img id="profile-pic" *ngIf="driver.profilePicture" [src]="driver.profilePicture">
       <div id="profile-info">
         <p id="name">{{ name }}</p>
         <p id="email">{{ email }}</p>
@@ -182,7 +184,7 @@
       <p>{{ time }}</p>
       <p class="price">{{ price }}</p>
       <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive !== 0">Your driver will arrive in {{ driverArrive }} minutes</p>
-      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive == 0">Your driver will arrive soon</p>
+      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive <= 0">Your driver will arrive soon</p>
     </div>
     <div id="buttons" *ngIf="currentRide.status == 'STARTED'">
       <button id="panic" type="button" (click)="panic()">PANIC</button>
