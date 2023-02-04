@@ -28,6 +28,7 @@ import { FavoriteRideRequest } from 'src/app/model/request/FavoriteRideRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TmplAstRecursiveVisitor } from '@angular/compiler';
 import { PanicComponent } from '../panic/panic.component';
+import { RateDriverVehicleComponent } from '../rate-driver-vehicle/rate-driver-vehicle.component';
 
 @Component({
   selector: 'app-create-ride',
@@ -295,10 +296,12 @@ export class CreateRideComponent implements OnInit {
             this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
+            this.openReviewDialog();
           } else if (this.currentRide.status === 'CANCELED') {
             this.snackBar.open('Your ride has been canceled!', '', {duration: 2000,});
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
+            this.openReviewDialog();
           }
         }
       );
@@ -536,5 +539,14 @@ export class CreateRideComponent implements OnInit {
       const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
       let that = this;
       this.getActiveRide();
+  }
+
+  openReviewDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'review-component';
+    dialogConfig.width = '700px';
+    dialogConfig.data = this.rideId;
+    this.dialogRef.open(RateDriverVehicleComponent, dialogConfig);
   }
 }

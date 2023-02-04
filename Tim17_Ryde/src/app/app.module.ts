@@ -43,8 +43,10 @@ import { PassengerProfileComponent } from './components/passenger-profile/passen
 import { EditPassengerComponent } from './components/edit-passenger/edit-passenger.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { RateDriverVehicleComponent } from './components/rate-driver-vehicle/rate-driver-vehicle.component';
 import { EditDriverComponent } from './components/edit-driver/edit-driver.component';
 import { UpdateConfirmationComponent } from './components/update-confirmation/update-confirmation.component';
+
 
 
 @NgModule({
@@ -82,8 +84,9 @@ import { UpdateConfirmationComponent } from './components/update-confirmation/up
     EditPassengerComponent,
     ChangePasswordComponent,
     ResetPasswordComponent,
+    RateDriverVehicleComponent,
     EditDriverComponent,
-    UpdateConfirmationComponent
+    UpdateConfirmationComponent,
 
   ],
   imports: [
@@ -101,7 +104,7 @@ import { UpdateConfirmationComponent } from './components/update-confirmation/up
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    NgxMaterialRatingModule
+    NgxMaterialRatingModule,
 
   ],
   providers: [
