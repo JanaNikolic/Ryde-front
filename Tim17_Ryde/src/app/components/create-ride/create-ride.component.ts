@@ -187,34 +187,6 @@ export class CreateRideComponent implements OnInit {
         this.favorite.vehicleType
       );
     }
-    
-
-    // this.selectedFromAddress.valueChanges.subscribe(
-    //   (value: string) => {
-    //     if (value != null && value.length > 5) {
-    //       // console.log(value);
-    //       this.mapService.setFromAddress(value + ", Novi Sad");
-    //     }
-
-    //   }
-    // );
-
-    // this.selectedToAddress.valueChanges.subscribe(
-    //   (value: string) => {
-    //     if (value != null && value.length > 5) {
-    //       // this.destination = value;
-    //       this.mapService.setToAddress(value + ", Novi Sad");
-    //     }
-    //   }
-    // );
-    // if (this.currentRide.status === 'ACCEPTED') {
-    //   this.arrivalTime = new Date(this.currentRide.startTime);
-    //   console.log(this.arrivalTime);
-
-    //   this.subscription = interval(1000).subscribe((x) => {
-    //     this.getTimeDifference();
-    //   });
-    // }
   }
 
   getActiveRide() {
@@ -307,6 +279,29 @@ export class CreateRideComponent implements OnInit {
             this.currentActiveRide = false;
             this.openReviewDialog();
           }
+
+
+          if (this.currentRide.scheduledTime != null) {
+            // const time = new Date(this.currentRide.scheduledTime);
+            // const now = new Date();
+            if (this.currentRide.status === 'ACCEPTED') {
+              this.snackBar.open('Your ride will arrive in 15 minutes!', '', {
+                duration: 2000,
+              });
+              console.log("TIMER");
+              let i = 2;
+              const timerId = setInterval(() => {
+                if (i < 0 || this.currentRide.status != 'ACCEPTED') {
+                  clearInterval(timerId);
+                }
+                i = i - 1;
+                this.snackBar.open('Your ride will arrive in ' + (5*i+5) + ' minutes!', '', {
+                  duration: 2000,
+                });               
+              }, 1 * 10000);
+            }
+          }
+
         }
       );
     }
@@ -461,13 +456,6 @@ export class CreateRideComponent implements OnInit {
       forkJoin([this.mapService.search(ride.locations[0].departure.address), this.mapService.search(ride.locations[0].destination.address)])
       .pipe(
         map(([dep, des]) => { 
-          // console.log(dep);
-          // console.log(des);        
-          // this.departureLat = dep[0].boundingbox[0];
-          // this.departureLng = dep[0].boundingbox[2];
-    
-          // this.destinationLat = des[0].lat;
-          // this.destinationLng = des[0].lon;
 
           ride.locations[0].departure.latitude = parseFloat(dep[0].lat);
           ride.locations[0].departure.longitude = parseFloat(dep[0].lon);
@@ -476,27 +464,15 @@ export class CreateRideComponent implements OnInit {
           ride.locations[0].destination.longitude = parseFloat(des[0].lon);
     
           console.log(ride);
-          // console.log(dep[0].lat);
-          // console.log(dep[0].lon);
-          // console.log(parseFloat(des[0].lat));
-          // console.log(des[0].lon);
-
-          // console.log(this.departureLat);
-          // console.log(this.departureLng);
-          // console.log(this.destinationLat);
-          // console.log(this.destinationLng);
-          // console.log(this.currentRide.locations[0].departure.latitude);
-          // console.log(this.currentRide.locations[0].departure.longitude);
-
-          // console.log(this.currentRide.locations[0].destination.latitude);
-          // console.log(this.currentRide.locations[0].destination.longitude);
-
-
           this.rideService.postRide(ride).subscribe({
             next: (res) => {
               this.rideId = res.id;
-              // console.log(res);
+              console.log(res);
+              
               this.initializeWebSocketConnection();
+              if (res.scheduledTime != null) {
+                this.snackBar.open('Ride sucessfuly ordered!', '', {duration: 2000,});
+              }
             },
             error: (error) => {
               this.snackBar.open('No available drivers!', '', {duration: 2000,});
@@ -504,9 +480,9 @@ export class CreateRideComponent implements OnInit {
             },
           });
     
-          // this.CreateRideForm.reset(this.CreateRideForm.value);
-          // console.log(this.selectedFromAddress);
-          this.openDialog();
+          if (ride.scheduledTime == null) {
+            this.openDialog();
+          }
         })
       )
       .subscribe();
