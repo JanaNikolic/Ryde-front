@@ -227,7 +227,6 @@ export class CreateRideComponent implements OnInit {
   }
 
   initializeWebSocketConnection() {
-    // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -254,7 +253,6 @@ export class CreateRideComponent implements OnInit {
               duration: 2000,
             });
             this.arrivalTime = new Date(this.currentRide.startTime);
-            // console.log(this.arrivalTime);
 
             this.subscription = interval(1000).subscribe((x) => {
               this.getTimeDifference();
@@ -282,8 +280,6 @@ export class CreateRideComponent implements OnInit {
 
 
           if (this.currentRide.scheduledTime != null) {
-            // const time = new Date(this.currentRide.scheduledTime);
-            // const now = new Date();
             if (this.currentRide.status === 'ACCEPTED') {
               this.snackBar.open('Your ride will arrive in 15 minutes!', '', {
                 duration: 2000,
@@ -350,8 +346,6 @@ export class CreateRideComponent implements OnInit {
 
       this.passengerService.getPassengerByEmail(letter).subscribe({
         next: (res) => {
-          // console.log(res);
-          // console.log(this.friendList);
 
           if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
