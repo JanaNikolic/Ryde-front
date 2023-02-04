@@ -8,6 +8,10 @@ import { pageDriver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
 import { WorkingHourResponse } from 'src/app/model/response/WorkingHourResponse';
 import { KilometersResponse, MoneyResponse, pageRide, RideCountResponse } from 'src/app/model/Ride';
+import { DriverUpdateRequest, DriverUpdateResponse } from 'src/app/model/request/DriverUpdateRequest';
+import { Document } from 'src/app/model/request/DriverUpdateRequest';
+
+
 @Injectable({
     providedIn: 'root'
   })
@@ -41,9 +45,32 @@ import { KilometersResponse, MoneyResponse, pageRide, RideCountResponse } from '
     getVehicle(driverId:number):Observable<Vehicle>{
       return this.http.get<Vehicle>(environment.apiHost+'/api/driver/' + driverId + '/vehicle')
     }
+    postUpdateRequest(request:DriverUpdateRequest): Observable<any> {
+      const options: any = {
+        responseType: 'text',
+      };
+      return this.http.post<any>(environment.apiHost + '/api/driver/updateRequest', request, options )
+    }
+    getUpdateRequests():Observable<DriverUpdateResponse[]>{
+      return this.http.get<DriverUpdateResponse[]>(environment.apiHost + '/api/driver/updateRequest')
+    }
+    getOneUpdateRequests(updateRequestId:number):Observable<DriverUpdateResponse>{
+      return this.http.get<DriverUpdateResponse>(environment.apiHost + '/api/driver/updateRequest/' +updateRequestId)
+    }
+    updateDriver(update:DriverUpdateResponse):Observable<Driver>{
+      return this.http.put<Driver>(environment.apiHost + '/api/driver/updateDriver',update);
+    }
 
+    deleteUpdateRequest(id:number):Observable<string>{
+      return this.http.delete<string>(environment.apiHost + '/api/driver/updateDriver/'+ id);
+    }
+    postDriverDocuments(id:number, document:Document):Observable<any>{
+      return this.http.post<any>(environment.apiHost + "/api/driver/" + id + "/documents", document)
+    }
+    getDriverDocuments(id:number):Observable<Document[]>{
+      return this.http.get<Document[]>(environment.apiHost + "api/driver/"+ id + "/documents")
+    }
 
-      
   
     getAllDrivers():Observable<pageDriver>{
       return this.http.get<pageDriver>(environment.apiHost + '/api/driver');

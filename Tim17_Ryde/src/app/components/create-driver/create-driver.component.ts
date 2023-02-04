@@ -7,6 +7,7 @@ import { Locations } from 'src/app/model/Locations';
 import { Vehicle } from 'src/app/model/Vehicle';
 import { Driver } from 'src/app/model/Driver';
 import { passwordMatch } from 'src/app/validators/passwordMatch';
+import { Document } from 'src/app/model/request/DriverUpdateRequest';
 
 @Component({
   selector: 'app-create-driver',
@@ -96,7 +97,7 @@ export class CreateDriverComponent {
         name: this.CreateDriverForm.value.name as string,
         surname: this.CreateDriverForm.value.surname as string,
         telephoneNumber: this.CreateDriverForm.value.telephoneNumber as string,
-        profilePicture: this.image,
+        profilePicture: "",
         email: this.CreateDriverForm.value.email as string,
         password: this.CreateDriverForm.value.password as string,
         address: this.CreateDriverForm.value.address as string,
@@ -104,26 +105,22 @@ export class CreateDriverComponent {
         active: false,
         activeRide: false
       }
-
-      
-      
       this.driverService.
         addDriver(this.driver)
         .subscribe( (res: Driver) =>
           { 
             console.log(this.vehicle);
-                
                 this.driver = res;
                 this.driverService.
                   addVehicle(Number(res.id), this.vehicle)
-                  .subscribe((res: any) => {
-                    
+                  .subscribe((res: any) => {    
                   });
-
-              
-
+                  let document:Document = {
+                    name: "vozacka dozvola",
+                    documentImage: this.image
+                  }
+                  this.driverService.postDriverDocuments(Number(res.id), document).subscribe((res:any) => {});
           }
-
         )
         ;
       alert("Driver succesfully created");

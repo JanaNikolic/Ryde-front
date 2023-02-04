@@ -1,4 +1,6 @@
 .reviews-body{
+    font-family: 'Outfit';
+    letter-spacing: 0.15em;
     height: 10%;
     width: 100%;
     margin-top: 5%;
@@ -6,20 +8,19 @@
 }
 
 h1{
+    font-weight: 600;
     text-align: center;
     color: #01ACAB;
 }
 h2{
-    font-family: 'Roboto';
-    letter-spacing: 0.15vh;
+    font-weight: 500;
     color: #D9D9D9;
 }
 .align-center{
     text-align: center;
 }
 h3{
-    font-family: 'Roboto';
-    letter-spacing: 0.15vh;
+    font-weight: 400;
     display: inline-block;
     margin-right: 10%;
     color: #D9D9D9;

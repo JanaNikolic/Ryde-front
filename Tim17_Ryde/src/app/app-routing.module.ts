@@ -37,10 +37,19 @@ const routes: Routes = [
   canActivate: [NotLoggedInGuard],
   loadChildren: () =>
   import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
-  {path: 'get-started', component:UnregisteredUserComponent},
+  {path: 'get-started', component:UnregisteredUserComponent, 
+  canActivate: [NotLoggedInGuard, PassengerGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
   {path: 'home', component:MainComponent},
-  {path: 'reviews-driver', component:ReviewsDriverComponent},
-  {path: 'passenger-history/:passengerId', component:PassengerHistoryComponent},
+  {path: 'reviews-driver', component:ReviewsDriverComponent,
+  canActivate: [NotLoggedInGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
+  {path: 'passenger-history/:passengerId', component:PassengerHistoryComponent,
+  canActivate: [NotLoggedInGuard, PassengerGuard],
+  loadChildren: () =>
+  import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
 
   {path: 'admin-main', component:AdminMainComponent,
   canActivate: [NotLoggedInGuard],

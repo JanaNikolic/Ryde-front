@@ -31,4 +31,24 @@ export class NavbarComponent {
     }
   );
   }
+
+  ngOnChange() : void {
+    this.navigation = document.getElementById("navigation");
+    this.router.events.subscribe((event) => {
+    if (event instanceof NavigationEnd ) {
+      let that = this;
+      this.currentRoute = event.url;
+      if (event.url == "/register") {
+        if (that.navigation  != null) {
+          that.navigation.setAttribute("style", "float: left;");
+          that.navigation.style.marginLeft = "7%";
+        }
+      } else {
+        if (that.navigation  != null) {
+        that.navigation.style.float = "right";
+        }
+      }}
+    }
+  );
+  }
 }

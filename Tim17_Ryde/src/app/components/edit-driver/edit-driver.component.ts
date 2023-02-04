@@ -1,29 +1,38 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { Passenger } from 'src/app/model/Passenger';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Driver } from 'src/app/model/Driver';
+import { DriverUpdateRequest, Document } from 'src/app/model/request/DriverUpdateRequest';
 import { PassengerUpdateResponse } from 'src/app/model/response/PassengerUpdateResponse';
-import { RideResponse } from 'src/app/model/response/RideResponse';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { PassengerService } from 'src/app/services/passenger/passenger.service';
+import { DriverService } from 'src/app/services/driver/driver.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
+
 @Component({
-  selector: 'app-edit-passenger',
-  templateUrl: './edit-passenger.component.html',
-  styleUrls: ['./edit-passenger.component.css']
+  selector: 'app-edit-driver',
+  templateUrl: './edit-driver.component.html',
+  styleUrls: ['./edit-driver.component.css']
 })
-export class EditPassengerComponent {
-  image:string = "";
-  editRequest: PassengerUpdateResponse = {
+export class EditDriverComponent {
+  image = "";
+  documentImage = "";
+  document:Document = {
+    name: "",
+    documentImage: ""
+  }
+  documents: Document[] = [];
+  editRequest: DriverUpdateRequest = {
     name: "",
     surname: "",
     email: "",
     telephoneNumber: "",
     address: "",
-    profilePicture: ""
+    profilePicture: "",
+    documents: this.documents
   }
+
 
   EditForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -33,7 +42,7 @@ export class EditPassengerComponent {
     address: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
 
-  constructor(private matDialog: MatDialog, public snackBar: MatSnackBar, public dialogRef: MatDialogRef<EditPassengerComponent>, @Inject(MAT_DIALOG_DATA) public data: Passenger, private passengerService: PassengerService, private authService:AuthService) {}
+  constructor(private matDialog: MatDialog, public snackBar: MatSnackBar, public dialogRef: MatDialogRef<EditDriverComponent>, @Inject(MAT_DIALOG_DATA) public data: Driver, private driverService: DriverService, private authService:AuthService) {}
 
   ngOnInit() : void {
     this.EditForm.controls['name'].setValue(this.data.name);
@@ -42,6 +51,7 @@ export class EditPassengerComponent {
     this.EditForm.controls['email'].disable();
     this.EditForm.controls['address'].setValue(this.data.address);
     this.EditForm.controls['telephoneNumber'].setValue(this.data.telephoneNumber);
+    
   }
 
   edit() {
@@ -57,27 +67,23 @@ export class EditPassengerComponent {
     else{
       this.editRequest.profilePicture = this.image;
     }
-   console.log(this.editRequest);
-    this.passengerService.edit(this.authService.getId(), this.editRequest).subscribe({
-      next: (res) => {
+    
+    this.document.name = "vozacka dozvola"
+    this.document.documentImage = this.documentImage;
+    this.editRequest.documents.push(this.document);
+  
+    this.driverService.postUpdateRequest(this.editRequest).subscribe(
+        (res: any) => {
         console.log(res);
-        let snackBarRef = this.snackBar.open('Edit successful!', "", {duration: 2000});
-        this.dialogRef.close();
-      }
-    })
+         let snackBarRef = this.snackBar.open('Edit request created!', "", {duration: 2000});
+         this.dialogRef.close();
+       });
+     
 
   }
 
   cancel() {
     this.dialogRef.close();
-  }
-  inputImage(image: any) {
-    const file = image.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-        this.image = reader.result!.toString();
-    };
   }
 
   changePassword() {
@@ -91,4 +97,22 @@ export class EditPassengerComponent {
 
       const modalDialog = this.matDialog.open(ChangePasswordComponent, dialogConfig);
   }
+
+  inputImage(image: any) {
+    const file = image.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this.image = reader.result!.toString();
+    };
+  }
+  inputDocumentImage(image: any) {
+    const file = image.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        this.documentImage = reader.result!.toString();
+    };
+  }
+
 }

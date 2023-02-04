@@ -1,9 +1,12 @@
 
 <div id="modal-content-wrapper">
     <div id="modal-header">
+        
         <h1 id="modal-title">Edit Profile</h1>
+        
     </div>
     <div id="modal-body" >
+        
         <form [formGroup]="EditForm"
             (ngSubmit)="edit()">
         <p class="textLabel"><label class="right-margin">Name</label>
@@ -23,7 +26,9 @@
             <p class="textLabel"><label>Photo</label></p>
             <input type="file" class="infoInput" name="inputImage" id="inputImage"
             (change)="inputImage($event)">
-    </div>
+            <p class="textLabel"><label>Document photo</label></p>
+            <input type="file" class="infoInput" name="documentImage" id="documentImage"
+            (change)="inputDocumentImage($event)">
     <p id="password-link" (click)="changePassword()">Change password -></p>
     <div id="modal-footer">
         <button type="submit" mat-raised-button id="modal-action-button" (click)="edit()">Edit</button>

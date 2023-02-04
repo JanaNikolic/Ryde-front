@@ -13,6 +13,8 @@ import { PanicRequest } from 'src/app/model/request/PanicRequest';
 import { PanicResponse } from 'src/app/model/response/PanicResponse';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { PanicNotificationComponent } from '../panic-notification/panic-notification.component';
+import { DriverUpdateResponse } from 'src/app/model/request/DriverUpdateRequest';
+import { UpdateConfirmationComponent } from '../update-confirmation/update-confirmation.component';
 
 @Component({
   selector: 'app-admin-main',
@@ -23,7 +25,7 @@ export class AdminMainComponent implements OnInit {
   private serverUrl = environment.apiHost + '/example-endpoint'
   private stompClient: any;
   isLoaded: boolean = false;
-
+  updatesInfo:boolean = false;
   passengersInfo: boolean = false;
   driversInfo: boolean = true;
   mapa: Map<String, Object> = new Map<String, Object>();
@@ -42,6 +44,7 @@ export class AdminMainComponent implements OnInit {
   };
 
   panic!: PanicResponse;
+  updateRequests: DriverUpdateResponse[] =[];
   drivers1: Driver[] = [];
   passengers: Passenger[] = [];
   userNotes: Note[] = [];
@@ -73,6 +76,11 @@ export class AdminMainComponent implements OnInit {
     this.passengerService.getAll().subscribe((pagePassenger) => {
       this.passengers = pagePassenger.results;
     })
+    this.driverService.getUpdateRequests().subscribe((updateRequests) => {
+      this.updateRequests = updateRequests;
+      
+    })
+
   }
 
     
@@ -161,15 +169,21 @@ export class AdminMainComponent implements OnInit {
   }
 
   showDrivers() {
+    this.updatesInfo = false;
     this.showNoteCreateForm = false;
     this.passengersInfo = false;
     this.driversInfo = true;
   }
 
   showPassengers() {
+    this.updatesInfo = false;
     this.driversInfo = false;
     this.passengersInfo = true;
-
+  }
+  showUpdates() {
+    this.driversInfo = false;
+    this.passengersInfo = false;
+    this.updatesInfo = true;
   }
   createNote() {
     if (!this.CreateNoteForm.valid) {
@@ -182,6 +196,22 @@ export class AdminMainComponent implements OnInit {
       alert("Note created!");
       this.showButtonsDriverPassenger();
     }
+  }
+
+   confirmUpdate(id:number) {
+
+    this.driverService.getOneUpdateRequests(id).subscribe((updateRequest) => {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "edit-profile";
+      dialogConfig.height = "600px";
+      dialogConfig.width = "350px";
+      dialogConfig.data = updateRequest;
+      const modalDialog = this.matDialog.open(UpdateConfirmationComponent, dialogConfig);
+      
+  })
+  
+    
   }
 
 
