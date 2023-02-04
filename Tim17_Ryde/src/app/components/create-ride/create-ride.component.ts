@@ -291,9 +291,9 @@ export class CreateRideComponent implements OnInit {
             this.openReviewDialog();
           }
 
-
-          if (this.currentRide.scheduledTime != null) {
-            if (this.currentRide.status === 'ACCEPTED') {
+          console.log(this.currentRide.scheduledTime);
+          if (this.currentRide.scheduledTime != null || this.currentRide.scheduledTime != '' || this.currentRide.scheduledTime != undefined ) {
+            if (this.currentRide.status === 'SCHEDULED' || this.currentRide.status === 'ACCEPTED') {
               this.snackBar.open('Your ride will arrive in 15 minutes!', '', {
                 duration: 2000,
               });
@@ -477,7 +477,7 @@ export class CreateRideComponent implements OnInit {
               console.log(res);
               
               this.initializeWebSocketConnection();
-              if (res.scheduledTime != null) {
+              if (res.scheduledTime != null && res.status == "SCHEDULED") {
                 this.snackBar.open('Ride sucessfuly ordered!', '', {duration: 2000,});
               }
             },

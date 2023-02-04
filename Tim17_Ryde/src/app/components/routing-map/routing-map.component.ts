@@ -259,8 +259,17 @@ export class RoutingMapComponent implements OnInit {
                   }
                 }
               });
-              console.log(vehicle);
             } else if (ride.status == 'ACCEPTED') {
+              this.map.eachLayer((layer: any) => {
+                console.log(layer);
+                if (layer.options.waypoints) {
+                  this.map.removeLayer(layer);
+                  if (this.currentRoute != null) {
+                    this.map.removeControl(this.currentRoute);
+                  this.currentRoute = null;
+                  }
+                }
+              });
               this.currentRoute = L.Routing.control({
                 waypoints: [
                   L.latLng(
@@ -460,6 +469,16 @@ export class RoutingMapComponent implements OnInit {
 
               if (this.currentRide.status == 'STARTED') {
                 console.log('started');
+                this.map.eachLayer((layer: any) => {
+                  console.log(layer);
+                  if (layer.options.waypoints) {
+                    this.map.removeLayer(layer);
+                    if (this.currentRoute != null) {
+                      this.map.removeControl(this.currentRoute);
+                    this.currentRoute = null;
+                    }
+                  }
+                });
                 this.currentRoute = L.Routing.control({
                   waypoints: [
                     L.latLng(
@@ -504,7 +523,16 @@ export class RoutingMapComponent implements OnInit {
         next: (ride) => {
           this.currentRide = ride;
           console.log(this.currentRide);
-
+          this.map.eachLayer((layer: any) => {
+            console.log(layer);
+            if (layer.options.waypoints) {
+              this.map.removeLayer(layer);
+              if (this.currentRoute != null) {
+                this.map.removeControl(this.currentRoute);
+              this.currentRoute = null;
+              }
+            }
+          });
           let geoLayerRouteGroup: LayerGroup = new LayerGroup();
           this.currentRoute = L.Routing.control({
             waypoints: [
