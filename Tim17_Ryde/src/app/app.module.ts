@@ -50,6 +50,7 @@ import { EditDriverComponent } from './components/edit-driver/edit-driver.compon
 import { UpdateConfirmationComponent } from './components/update-confirmation/update-confirmation.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,8 +89,9 @@ import { UpdateConfirmationComponent } from './components/update-confirmation/up
     RateDriverVehicleComponent,
     RoutingMapComponent,
     EditDriverComponent,
-    UpdateConfirmationComponent
-
+    UpdateConfirmationComponent,
+    EditDriverComponent,
+    UpdateConfirmationComponent,
   ],
   imports: [
     AppRoutingModule,
