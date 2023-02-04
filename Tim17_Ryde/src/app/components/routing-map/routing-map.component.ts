@@ -147,16 +147,17 @@ export class RoutingMapComponent implements OnInit {
     });
   }
 
-  openGlobalSocket() { 
+  openGlobalSocket() {
     if (this.driver.id !== 0) {
       this.stompClient.subscribe(
         '/topic/driver/' + this.driver.id,
         (message: { body: string }) => {
           let ride: RideResponse = JSON.parse(message.body);
           this.currentRide = ride;
-          if (ride.status == "FINISHED") {
+          this.driverSubscribeToRide();
+          if (ride.status == 'FINISHED') {
             this.mainGroup = [];
-          } else if (ride.status == "ACCEPTED") { 
+          } else if (ride.status == 'ACCEPTED') {
             this.currentRoute = L.Routing.control({
               waypoints: [
                 L.latLng(
@@ -170,7 +171,7 @@ export class RoutingMapComponent implements OnInit {
               ],
               addWaypoints: false,
             }).addTo(this.map);
-          } else if (ride.status == "ACCEPTED") { 
+          } else if (ride.status == 'ACCEPTED') {
             this.currentRoute = L.Routing.control({
               waypoints: [
                 L.latLng(
@@ -183,10 +184,12 @@ export class RoutingMapComponent implements OnInit {
                 ),
               ],
               addWaypoints: false,
-            }).on('routesfound', (e) => {
-              this.route = e.routes;
-              console.log(this.route);
-            }).addTo(this.map);
+            })
+              .on('routesfound', (e) => {
+                this.route = e.routes;
+                console.log(this.route);
+              })
+              .addTo(this.map);
           }
         }
       );
@@ -196,9 +199,9 @@ export class RoutingMapComponent implements OnInit {
       '/topic/ride/' + this.currentRide.id,
       (message: { body: string }) => {
         let ride: Ride = JSON.parse(message.body);
-        if (ride.status == "FINISHED") {
+        if (ride.status == 'FINISHED') {
           this.mainGroup = [];
-        } else if (ride.status == "ACCEPTED") { 
+        } else if (ride.status == 'ACCEPTED') {
           this.currentRoute = L.Routing.control({
             waypoints: [
               L.latLng(
@@ -212,7 +215,7 @@ export class RoutingMapComponent implements OnInit {
             ],
             addWaypoints: false,
           }).addTo(this.map);
-        } else if (ride.status == "STARTED") { 
+        } else if (ride.status == 'STARTED') {
           this.currentRoute = L.Routing.control({
             waypoints: [
               L.latLng(
@@ -225,15 +228,88 @@ export class RoutingMapComponent implements OnInit {
               ),
             ],
             addWaypoints: false,
-          }).on('routesfound', (e) => {
-            this.route = e.routes;
-            console.log(this.route);
-          }).addTo(this.map);
+          })
+            .on('routesfound', (e) => {
+              this.route = e.routes;
+              console.log(this.route);
+            })
+            .addTo(this.map);
         }
       }
     );
-
   }
+
+  driverSubscribeToRide() {
+    this.driverService.getVehicle(this.authService.getId()).subscribe({
+      next: (vehicle) => {
+        this.vehicle = vehicle;
+
+        this.stompClient.subscribe(
+          '/topic/ride/' + this.currentRide.id,
+          (message: { body: string }) => {
+            let ride: Ride = JSON.parse(message.body);
+            if (ride.status == 'FINISHED') {
+              this.map.eachLayer((layer: any) => {
+                console.log(layer);
+                if (layer.options.waypoints) {
+                  this.map.removeLayer(layer);
+                  if (this.currentRoute != null) {
+                    this.map.removeControl(this.currentRoute);
+                  this.currentRoute = null;
+                  }
+                }
+              });
+              console.log(vehicle);
+            } else if (ride.status == 'ACCEPTED') {
+              this.currentRoute = L.Routing.control({
+                waypoints: [
+                  L.latLng(
+                    this.vehicle.currentLocation.latitude,
+                    this.vehicle.currentLocation.longitude
+                  ),
+                  L.latLng(
+                    this.currentRide.locations[0].destination.latitude,
+                    this.currentRide.locations[0].destination.longitude
+                  ),
+                ],
+                addWaypoints: false,
+              }).addTo(this.map);
+            } else if (ride.status == 'STARTED') {
+              this.map.eachLayer((layer: any) => {
+                console.log(layer);
+                if (layer.options.waypoints) {
+                  this.map.removeLayer(layer);
+                  if (this.currentRoute != null) {
+                    this.map.removeControl(this.currentRoute);
+                  this.currentRoute = null;
+                  }
+                }
+              });
+              this.currentRoute = L.Routing.control({
+                waypoints: [
+                  L.latLng(
+                    this.currentRide.locations[0].departure.latitude,
+                    this.currentRide.locations[0].departure.longitude
+                  ),
+                  L.latLng(
+                    this.currentRide.locations[0].destination.latitude,
+                    this.currentRide.locations[0].destination.longitude
+                  ),
+                ],
+                addWaypoints: false,
+              })
+                .on('routesfound', (e) => {
+                  this.route = e.routes;
+                  console.log(this.route);
+                })
+                .addTo(this.map);
+            }
+          }
+        );
+      },
+    });
+  }
+
   openGlobalSocket2() {
     this.stompClient.subscribe(
       '/topic/map-update/update-location',
@@ -313,12 +389,10 @@ export class RoutingMapComponent implements OnInit {
                     routeLayer.setStyle({ color: `#${this.color}` });
                     routeLayer.addTo(geoLayerRouteGroup);
                     this.ride.id = geoLayerRouteGroup;
-                    let markerLayer = marker(
-                      [
-                        this.vehicle.currentLocation.longitude,
-                        this.vehicle.currentLocation.latitude,
-                      ]
-                    );
+                    let markerLayer = marker([
+                      this.vehicle.currentLocation.longitude,
+                      this.vehicle.currentLocation.latitude,
+                    ]);
                     markerLayer.addTo(geoLayerRouteGroup);
                     const loc: Locations = {
                       address: 'Adresa',
@@ -328,12 +402,10 @@ export class RoutingMapComponent implements OnInit {
                     this.vehicleService
                       .updateLocation(this.vehicle.id, loc)
                       .subscribe({
-                        next: (res) => {
-                        },
+                        next: (res) => {},
                       });
                     i = i + 2;
                     this.rideVehicle[this.vehicle.id] = markerLayer;
-                    
                   }, 3000);
                   this.mainGroup = [...this.mainGroup, geoLayerRouteGroup];
                 })
@@ -341,7 +413,7 @@ export class RoutingMapComponent implements OnInit {
             }
           },
         });
-      },
+      }
     );
     this.stompClient.subscribe(
       '/topic/map-update/ended-ride',
@@ -376,55 +448,56 @@ export class RoutingMapComponent implements OnInit {
     if (this.authService.getRole() === 'ROLE_DRIVER') {
       this.driver.id = this.authService.getId();
       // this.timerId = setInterval(() => {
-        this.rideService.getActive(this.authService.getId()).subscribe({
-          next: (ride) => {
-            this.currentRide = ride;
-            console.log(this.currentRide);
-  
-            this.driverService.getVehicle(this.authService.getId()).subscribe({
-              next: (vehicle) => {
-                this.vehicle = vehicle;
-                let geoLayerRouteGroup: LayerGroup = new LayerGroup();
-  
-                if (this.currentRide.status == 'STARTED') {
-                  console.log('started');
-                  this.currentRoute = L.Routing.control({
-                    waypoints: [
-                      L.latLng(
-                        this.currentRide.locations[0].departure.latitude,
-                        this.currentRide.locations[0].departure.longitude
-                      ),
-                      L.latLng(
-                        this.currentRide.locations[0].destination.latitude,
-                        this.currentRide.locations[0].destination.longitude
-                      ),
-                    ],
-                    addWaypoints: false,
-                  }).on('routesfound', (e) => {
+      this.rideService.getActive(this.authService.getId()).subscribe({
+        next: (ride) => {
+          this.currentRide = ride;
+          console.log(this.currentRide);
+
+          this.driverService.getVehicle(this.authService.getId()).subscribe({
+            next: (vehicle) => {
+              this.vehicle = vehicle;
+              let geoLayerRouteGroup: LayerGroup = new LayerGroup();
+
+              if (this.currentRide.status == 'STARTED') {
+                console.log('started');
+                this.currentRoute = L.Routing.control({
+                  waypoints: [
+                    L.latLng(
+                      this.currentRide.locations[0].departure.latitude,
+                      this.currentRide.locations[0].departure.longitude
+                    ),
+                    L.latLng(
+                      this.currentRide.locations[0].destination.latitude,
+                      this.currentRide.locations[0].destination.longitude
+                    ),
+                  ],
+                  addWaypoints: false,
+                })
+                  .on('routesfound', (e) => {
                     this.route = e.routes;
                     console.log(this.route);
-                  }).addTo(this.map);
-                } else if (this.currentRide.status == 'ACCEPTED') {
-                  this.currentRoute = L.Routing.control({
-                    waypoints: [
-                      L.latLng(
-                        this.vehicle.currentLocation.latitude,
-                        this.vehicle.currentLocation.longitude
-                      ),
-                      L.latLng(
-                        this.currentRide.locations[0].destination.latitude,
-                        this.currentRide.locations[0].destination.longitude
-                      ),
-                    ],
-                    addWaypoints: false,
-                  }).addTo(this.map);
-                }
-              },
-            });
-          },
-        });
+                  })
+                  .addTo(this.map);
+              } else if (this.currentRide.status == 'ACCEPTED') {
+                this.currentRoute = L.Routing.control({
+                  waypoints: [
+                    L.latLng(
+                      this.vehicle.currentLocation.latitude,
+                      this.vehicle.currentLocation.longitude
+                    ),
+                    L.latLng(
+                      this.currentRide.locations[0].destination.latitude,
+                      this.currentRide.locations[0].destination.longitude
+                    ),
+                  ],
+                  addWaypoints: false,
+                }).addTo(this.map);
+              }
+            },
+          });
+        },
+      });
       // }, 2000);
-      
     } else if (this.authService.getRole() === 'ROLE_PASSENGER') {
       this.passenger.id = this.authService.getId();
       this.rideService.getPassengerActive(this.authService.getId()).subscribe({
@@ -498,5 +571,9 @@ export class RoutingMapComponent implements OnInit {
 
   onMapReady(map: Map) {
     this.map = map;
+  }
+
+  addDrivers() {
+
   }
 }
