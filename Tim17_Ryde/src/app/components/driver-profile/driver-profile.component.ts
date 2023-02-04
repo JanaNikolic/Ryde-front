@@ -6,6 +6,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Driver } from 'src/app/model/Driver';
 import { Vehicle } from 'src/app/model/Vehicle';
 import { KilometersResponse, MoneyResponse, Ride, RideCountResponse } from 'src/app/model/Ride';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EditDriverComponent } from '../edit-driver/edit-driver.component';
 Chart.register(...registerables);
 
 const today = new Date();
@@ -23,9 +25,10 @@ const year = today.getFullYear();
 })
 export class DriverProfileComponent {
 
-  constructor(private driverService: DriverService, private route: ActivatedRoute){
-    
+  constructor(private driverService: DriverService, private route: ActivatedRoute, private matDialog: MatDialog){
+  
   }
+  
   campaignOne = new FormGroup({
     start: new FormControl(new Date(year, month-1, todayDate)),
     end: new FormControl(new Date(year, month, todayDate)),
@@ -48,6 +51,12 @@ export class DriverProfileComponent {
   driverInfo: boolean = true;
   vehicleInfo: boolean = false;
   statisticInfo: boolean = false;
+  model = "";
+  numOfSeats = 0;
+  type = "";
+  babyTransport = false;
+  petTransport = false;
+  registration = "";
   
   driver: Driver = {
     id: 1,
@@ -76,15 +85,25 @@ export class DriverProfileComponent {
 
   ngOnInit(): void {
 
+    this.route.params.subscribe((params) => {
+      this.driverService.getVehicle(+params['driverId'])
+      .subscribe(
+        (res) => {    
+        this.vehicle = res;
+        this.model = res.model;
+        this.babyTransport = res.babyTransport;
+        this.petTransport = res.petTransport;
+        this.numOfSeats = res.passengerSeats;
+        this.registration = res.licenseNumber;
+        this.type = res.vehicleType;
+    })
+  });
 
     this.route.params.subscribe((params) => {
       this.driverService.getDriver(+params['driverId'])
       .subscribe(
         (driver) => {    
-          
-  
           this.driver = driver;
-          
         }
       ); 
   
@@ -251,6 +270,16 @@ this.driverService.getRidesPerDay(+params['driverId'], start, end)
     this.chartKilometers.data.labels = labelData;
     this.chartKilometers.data.datasets[0].data = mainData
     this.chartKilometers.update();
+  }
+  editProfile() {
+    const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.id = "edit-profile";
+      dialogConfig.height = "600px";
+      dialogConfig.width = "350px";
+      dialogConfig.data = this.driver;
+
+      const modalDialog = this.matDialog.open(EditDriverComponent, dialogConfig);
   }
   
 
