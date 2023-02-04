@@ -171,7 +171,8 @@
     </div>
     <p class="subtitles passenger-title">Driver</p>
     <div id="passenger-info">
-      <img id="profile-pic" src="assets/images/avatar.png" alt="profilePic" />
+      <img id="profile-pic" *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+      <img id="profile-pic" *ngIf="driver.profilePicture" [src]="driver.profilePicture">
       <div id="profile-info">
         <p id="name">{{ name }}</p>
         <p id="email">{{ email }}</p>

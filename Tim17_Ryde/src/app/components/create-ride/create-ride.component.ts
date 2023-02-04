@@ -29,6 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TmplAstRecursiveVisitor } from '@angular/compiler';
 import { PanicComponent } from '../panic/panic.component';
 import { RateDriverVehicleComponent } from '../rate-driver-vehicle/rate-driver-vehicle.component';
+import { Driver } from 'src/app/model/Driver';
 
 @Component({
   selector: 'app-create-ride',
@@ -99,6 +100,18 @@ export class CreateRideComponent implements OnInit {
     vehicleType: '',
     babyTransport: false,
     petTransport: false,
+  };
+  driver: Driver = {
+    name: '',
+    surname: '',
+    telephoneNumber: '',
+    email: '',
+    address: '',
+    password: '',
+    blocked: false,
+    active: false,
+    activeRide: false,
+    profilePicture: ''
   };
   
   constructor(
@@ -494,6 +507,7 @@ export class CreateRideComponent implements OnInit {
       next: (res) => {
         this.name = res.name + ' ' + res.surname;
         this.email = res.email;
+        this.driver = res;
       },
       error: (error) => {},
     });

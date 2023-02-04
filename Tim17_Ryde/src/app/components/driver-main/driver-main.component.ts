@@ -29,6 +29,7 @@ export class DriverMainComponent {
   departure = '';
   destination = '';
   passenger!: Passenger;
+  passengerPhoto: string = '';
   name = '';
   email = '';
   startBtn = document.getElementById('start');
@@ -180,6 +181,7 @@ export class DriverMainComponent {
           this.destination = this.ride.locations[0].destination.address;
           this.name = res.name + " " + res.surname;
           this.email = res.email;
+          this.passenger = res;
       },
     });
   }
