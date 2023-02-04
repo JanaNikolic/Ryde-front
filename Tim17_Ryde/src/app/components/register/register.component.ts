@@ -12,14 +12,14 @@ import { passwordMatch } from 'src/app/validators/passwordMatch';
 })
 export class RegisterComponent {
   image:string = '';
-  buttonClicked: boolean = false;
+  
   RegisterForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
     surname: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.email]),
-    telephoneNumber: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')]),
+    telephoneNumber: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern('^$|^\\+381[0-9]{5,9}')]),
     address: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*\d)(?=.*[A-Z])(?!.*[^a-zA-Z0-9@#$^+=])(.{8,15})$')]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
   }, [passwordMatch("password", "confirmPassword")])
 
@@ -40,7 +40,7 @@ export class RegisterComponent {
   constructor(private passengerService: PassengerService, private router: Router) {}
 
   register(){
-    this.buttonClicked = true;
+    
     this.passenger = {
       name: this.RegisterForm.value.name as string,
       surname: this.RegisterForm.value.surname as string,

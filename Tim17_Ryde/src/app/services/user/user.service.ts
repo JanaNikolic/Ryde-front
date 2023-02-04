@@ -16,19 +16,19 @@ import { PasswordResetRequest } from 'src/app/model/request/PasswordResetRequest
     constructor(private http: HttpClient) { }
   
   
-    blockUser(userId:number):Observable<1>{
-      return this.http.put<1>(environment.apiHost+'/api/user/' + userId + "/block", HttpRequest);
+    blockUser(userId:number):Observable<any>{
+      return this.http.put<any>(environment.apiHost+'/api/user/' + userId + "/block", HttpRequest);
       
     }
 
-    unblockUser(userId:number):Observable<1>{
-        return this.http.put<1>(environment.apiHost+'/api/user/' + userId + "/unblock", HttpRequest);
+    unblockUser(userId:number):Observable<any>{
+        return this.http.put<any>(environment.apiHost+'/api/user/' + userId + "/unblock", HttpRequest);
         
       }
     getNotes(userId:number):Observable<pageNote>{
       return this.http.get<pageNote>(environment.apiHost + '/api/user/'+ userId + "/note");
     }
-    createNote(note: any, userId:Number): Observable<any> {
+    createNote(note: Note, userId:Number): Observable<Note> {
       
       return this.http.post<Note>(environment.apiHost + '/api/user/'+ userId + "/note",note);
     }

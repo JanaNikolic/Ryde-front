@@ -32,15 +32,15 @@ export class CreateDriverComponent {
   CreateDriverForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
     surname: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.email]),
-    telephoneNumber: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    email: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]),
+    telephoneNumber: new FormControl('', [Validators.required, Validators.minLength(1), Validators.pattern("^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{3,6}$")]),
     address: new FormControl('', [Validators.required, Validators.minLength(1)]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)], ),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)] ),
     model: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    licenceNumber: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    licenceNumber: new FormControl('', [Validators.required, Validators.minLength(1)] ),
     passengerSeats: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    vehicleType: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    vehicleType: new FormControl('', [Validators.required]),
     babyTransport: new FormControl('', []),
     petTransport: new FormControl('', []),
 
@@ -107,12 +107,8 @@ export class CreateDriverComponent {
         addDriver(this.driver)
         .subscribe( (res: Driver) =>
           { 
-            console.log(this.vehicle);
                 this.driver = res;
-                this.driverService.
-                  addVehicle(Number(res.id), this.vehicle)
-                  .subscribe((res: any) => {    
-                  });
+                this.driverService.addVehicle(Number(res.id), this.vehicle).subscribe((res: any) => { });
                   let document:Document = {
                     name: "vozacka dozvola",
                     documentImage: this.image
