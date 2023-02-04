@@ -45,11 +45,14 @@ export class UnregisteredUserComponent implements OnInit {
   ngOnInit(): void {
 
     this.mapService.selectedFromAddress$.subscribe(data => {
-      this.selectedFromAddress = data.display_name;
+      const address = data.address;
+      console.log(address.road + " " + address.house_number + ", " + address.city_district);
+      this.selectedFromAddress = address.road + " " + address.house_number + ", " + address.city_district;
     });
 
     this.mapService.selectedToAddress$.subscribe(data => {
-      this.selectedToAddress = data.display_name;
+      const address = data.address;
+      this.selectedToAddress = address.road + " " + address.house_number + ", " + address.city_district;
     });
 
   }

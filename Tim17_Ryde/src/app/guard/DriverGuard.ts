@@ -14,7 +14,7 @@ export class DriverGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (this.authService.isLoggedIn() && this.authService.getRole() == "ROLE_PASSENGER" ) {
-        this.router.navigate(['home']);
+        this.router.navigate(['get-ryde']);
         return false;
       }
     return true;
