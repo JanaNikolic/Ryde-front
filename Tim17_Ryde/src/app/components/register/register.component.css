@@ -25,6 +25,14 @@
     letter-spacing: 0.15em;
 
 }
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}
+button[disabled]:hover {
+    transform: scale(1.00);
+}
 
 
 .container{

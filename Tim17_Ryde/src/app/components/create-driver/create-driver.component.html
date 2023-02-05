@@ -11,56 +11,55 @@
                     </p>
                     <p>
                         <input type="text" formControlName="name" class="shortInfoInput" name="firstName" id="firstName"
-                        [ngClass]="{'red-border-class': name && name.invalid && buttonClicked}"  placeholder="First name:">
+                        [ngClass]="{'red-border-class': name && name.invalid }"  placeholder="First name:">
                         <input type="text" formControlName="surname" class="shortInfoInput left-margin" name="lastName"
-                        [ngClass]="{'red-border-class': surname && surname.invalid && buttonClicked}" id="lastName" placeholder="Last name:">
-                        <span *ngIf="name && name.valid || !buttonClicked" class="noError left">Invalid input(blank)</span>
-                        <span *ngIf="name && name.invalid && buttonClicked" class="error left">Name is required</span>
-                        <span *ngIf="surname && surname.valid || !buttonClicked" class="noError right">Invalid input(blank)</span>
-                        <span *ngIf="surname && surname.invalid && buttonClicked" class="error right">Surname is required</span>
+                        [ngClass]="{'red-border-class': surname && surname.invalid }" id="lastName" placeholder="Last name:">
+                        <span *ngIf="name && name.valid " class="noError left">Invalid input(blank)</span>
+                        <span *ngIf="name && name.invalid " class="error left">Name is required</span>
+                        <span *ngIf="surname && surname.valid " class="noError right">Invalid input(blank)</span>
+                        <span *ngIf="surname && surname.invalid " class="error right">Surname is required</span>
                     </p>
                     <p class="textLabel noMargin"><label>Email</label></p>
                     <p>
                         <input type="email" formControlName="email" class="infoInput"
-                            [ngClass]="{'red-border-class': email && email.invalid && buttonClicked}" name="email" id="email"
+                            [ngClass]="{'red-border-class': email && email.invalid }" name="email" id="email"
                             placeholder="Email:">
 
-                        <span *ngIf="email && email.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="email && email.errors?.['required'] && buttonClicked" class="error">Email is required</span>
-                        <span *ngIf="email && email.errors?.['email'] && buttonClicked" class="error">Not valid email</span>
+                        <span *ngIf="email && email.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="email && email.errors?.['required'] " class="error">Email is required</span>
+                        <span *ngIf="email && email.errors?.['pattern'] " class="error">Not valid email</span>
                     </p>
                     <p class="textLabel noMargin"><label>Phone</label></p>
                     <p>
                         <input type="tel" formControlName="telephoneNumber" class="infoInput" name="phoneNumber"
-                        [ngClass]="{'red-border-class': telephoneNumber && telephoneNumber.invalid && buttonClicked}"  id="phoneNumber" placeholder="Phone number:">
-                        <span *ngIf="telephoneNumber && telephoneNumber.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="telephoneNumber && telephoneNumber.invalid && buttonClicked" class="error">Telephone number is required</span>
+                        [ngClass]="{'red-border-class': telephoneNumber && telephoneNumber.invalid }"  id="phoneNumber" placeholder="Phone number:">
+                        <span *ngIf="telephoneNumber && telephoneNumber.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="telephoneNumber && telephoneNumber.errors?.['required'] " class="error">Telephone number is required</span>
+                        <span *ngIf="telephoneNumber && telephoneNumber.errors?.['pattern'] " class="error">Valid number is required</span>
                     </p>
                     <p class="textLabel noMargin"><label>Address</label></p>
                     <p>
                         <input type="text" formControlName="address" class="infoInput" name="address" id="address"
-                        [ngClass]="{'red-border-class': address && address.invalid && buttonClicked}" placeholder="Address:">
-                        <span *ngIf="address && address.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="address && address.invalid && buttonClicked" class="error">Address is required</span>
+                        [ngClass]="{'red-border-class': address && address.invalid}" placeholder="Address:">
+                        <span *ngIf="address && address.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="address && address.invalid " class="error">Address is required</span>
                     </p>
                     <hr>
                     <p class="textLabel noMargin"><label>Password</label></p>
                     <p>
                         <input type="password" formControlName="password" class="infoInput" name="password"
-                        [ngClass]="{'red-border-class': password && password.invalid && buttonClicked}" id="password" placeholder="Password:">
-                        <span *ngIf="password && password.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="password && password.errors?.['minlength'] && buttonClicked" class="error">Password must be at least 8 characters long</span>
-                        <span *ngIf="password && password.errors?.['required'] && buttonClicked" class="error">Password is required</span>
+                        [ngClass]="{'red-border-class': password && password.invalid}" id="password" placeholder="Password:">
+                        <span *ngIf="password && password.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="password && password.errors?.['minlength'] " class="error">Password must be at least 8 characters long</span>
+                        <span *ngIf="password && password.errors?.['required'] " class="error">Password is required</span>
                     </p>
                     <p class="textLabel noMargin"><label>Confirm Password</label></p>
                     <p>
                         <input type="password" formControlName="confirmPassword" class="infoInput"
-                        [ngClass]="{'red-border-class': confirmPassword && confirmPassword.invalid && buttonClicked}" name="confirmPassword" id="confirmPassword" placeholder="Confirm password:">
+                        [ngClass]="{'red-border-class': confirmPassword && confirmPassword.invalid}" name="confirmPassword" id="confirmPassword" placeholder="Confirm password:">
                         <br>
-                        <span *ngIf="confirmPassword && confirmPassword.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="confirmPassword && confirmPassword.errors?.['required'] && buttonClicked" class="error">Confirm password is required</span>
-                        <span *ngIf="confirmPassword && confirmPassword.errors?.['minlength'] && buttonClicked" class="error">Confirm password must be at least 8 characters long</span>
-                        <span *ngIf="confirmPassword && CreateDriverForm.errors?.['passwordMismatchError'] && buttonClicked" class="error">Confirm password must be same as password</span>
+                        <span *ngIf="confirmPassword && confirmPassword.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="confirmPassword && CreateDriverForm.errors?.['passwordMismatchError'] " class="error">Confirm password must be same as password</span>
                     </p>
                     <p class="textLabel noMargin"><label>Insert picture</label></p>
                     <p>
@@ -77,24 +76,24 @@
                     <p class="textLabel noMargin"><label>Model</label></p>
                     <p>
                         <input type="text" formControlName="model" class="infoInput" name="Model" id="Model"
-                        [ngClass]="{'red-border-class': model && model.invalid && buttonClicked}" placeholder="Model:">
-                        <span *ngIf="model && model.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="model && model.invalid && buttonClicked" class="error">Model is required</span>
+                        [ngClass]="{'red-border-class': model && model.invalid }" placeholder="Model:">
+                        <span *ngIf="model && model.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="model && model.invalid " class="error">Model is required</span>
                     </p>
 
                     <p class="textLabel noMargin"><label>Licence Plate</label></p>
                     <p>
                         <input type="text" formControlName="licenceNumber" class="infoInput" name="licencePlate"
-                        [ngClass]="{'red-border-class': licenceNumber && licenceNumber.invalid && buttonClicked}" id="licencePlate" placeholder="Licence plate:">
-                        <span *ngIf="licenceNumber && licenceNumber.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="licenceNumber && licenceNumber.invalid && buttonClicked" class="error">Licence plate is required</span>
+                        [ngClass]="{'red-border-class': licenceNumber && licenceNumber.invalid }" id="licencePlate" placeholder="Licence plate:">
+                        <span *ngIf="licenceNumber && licenceNumber.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="licenceNumber && licenceNumber.errors?.['required'] " class="error">Licence plate is required</span>
                     </p>
                     <div class="seatNumbers">
                         <p class="textLabel" id="seatLabel"><label>Number of seats: </label></p>
                         <input type="number" formControlName="passengerSeats" class="infoInput" id="numberOfSeats"
-                            name="numberOfSeats" placeholder="0" min="1" max="4">
-                        <span *ngIf="passengerSeats && passengerSeats.valid || !buttonClicked" class="noError">Invalid input(blank)</span>
-                        <span *ngIf="passengerSeats && passengerSeats.invalid && buttonClicked" class="error">Number of seats is required</span>
+                            name="numberOfSeats" placeholder="0" min="1" max="20">
+                        <span *ngIf="passengerSeats && passengerSeats.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="passengerSeats && passengerSeats.invalid " class="error">Number of seats is required</span>
                     </div>
                     <hr id="hrNumSeats">
                     <h3>Type Of Car</h3>
@@ -139,7 +138,7 @@
 
                 </div>
                 <p>
-                    <button type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+                    <button [disabled]="!CreateDriverForm.valid" type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
                 </p>
             </form>
         </div>

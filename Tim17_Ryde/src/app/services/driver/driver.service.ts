@@ -37,7 +37,7 @@ import { Document } from 'src/app/model/request/DriverUpdateRequest';
       return this.http.get<KilometersResponse>(environment.apiHost+'/api/driver/kilometers/' + driverId + "?startDate="+ from + "&endDate=" + to);  
     }
 
-    addDriver(driver: any): Observable<any> {
+    addDriver(driver: Driver): Observable<Driver> {
       
       return this.http.post<Driver>(environment.apiHost + '/api/driver',driver);
     }
@@ -64,8 +64,8 @@ import { Document } from 'src/app/model/request/DriverUpdateRequest';
     deleteUpdateRequest(id:number):Observable<string>{
       return this.http.delete<string>(environment.apiHost + '/api/driver/updateDriver/'+ id);
     }
-    postDriverDocuments(id:number, document:Document):Observable<any>{
-      return this.http.post<any>(environment.apiHost + "/api/driver/" + id + "/documents", document)
+    postDriverDocuments(id:number, document:Document):Observable<Document>{
+      return this.http.post<Document>(environment.apiHost + "/api/driver/" + id + "/documents", document)
     }
     getDriverDocuments(id:number):Observable<Document[]>{
       return this.http.get<Document[]>(environment.apiHost + "api/driver/"+ id + "/documents")

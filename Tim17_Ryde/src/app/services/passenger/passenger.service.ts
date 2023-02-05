@@ -40,7 +40,7 @@ export class PassengerService {
     return this.http.get<pagePassenger>(environment.apiHost + '/api/passenger');
   }
 
-  add(passenger: any): Observable<any> {
+  add(passenger: Passenger): Observable<any> {
     const options: any = {
       responseType: 'text',
     };
