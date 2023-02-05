@@ -85,7 +85,14 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+<<<<<<< Updated upstream
             "include": ["**/register.component.spec.ts"],
+=======
+            "include": ["**/register.component.spec.ts", 
+          "**/passenger/passenger.service.spec.ts",
+        "**/login.component.spec.ts"],
+            
+>>>>>>> Stashed changes
             "polyfills": [
               "zone.js",
               "zone.js/testing"
