@@ -165,8 +165,8 @@ export class RoutingMapComponent implements OnInit {
                   this.vehicle.currentLocation.longitude
                 ),
                 L.latLng(
-                  this.currentRide.locations[0].destination.latitude,
-                  this.currentRide.locations[0].destination.longitude
+                  this.currentRide.locations[0].departure.latitude,
+                  this.currentRide.locations[0].departure.longitude
                 ),
               ],
               addWaypoints: false,
@@ -229,8 +229,8 @@ export class RoutingMapComponent implements OnInit {
                 this.vehicle.currentLocation.longitude
               ),
               L.latLng(
-                this.currentRide.locations[0].destination.latitude,
-                this.currentRide.locations[0].destination.longitude
+                this.currentRide.locations[0].departure.latitude,
+                this.currentRide.locations[0].departure.longitude
               ),
             ],
             addWaypoints: false,
@@ -307,8 +307,8 @@ export class RoutingMapComponent implements OnInit {
                     this.vehicle.currentLocation.longitude
                   ),
                   L.latLng(
-                    this.currentRide.locations[0].destination.latitude,
-                    this.currentRide.locations[0].destination.longitude
+                    this.currentRide.locations[0].departure.latitude,
+                    this.currentRide.locations[0].departure.longitude
                   ),
                 ],
                 addWaypoints: false,
@@ -402,8 +402,8 @@ export class RoutingMapComponent implements OnInit {
                     this.vehicle.currentLocation.longitude
                   ),
                   L.latLng(
-                    this.currentRide.locations[0].destination.latitude,
-                    this.currentRide.locations[0].destination.longitude
+                    this.currentRide.locations[0].departure.latitude,
+                    this.currentRide.locations[0].departure.longitude
                   ),
                 ],
                 addWaypoints: false,
@@ -545,8 +545,8 @@ export class RoutingMapComponent implements OnInit {
                       this.vehicle.currentLocation.longitude
                     ),
                     L.latLng(
-                      this.currentRide.locations[0].destination.latitude,
-                      this.currentRide.locations[0].destination.longitude
+                      this.currentRide.locations[0].departure.latitude,
+                      this.currentRide.locations[0].departure.longitude
                     ),
                   ],
                   addWaypoints: false,
