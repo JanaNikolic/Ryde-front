@@ -45,19 +45,21 @@ export class RegisterComponent {
       name: this.RegisterForm.value.name as string,
       surname: this.RegisterForm.value.surname as string,
       telephoneNumber: this.RegisterForm.value.telephoneNumber as string,
-      profilePicture: undefined,
+      profilePicture: "undefined",
       email: this.RegisterForm.value.email as string,
       password: this.RegisterForm.value.password as string,
       address: this.RegisterForm.value.address as string,
       blocked: false,
       active: false
     }
-
+    
     if (this.RegisterForm.valid && this.RegisterForm.value.password == this.RegisterForm.value.confirmPassword) {
       
       this.passengerService.
         add(this.passenger)
         .subscribe((res: any) => {
+          
+          this.passenger = res;
           
         });
         alert("Passenger registered");

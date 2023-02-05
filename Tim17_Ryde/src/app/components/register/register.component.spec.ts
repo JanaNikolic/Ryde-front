@@ -4,9 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
 import { RegisterComponent } from './register.component';
+import { PassengerService } from 'src/app/services/passenger/passenger.service';
+import { Passenger } from 'src/app/model/Passenger';
+import { of } from 'rxjs';
 
 describe('RegisterComponent', () => {
+  
   let component: RegisterComponent;
+  let passengerService: PassengerService
   let fixture: ComponentFixture<RegisterComponent>;
   let de: DebugElement;
   let el: HTMLElement;
@@ -15,8 +20,9 @@ describe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RegisterComponent,
-        
       ],
+
+    
       imports: [
         BrowserModule,
         FormsModule,
@@ -24,19 +30,29 @@ describe('RegisterComponent', () => {
         HttpClientTestingModule
       ]
     }).compileComponents();
+    passengerService = TestBed.get(PassengerService);
 
   });
   beforeEach(() => {
+    
     fixture = TestBed.createComponent(RegisterComponent);
 
-    component = fixture.componentInstance; // ContactComponent test instance
-      // query for the title <h1> by CSS element selector
+    component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('form'));
     el = de.nativeElement;
+    
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  
+  
+
+  it(`button should be disabled if form not valid`,() => {
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('button'));
+    expect(el.nativeElement.disabled).toBeTruthy();
   });
 
   it(`should not call the register method if button disabled`,() => {
@@ -130,7 +146,22 @@ describe('RegisterComponent', () => {
     expect(component.RegisterForm.valid).toBeTruthy();
   });
 
-  it(`should call the register method`,() => {
+  it(`button should not be disabled if form is valid`,() => {
+    component.RegisterForm.controls['email'].setValue('boki@gmail.com');
+    component.RegisterForm.controls['name'].setValue('boki');
+    component.RegisterForm.controls['surname'].setValue('bokic');
+    component.RegisterForm.controls['address'].setValue('strazilovska 88');
+    component.RegisterForm.controls['telephoneNumber'].setValue('+3812715420');
+    component.RegisterForm.controls['password'].setValue('Password123');
+    component.RegisterForm.controls['confirmPassword'].setValue('Password123');
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('button'));
+    expect(el.nativeElement.disabled).toBeFalsy();
+  });
+
+  
+
+  it(`should call the register method if form is valid`,() => {
     spyOn(component, 'register');
     
     component.RegisterForm.controls['email'].setValue('boki@gmail.com');
@@ -145,5 +176,60 @@ describe('RegisterComponent', () => {
     el.click();
     expect(component.register).toHaveBeenCalled();
   });
+
+  it('should call the add method and change passenger info if input valid', () => {
+    component.RegisterForm.controls['email'].setValue('boki@gmail.com');
+    component.RegisterForm.controls['name'].setValue('boki');
+    component.RegisterForm.controls['surname'].setValue('bokic');
+    component.RegisterForm.controls['address'].setValue('strazilovska 88');
+    component.RegisterForm.controls['telephoneNumber'].setValue('+3812715420');
+    component.RegisterForm.controls['password'].setValue('Password123');
+    component.RegisterForm.controls['confirmPassword'].setValue('Password123');
+    fixture.detectChanges();
+    const passenger: Passenger = {
+      name: 'bogdan',
+      surname: 'janosevic',
+      email: 'bogi@gmail.com',
+      password: 'sifra',
+      telephoneNumber: '+3812716482',
+      address: 'adresa',
+      active: false,
+      blocked: false
+    };
+    fixture.detectChanges();
+    spyOn(passengerService, 'add').and.returnValue(of(passenger));
+    component.register();
+    expect(passengerService.add).toHaveBeenCalled();
+    expect(component.passenger).toEqual(passenger);
+  });
+
+  it('should not call the add method input invalid', () => {
+    component.RegisterForm.controls['email'].setValue('boki@gmail.com');
+    component.RegisterForm.controls['name'].setValue('boki');
+    component.RegisterForm.controls['surname'].setValue('bokic');
+    component.RegisterForm.controls['address'].setValue('');
+    component.RegisterForm.controls['telephoneNumber'].setValue('+3812715420');
+    component.RegisterForm.controls['password'].setValue('');
+    component.RegisterForm.controls['confirmPassword'].setValue('Password123');
+    fixture.detectChanges();
+    const passenger: Passenger = {
+      name: 'bogdan',
+      surname: 'janosevic',
+      email: 'bogi@gmail.com',
+      password: 'sifra',
+      telephoneNumber: '+3812716482',
+      address: 'adresa',
+      active: false,
+      blocked: false
+    };
+    fixture.detectChanges();
+    spyOn(passengerService, 'add').and.returnValue(of(passenger));
+    component.register();
+    expect(passengerService.add).toHaveBeenCalledTimes(0);
+
+  });
+  
+
+  
 
 });
