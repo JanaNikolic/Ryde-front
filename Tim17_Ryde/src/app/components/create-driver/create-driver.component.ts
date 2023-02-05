@@ -22,8 +22,8 @@ export class CreateDriverComponent {
     
 
     address: "slovacka 5",
-    latitude: 1,
-    longitude: 1,
+    latitude: 45.27,
+    longitude: 19.8,
 
   }
   image: string = "";
