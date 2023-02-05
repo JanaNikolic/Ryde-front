@@ -74,13 +74,17 @@ export class DriverMainComponent {
     this.rideService.getActive(this.driverId).subscribe({
       next: (res) => {
         this.ride = res;
-        this.currentActiveRide = true;
+        
         if (this.ride.status === "STARTED") {
+          this.currentActiveRide = true;
           this.started = true;  
           this.mapService.setFromAddress(this.ride.locations[0].departure.address);
 
           this.mapService.setToAddress(this.ride.locations[0].destination.address);
+        } else if (this.ride.status === "PENDING") {
+          this.openModal();
         } else {
+          this.currentActiveRide = true;
           this.started = false;
         }
         
@@ -90,6 +94,10 @@ export class DriverMainComponent {
         this.currentActiveRide = false;
       }
     })
+  }
+
+  onDestroy(): void {
+    this.stompClient.unsubscribe('/topic/driver/' + this.driverId);
   }
 
   initializeWebSocketConnection() {
