@@ -200,8 +200,28 @@ export class RoutingMapComponent implements OnInit {
       (message: { body: string }) => {
         let ride: Ride = JSON.parse(message.body);
         if (ride.status == 'FINISHED') {
+          this.map.eachLayer((layer: any) => {
+            console.log(layer);
+            if (layer.options.waypoints) {
+              this.map.removeLayer(layer);
+              if (this.currentRoute != null) {
+                this.map.removeControl(this.currentRoute);
+              this.currentRoute = null;
+              }
+            }
+          });
           this.mainGroup = [];
         } else if (ride.status == 'ACCEPTED') {
+          this.map.eachLayer((layer: any) => {
+            console.log(layer);
+            if (layer.options.waypoints) {
+              this.map.removeLayer(layer);
+              if (this.currentRoute != null) {
+                this.map.removeControl(this.currentRoute);
+              this.currentRoute = null;
+              }
+            }
+          });
           this.currentRoute = L.Routing.control({
             waypoints: [
               L.latLng(
@@ -216,6 +236,16 @@ export class RoutingMapComponent implements OnInit {
             addWaypoints: false,
           }).addTo(this.map);
         } else if (ride.status == 'STARTED') {
+          this.map.eachLayer((layer: any) => {
+            console.log(layer);
+            if (layer.options.waypoints) {
+              this.map.removeLayer(layer);
+              if (this.currentRoute != null) {
+                this.map.removeControl(this.currentRoute);
+              this.currentRoute = null;
+              }
+            }
+          });
           this.currentRoute = L.Routing.control({
             waypoints: [
               L.latLng(
@@ -498,6 +528,16 @@ export class RoutingMapComponent implements OnInit {
                   })
                   .addTo(this.map);
               } else if (this.currentRide.status == 'ACCEPTED') {
+                this.map.eachLayer((layer: any) => {
+                  console.log(layer);
+                  if (layer.options.waypoints) {
+                    this.map.removeLayer(layer);
+                    if (this.currentRoute != null) {
+                      this.map.removeControl(this.currentRoute);
+                    this.currentRoute = null;
+                    }
+                  }
+                });
                 this.currentRoute = L.Routing.control({
                   waypoints: [
                     L.latLng(

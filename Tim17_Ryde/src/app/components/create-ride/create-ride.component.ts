@@ -9,7 +9,14 @@ import {
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMatTimepickerComponent } from 'ngx-mat-timepicker';
-import { forkJoin, interval, isEmpty, map, Observable, Subscription } from 'rxjs';
+import {
+  forkJoin,
+  interval,
+  isEmpty,
+  map,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { environment } from 'src/app/environment/environment';
@@ -76,7 +83,7 @@ export class CreateRideComponent implements OnInit {
     passengers: [],
     scheduledTime: '',
     driver: { id: 0, email: '' },
-    vehicleType: ''
+    vehicleType: '',
   };
   currentActiveRide: boolean = false;
   departure: string = '';
@@ -111,9 +118,9 @@ export class CreateRideComponent implements OnInit {
     blocked: false,
     active: false,
     activeRide: false,
-    profilePicture: ''
+    profilePicture: '',
   };
-  
+
   constructor(
     private mapService: MapService,
     private router: Router,
@@ -125,7 +132,7 @@ export class CreateRideComponent implements OnInit {
     private driverService: DriverService,
     private route: ActivatedRoute,
     public snackBar: MatSnackBar,
-    public matDialog: MatDialog,
+    public matDialog: MatDialog
   ) {}
 
   imageStandard: any = 'assets/images/standard.png';
@@ -168,13 +175,19 @@ export class CreateRideComponent implements OnInit {
 
     this.mapService.selectedFromAddress$.subscribe((data) => {
       const address = data.address;
-      console.log(address.road + " " + address.house_number + ", " + address.city_district);
-      this.CreateRideForm.controls['departure'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
+      console.log(
+        address.road + ' ' + address.house_number + ', ' + address.city_district
+      );
+      this.CreateRideForm.controls['departure'].setValue(
+        address.road + ' ' + address.house_number + ', ' + address.city_district
+      );
     });
 
     this.mapService.selectedToAddress$.subscribe((data) => {
       const address = data.address;
-      this.CreateRideForm.controls['destination'].setValue(address.road + " " + address.house_number + ", " + address.city_district);
+      this.CreateRideForm.controls['destination'].setValue(
+        address.road + ' ' + address.house_number + ', ' + address.city_district
+      );
     });
 
     this.selectedTime = this.CreateRideForm.get('selectedTime');
@@ -185,8 +198,13 @@ export class CreateRideComponent implements OnInit {
       this.CreateRideForm.controls['date'].disable();
     }
 
-    if (this.favorite.departure == undefined || this.favorite.departure.length > 0) {
-      this.CreateRideForm.controls['departure'].setValue(this.favorite.departure);
+    if (
+      this.favorite.departure == undefined ||
+      this.favorite.departure.length > 0
+    ) {
+      this.CreateRideForm.controls['departure'].setValue(
+        this.favorite.departure
+      );
       this.CreateRideForm.controls['destination'].setValue(
         this.favorite.destination
       );
@@ -207,20 +225,23 @@ export class CreateRideComponent implements OnInit {
       next: (res) => {
         this.currentRide = res;
         this.rideId = this.currentRide.id;
-        
-        this.openCurrentRide();
 
-        this.arrivalTime = new Date(this.currentRide.startTime);
-        this.subscription = interval(1000).subscribe((x) => {
-          this.getTimeDifference();
-        });
+        if (this.currentRide.status == 'PENDING') {
+          this.openDialog();
+        } else {
+          this.openCurrentRide();
+          this.arrivalTime = new Date(this.currentRide.startTime);
+          this.subscription = interval(1000).subscribe((x) => {
+            this.getTimeDifference();
+          });
+        }
 
         this.initializeWebSocketConnection();
       },
       error: (error) => {
         this.currentActiveRide = false;
-      }
-    })
+      },
+    });
   }
 
   getTimeDifference() {
@@ -233,10 +254,17 @@ export class CreateRideComponent implements OnInit {
       (timeDifference / (this.milliSecondsInASecond * this.minutesInAnHour)) %
         this.SecondsInAMinute
     );
-    if (this.driverArrive <= 0 || this.driverArrive >= this.currentRide.estimatedTimeInMinutes) {
+    if (
+      this.driverArrive <= 0 ||
+      this.driverArrive >= this.currentRide.estimatedTimeInMinutes
+    ) {
       this.driverArrive = 0;
       this.subscription.unsubscribe();
     }
+  }
+
+  onDestroy(): void {
+    this.stompClient.unsubscribe('/topic/ride/' + this.rideId);
   }
 
   initializeWebSocketConnection() {
@@ -257,8 +285,8 @@ export class CreateRideComponent implements OnInit {
         (message: { body: string }) => {
           // console.log(message);
           this.handleResult(message);
-          
-          if (this.currentRide.status === 'ACCEPTED') {
+
+          if (this.currentRide.status === 'ACCEPTED' && this.currentRide.scheduledTime == null) {
             this.dialogRef.closeAll();
             this.currentActiveRide = true;
             this.openCurrentRide();
@@ -272,45 +300,56 @@ export class CreateRideComponent implements OnInit {
             });
           } else if (this.currentRide.status === 'STARTED') {
             this.currentActiveRide = true;
-            this.snackBar.open('Your ride has started!', '', {duration: 2000,});
+            this.snackBar.open('Your ride has started!', '', {
+              duration: 2000,
+            });
             this.dialogRef.closeAll();
             this.openCurrentRide();
           } else if (this.currentRide.status === 'REJECTED') {
-            this.snackBar.open('Your ride was rejected! Try again.', '', {duration: 3000,});
+            this.snackBar.open('Your ride was rejected! Try again.', '', {
+              duration: 3000,
+            });
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
           } else if (this.currentRide.status === 'FINISHED') {
-            this.snackBar.open('Your ride has finished!', '', {duration: 2000,});
+            this.snackBar.open('Your ride has finished!', '', {
+              duration: 2000,
+            });
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
             this.openReviewDialog();
           } else if (this.currentRide.status === 'CANCELED') {
-            this.snackBar.open('Your ride has been canceled!', '', {duration: 2000,});
+            this.snackBar.open('Your ride has been canceled!', '', {
+              duration: 2000,
+            });
             this.dialogRef.closeAll();
             this.currentActiveRide = false;
             this.openReviewDialog();
           }
 
           console.log(this.currentRide.scheduledTime);
-          if (this.currentRide.scheduledTime != null || this.currentRide.scheduledTime != '' || this.currentRide.scheduledTime != undefined ) {
-            if (this.currentRide.status === 'SCHEDULED' || this.currentRide.status === 'ACCEPTED') {
+          if (this.currentRide.scheduledTime != null) {
+            if (this.currentRide.status === 'ACCEPTED') {
               this.snackBar.open('Your ride will arrive in 15 minutes!', '', {
                 duration: 2000,
               });
-              console.log("TIMER");
+              console.log('TIMER');
               let i = 2;
               const timerId = setInterval(() => {
                 if (i < 0 || this.currentRide.status != 'ACCEPTED') {
                   clearInterval(timerId);
                 }
                 i = i - 1;
-                this.snackBar.open('Your ride will arrive in ' + (5*i+5) + ' minutes!', '', {
-                  duration: 2000,
-                });               
+                this.snackBar.open(
+                  'Your ride will arrive in ' + (5 * i + 5) + ' minutes!',
+                  '',
+                  {
+                    duration: 2000,
+                  }
+                );
               }, 1 * 10000);
             }
           }
-
         }
       );
     }
@@ -359,7 +398,6 @@ export class CreateRideComponent implements OnInit {
 
       this.passengerService.getPassengerByEmail(letter).subscribe({
         next: (res) => {
-
           if (!this.friendList.find((e) => e.id === res.id)) {
             this.friendList.push(res);
             letter = letter.toUpperCase().substring(0, 1);
@@ -442,7 +480,7 @@ export class CreateRideComponent implements OnInit {
       petTransport: pets,
       scheduledTime: time,
     };
-    
+
     this.CreateRideForm.reset(this.CreateRideForm.value);
     this.CreateRideForm.controls['date'].setValue(new Date());
     console.log(this.CreateRideForm);
@@ -460,41 +498,45 @@ export class CreateRideComponent implements OnInit {
 
       this.mapService.setToAddress(this.selectedToAddress + ', Novi Sad');
 
-      forkJoin([this.mapService.search(ride.locations[0].departure.address), this.mapService.search(ride.locations[0].destination.address)])
-      .pipe(
-        map(([dep, des]) => { 
+      forkJoin([
+        this.mapService.search(ride.locations[0].departure.address),
+        this.mapService.search(ride.locations[0].destination.address),
+      ])
+        .pipe(
+          map(([dep, des]) => {
+            ride.locations[0].departure.latitude = parseFloat(dep[0].lat);
+            ride.locations[0].departure.longitude = parseFloat(dep[0].lon);
 
-          ride.locations[0].departure.latitude = parseFloat(dep[0].lat);
-          ride.locations[0].departure.longitude = parseFloat(dep[0].lon);
+            ride.locations[0].destination.latitude = parseFloat(des[0].lat);
+            ride.locations[0].destination.longitude = parseFloat(des[0].lon);
 
-          ride.locations[0].destination.latitude = parseFloat(des[0].lat);
-          ride.locations[0].destination.longitude = parseFloat(des[0].lon);
-    
-          console.log(ride);
-          this.rideService.postRide(ride).subscribe({
-            next: (res) => {
-              this.rideId = res.id;
-              console.log(res);
-              
-              this.initializeWebSocketConnection();
-              if (res.scheduledTime != null && res.status == "SCHEDULED") {
-                this.snackBar.open('Ride sucessfuly ordered!', '', {duration: 2000,});
-              }
-            },
-            error: (error) => {
-              this.snackBar.open('No available drivers!', '', {duration: 2000,});
-              this.dialogRef.closeAll();
-            },
-          });
-    
-          if (ride.scheduledTime == null) {
-            this.openDialog();
-          }
-        })
-      )
-      .subscribe();
+            console.log(ride);
+            this.rideService.postRide(ride).subscribe({
+              next: (res) => {
+                this.rideId = res.id;
+                console.log(res);
 
-      
+                this.initializeWebSocketConnection();
+                if (res.scheduledTime != null && res.status == 'SCHEDULED') {
+                  this.snackBar.open('Ride sucessfuly ordered!', '', {
+                    duration: 2000,
+                  });
+                }
+              },
+              error: (error) => {
+                this.snackBar.open('No available drivers!', '', {
+                  duration: 2000,
+                });
+                this.dialogRef.closeAll();
+              },
+            });
+
+            if (ride.scheduledTime == null) {
+              this.openDialog();
+            }
+          })
+        )
+        .subscribe();
     }
   }
 
@@ -558,14 +600,14 @@ export class CreateRideComponent implements OnInit {
   }
   panic() {
     const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.id = "panic-component";
-      dialogConfig.height = "350px";
-      dialogConfig.width = "600px";
-      dialogConfig.data = this.currentRide;
-      const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
-      let that = this;
-      this.getActiveRide();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'panic-component';
+    dialogConfig.height = '350px';
+    dialogConfig.width = '600px';
+    dialogConfig.data = this.currentRide;
+    const modalDialog = this.matDialog.open(PanicComponent, dialogConfig);
+    let that = this;
+    this.getActiveRide();
   }
 
   openReviewDialog() {
