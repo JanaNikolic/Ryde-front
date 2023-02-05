@@ -31,7 +31,7 @@
         <div class="split">
           <mat-form-field class="date-picker" appearance="fill" color="accent">
             <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="date" />
             <mat-datepicker-toggle
               matIconSuffix
               [for]="picker"

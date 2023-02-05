@@ -1,5 +1,5 @@
 import { AnimateTimings } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -43,15 +43,15 @@ import { Driver } from 'src/app/model/Driver';
   templateUrl: './create-ride.component.html',
   styleUrls: ['./create-ride.component.css'],
 })
-export class CreateRideComponent implements OnInit {
+export class CreateRideComponent implements OnInit, OnDestroy {
   CreateRideForm!: FormGroup;
   date: Date = new Date();
-  hour: any = DateTime.local().hour;
+  hour: number = DateTime.local().hour;
   maxTime: DateTime = DateTime.local().set({
-    hour: this.hour + 5,
-  });
+    hour: 23, minute: 59
+  });;
   minTime: DateTime = DateTime.local().set({
-    hour: this.hour,
+    hour: this.hour
   });
   selectedFromAddress: any;
   selectedToAddress: any;
@@ -120,10 +120,11 @@ export class CreateRideComponent implements OnInit {
     activeRide: false,
     profilePicture: '',
   };
+  maxDate: Date = new Date;
+  minDate: Date = new Date;
 
   constructor(
     private mapService: MapService,
-    private router: Router,
     private formBuilder: FormBuilder,
     private dialogRef: MatDialog,
     private authService: AuthService,
@@ -134,6 +135,9 @@ export class CreateRideComponent implements OnInit {
     public snackBar: MatSnackBar,
     public matDialog: MatDialog
   ) {}
+  ngOnDestroy(): void {
+    this.stompClient.unsubscribe('/topic/ride/' + this.rideId);
+  }
 
   imageStandard: any = 'assets/images/standard.png';
   imageLuxry: any = 'assets/images/luxury.png';
@@ -143,6 +147,19 @@ export class CreateRideComponent implements OnInit {
     this.passengerId = this.authService.getId();
 
     this.getActiveRide();
+
+    const today = new Date();
+    this.date.setHours(this.date.getHours() + 5);
+    // console.log(this.date);
+    // console.log(this.date.getDate());
+    // console.log(today.getDate());
+    this.maxDate = this.date;
+    if (today.getDate() == this.date.getDate()) {
+      this.CreateRideForm.controls['date'].disable();
+    }
+
+    console.log(this.maxTime);
+    console.log(this.minTime);
 
     this.CreateRideForm = this.formBuilder.group({
       departure: new FormControl('', {
@@ -158,6 +175,26 @@ export class CreateRideComponent implements OnInit {
       vehicleType: new FormControl('STANDARD'),
       date: new FormControl(new Date()),
       selectedTime: new FormControl(),
+    });
+
+    this.CreateRideForm.get("date")?.valueChanges.subscribe(x => {
+      console.log(x);
+      if (today.getDate() == x.getDate()) {
+        this.minTime = DateTime.local().set({
+          hour: this.hour,
+        });
+        this.maxTime = DateTime.local().set({
+          hour: this.hour + 5,
+        });
+      } else {
+        let max = DateTime.local().set({
+          hour: this.hour + 5, minute: 59
+        });
+        this.maxTime = max;
+        this.minTime = DateTime.local().set({day: x.getDate(), hour: 0, minute: 0});
+      }
+      console.log(this.maxTime);
+      console.log(this.minTime);
     });
 
     this.selectedFromAddress = this.CreateRideForm.get('departure');
@@ -192,11 +229,6 @@ export class CreateRideComponent implements OnInit {
 
     this.selectedTime = this.CreateRideForm.get('selectedTime');
 
-    const today = new Date();
-    this.date.setHours(this.date.getHours() + 5);
-    if (today.getDate == this.date.getDate) {
-      this.CreateRideForm.controls['date'].disable();
-    }
 
     if (
       this.favorite.departure == undefined ||
@@ -263,9 +295,6 @@ export class CreateRideComponent implements OnInit {
     }
   }
 
-  onDestroy(): void {
-    this.stompClient.unsubscribe('/topic/ride/' + this.rideId);
-  }
 
   initializeWebSocketConnection() {
     let ws = new SockJS(this.serverUrl);
