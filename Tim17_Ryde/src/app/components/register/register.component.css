@@ -41,7 +41,8 @@ button[disabled]:hover {
     top: 0px;
     right: 15%;
     width: 30%;
-    height: 90%;
+    height: fit-content;
+    padding-bottom: 3%;
     background: #101111;
     border-width: 0px 2px 2px 2px;
     border-style: solid;
