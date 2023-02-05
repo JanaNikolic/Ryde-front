@@ -57,7 +57,7 @@ export class RegisterComponent {
       
       this.passengerService.
         add(this.passenger)
-        .subscribe((res: any) => {
+        .subscribe((res) => {
           
           this.passenger = res;
           

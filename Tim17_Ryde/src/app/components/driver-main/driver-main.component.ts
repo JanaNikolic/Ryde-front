@@ -33,7 +33,7 @@ export class DriverMainComponent {
   name = '';
   email = '';
   startBtn = document.getElementById('start');
-  driverId: any = 0;
+  driverId: number = 0;
   currentActiveRide: boolean = false;
   started: boolean = false;
   passengers: UserResponse[] = [];

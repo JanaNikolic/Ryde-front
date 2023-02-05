@@ -73,7 +73,7 @@ export class EditDriverComponent {
     this.editRequest.documents.push(this.document);
   
     this.driverService.postUpdateRequest(this.editRequest).subscribe(
-        (res: any) => {
+        (res) => {
         console.log(res);
          let snackBarRef = this.snackBar.open('Edit request created!', "", {duration: 2000});
          this.dialogRef.close();
