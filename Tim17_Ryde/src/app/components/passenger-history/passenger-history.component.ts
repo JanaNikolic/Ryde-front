@@ -128,10 +128,11 @@ export class PassengerHistoryComponent {
           this.mapService.setToAddress(this.singleRide.locations[0].destination.address + ", Novi Sad");
 
           
-        
-         
-          const time = new Date().valueOf() - new Date(this.singleRide.endTime.split("T")[0]).valueOf();
+          
 
+          
+
+          const time = new Date().valueOf() - new Date(this.singleRide.endTime.split("T")[0]).valueOf();
           if(time >  259200000){
             this.disableCreateReviews = true;
           }
