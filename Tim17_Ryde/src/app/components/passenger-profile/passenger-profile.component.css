@@ -1,0 +1,353 @@
+#title-pic {
+    margin-top: 60px;
+    background-image: url("../../../assets/images/titlepic.png");
+    height: 200px;
+    background-size: cover;
+    box-shadow: inset 0 0 17px 25px #101111 ;
+
+}
+
+body {
+    background: linear-gradient(162.95deg, #101111 81.97%, rgba(0, 102, 98, 0.72) 122.06%);
+}
+
+#title {
+    font-family: 'Raleway';
+    width: 50%;
+    height: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    margin: auto;
+    line-height: 42px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.15em;
+    text-transform: capitalize;
+
+    color: #D9D9D9;
+}
+
+#profile-card {
+    margin-top: -7%;
+    width: 310px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    background: #101111;
+    border-image:
+        linear-gradient(to bottom,
+            #01acac 40%,
+            rgba(0, 0, 0, 0)) 1;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: #01acac;
+    box-shadow: -20px 10px 30px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+#profile-info {
+    padding: 0px 15% 0px 15%;
+    flex-direction: column;
+}
+
+#main-info {
+    display: flex;
+    flex-direction: row;
+}
+
+h2 {
+    font-family: 'Raleway';
+    margin-bottom: 10px;
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 23px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.15em;
+text-transform: capitalize;
+
+color: #01ACAB;
+}
+
+h3 {
+    font-family: 'Raleway';
+    margin-top: 5px;
+    margin-bottom: 25px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+    text-align: center;
+    letter-spacing: 0.15em;
+
+    color: #D9D9D9;
+}
+
+p {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 19px;
+    display: flex;
+    text-align: center;
+    letter-spacing: 0.15em;
+    text-transform: capitalize;
+
+    color: #D9D9D9;
+}
+img {
+    object-fit: contain;
+    width: 312px;
+height: 312px;
+}
+
+#edit {
+    background: #01ACAB;
+    box-shadow: 0px 4px 7px 14px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    border: 0;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 19px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 8px 0px;
+    margin: 30px auto;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    color: #101111;
+}
+
+#edit:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.favorite-location {
+    width: 220px;
+    height: 130px;
+    border-image:
+        linear-gradient(to bottom,
+            #01acac 40%,
+            rgba(0, 0, 0, 0)) 1;
+    border-width: 2px 2px 2px 2px;
+    border-style: solid;
+    border-color: #01acac;
+    box-shadow: -20px 10px 30px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px 10px;
+}
+
+.ping {
+    position: relative;
+    display: flex;
+    width: 1.5vh;
+    height: 10vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.smallElipse {
+
+    /* Ellipse 1 */
+    margin-top: 0.2vw;
+    margin-bottom: 0.2vw;
+    margin-left: 1.8vh;
+    width: 0.5vh;
+    height: 0.5vh;
+    border-radius: 20px;
+
+    background: #D9D9D9;
+}
+
+.pin {
+    margin-top: 0.3vh;
+    width: 3vh;
+    height: 3vh;
+    margin-left: 0.7vh;
+
+}
+
+.bigElipse {
+
+    margin-top: 0.8vw;
+    margin-left: 1.6vh;
+    margin-bottom: 0.4vw;
+    border-radius: 20px;
+    width: 1.2vh;
+    height: 1.2vh;
+
+    background: #D9D9D9;
+
+}
+
+.location-info {
+    display: flex;
+}
+
+.depdest {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 2vw;
+}
+
+.icons {
+    display: flex;
+    width: 30px;
+}
+
+.footer {
+    padding-left: 5px;
+    display: flex;
+    margin-top: 10px;
+    width: 75%;
+    justify-content: space-between;
+}
+
+.footer p {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.1em;
+    text-transform: capitalize;
+    margin: 5px;
+    color: #D9D9D9;
+}
+.icon {
+    width: 30px;
+    height: 30px;
+    padding: 0px 3px;
+    filter: invert(89%) sepia(9%) saturate(9%) hue-rotate(43deg) brightness(92%) contrast(105%);
+}
+
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+#favorite-rides h1 {
+    font-family: 'Raleway';
+font-style: normal;
+font-weight: 600;
+font-size: 36px;
+line-height: 66px;
+align-items: center;
+text-align: center;
+letter-spacing: 0.15em;
+text-transform: capitalize;
+
+color: #01ACAB;
+}
+
+#favorite-rides {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.favorite-ride-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 39px;
+}
+
+#monthly {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    justify-content: space-evenly;
+    margin-top: 10%;
+    width: 45%;
+    margin-left: 5%;
+}
+
+.monthly-count {
+    display: flex;
+    flex-direction: column;
+}
+
+.count {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.comparison p {
+    inline-size: 110px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: lowercase;
+}
+
+.accent {
+    color: #01ACAB;
+    margin: 0;
+    margin-right: 5px;
+}
+
+.num {
+    font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+font-size: 48px;
+line-height: 40px;
+margin: 0;
+}
+
+.monthly-count h3 {
+    text-align: center;
+}
+
+.chart-container {
+    margin: 5%;
+    margin-left: 0;
+    width: 40%;
+}
+
+#statistics {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chart-container-left {
+    margin: 0 3% 10% 7%;
+    width: 40%;
+    height: 50%;
+}
+
+.chart-container-right {
+    margin: 0 7% 10% 0;
+    width: 40%;
+    height: 50%;
+}
+
+mat-form-field {
+    top: 10%;
+    display: flex;
+    position: relative;
+    width: fit-content;
+    margin: auto;
+    justify-content: center;
+}

@@ -1,0 +1,90 @@
+#navbar {
+    width: 100%;
+    position: absolute;
+    height: 60px;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    display: inline-block;
+    margin: 6px 0px 0px 20px;
+    width: 100px;
+    padding: 6px 0px 6px 0px;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+a:hover {
+    transform: scale(1.02);
+}
+
+#loginButton {
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+#registerButton {
+    color: #01acac;
+    border: 1px solid #01acac;
+}
+
+#name {
+    top: 12px;
+    position: relative;
+    height: 36px;
+    overflow: hidden;
+    padding-left: 10%;
+}
+
+
+#navigation {
+    display: inline;
+    float: right;
+    margin-top: 10px;
+    padding-right: 10%;
+}
+
+.img-fluid {
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    #navbar {
+        height: 120px;
+    }
+    #name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 0; 
+    }
+    #navigation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin-top: 20px;
+        float:none;
+    }
+}
+

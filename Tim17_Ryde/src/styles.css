@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+body {
+    margin: 0;
+    font-family: Outfit, Roboto, sans-serif;
+    /* background-color: #131313; */
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom left, #101111 55.97%, rgba(0, 102, 98, 0.72) 98.06%);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

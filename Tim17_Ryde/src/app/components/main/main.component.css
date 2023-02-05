@@ -1,0 +1,54 @@
+p {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10vh;
+    line-height: 20vh;
+
+    text-transform: uppercase;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+button {
+    position: relative;
+    margin: 0;
+    padding: 2vh 3vh;
+    border-radius: 20px;
+    background-color: #D9D9D9;
+    border-width: 0;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.8vh;    
+    line-height: 3vh;
+
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    color: #000000;
+    cursor: pointer;
+
+    
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.vertical-center {
+    margin: 0;
+  position: relative;
+  text-align: center;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+div {
+    padding-top: 10vw;
+    position: relative;
+    height: fit-content;
+}

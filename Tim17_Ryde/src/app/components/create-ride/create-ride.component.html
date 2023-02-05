@@ -1,0 +1,193 @@
+<div class="container">
+  <app-map class="map" *ngIf="currentRide.status != 'ACCEPTED' && currentRide.status != 'STARTED'"></app-map>
+    <app-routing-map class="map" *ngIf="currentRide.status == 'ACCEPTED' || currentRide.status == 'STARTED'"></app-routing-map>
+  <div class="left-container" *ngIf="currentActiveRide == false">
+    <h1>Get a Ryde</h1>
+    <div class="form-container">
+      <form
+        [formGroup]="CreateRideForm"
+        fxLayout="colums"
+        (ngSubmit)="createRide()"
+      >
+      <span class="favorite"><button type="button" id="favorite" (click)="addFavorite()" title="Add as favorite"></button></span>
+        <mat-form-field appearance="fill">
+          <mat-label>Departure</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="departure"
+            id="departureInput"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Destination</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="destination"
+            id="destinationInput"
+          />
+        </mat-form-field>
+        <div class="split">
+          <mat-form-field class="date-picker" appearance="fill" color="accent">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="date" />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="time-picker">
+            <input
+              matInput
+              name="selected_time"
+              [format]="24"
+              formControlName="selectedTime"
+              [ngxMatTimepicker]="pickerB"
+              [max]="maxTime"
+              [min]="minTime"
+              placeholder="Now"
+              readonly
+            />
+            <mat-icon matSuffix (click)="pickerB.open()"> schedule </mat-icon>
+          </mat-form-field>
+          <ngx-mat-timepicker color="accent" #pickerB></ngx-mat-timepicker>
+        </div>
+
+        <h2>Type of Car</h2>
+
+        <div class="radio-button">
+          <input
+            id="standard"
+            type="radio"
+            name="vehicleType"
+            value="STANDARD"
+            formControlName="vehicleType"
+            ng-checked='vehicleType === STANDARD'
+            required
+          />
+          <label class="vehicletype-cc standard" for="standard"></label>
+          <input
+            id="luxury"
+            type="radio"
+            name="vehicleType"
+            value="LUXURY"
+            formControlName="vehicleType"
+            required
+          />
+          <label class="vehicletype-cc luxury" for="luxury"></label>
+          <input
+            id="van"
+            type="radio"
+            name="vehicleType"
+            value="VAN"
+            formControlName="vehicleType"
+            required
+          />
+          <label class="vehicletype-cc van" for="van"></label>
+          <div></div>
+        </div>
+        <div class="car-labels">
+          <span class="text">Standard</span>
+          <span class="text">Luxury</span>
+          <span class="text">Van</span>
+        </div>
+        <section class="section">
+          <h2>Traveling with</h2>
+          <mat-checkbox
+            class="checkbox"
+            formControlName="petTransport"
+            src="assets/images/pet.png"
+          >
+            <p>Pets</p>
+          </mat-checkbox>
+          <mat-checkbox class="checkbox" formControlName="babyTransport">
+            <p>Babies</p>
+          </mat-checkbox>
+        </section>
+
+        <h2>Share ride with</h2>
+        <div>
+          <div id="friends">
+            <button class="add" id="addBtn" type="button" (click)="openPopup()"></button>
+          </div>
+          <div class="popup-div">
+            <label class="popup" id="popup">
+              <input
+                [formControl]="friendEmail"
+                type="email"
+                id="addPassenger"
+                placeholder="Enter friend's email..."
+              />
+              <button id="addFriend" type="button" (click)="addFriend()">
+                Add
+              </button>
+            </label>
+            <small id="no-user-error">User with this email doesn't exist</small>
+            <small id="already-added-error">User with this email is already added</small>
+          </div>
+        </div>
+
+        <div
+          class="vertical-center"
+          fxLayout="row"
+          fxLayoutAlign="space-between end"
+        >
+          <button
+            class="submit"
+            type="submit"
+            id="getRideBtn"
+            mat-raised-button
+          >
+            Look For Driver
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="left-container width-25" *ngIf="currentActiveRide == true">
+    <h1>Current ride</h1>
+    <div class="adresses">
+      <div class="ping">
+        <span class="bigElipse"></span>
+        <span class="smallElipse"></span>
+        <span class="smallElipse"></span>
+        <img
+          class="pin"
+          src="assets/images/pin.svg"
+          alt="pin"
+          width="80px"
+          height="80px"
+        />
+      </div>
+      <div class="location-info">
+        <p class="subtitles">Departure</p>
+        <p id="departure" class="locations">{{ departure }}</p>
+        <p class="subtitles">Destination</p>
+        <p id="destination" class="locations">{{ destination }}</p>
+      </div>
+    </div>
+    <p class="subtitles passenger-title">Driver</p>
+    <div id="passenger-info">
+      <img id="profile-pic" *ngIf="!driver.profilePicture"  src="../../../assets/images/profile_picture.jpg">
+      <img id="profile-pic" *ngIf="driver.profilePicture" [src]="driver.profilePicture">
+      <div id="profile-info">
+        <p id="name">{{ name }}</p>
+        <p id="email">{{ email }}</p>
+      </div>
+    </div>
+    <div class="vehicle-info">
+      <p>{{ model }}</p>
+      <p>{{ licensePlate }}</p>
+      <p>{{ time }}</p>
+      <p class="price">{{ price }}</p>
+      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive !== 0">Your driver will arrive in {{ driverArrive }} minutes</p>
+      <p *ngIf="currentRide.status == 'ACCEPTED' && driverArrive <= 0">Your driver will arrive soon</p>
+    </div>
+    <div id="buttons" *ngIf="currentRide.status == 'STARTED'">
+      <button id="panic" type="button" (click)="panic()">PANIC</button>
+    </div>
+  </div>
+</div>

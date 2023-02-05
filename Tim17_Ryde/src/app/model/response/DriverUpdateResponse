@@ -1,0 +1,13 @@
+import {UserResponse} from "./UserResponse"
+
+export interface DriverUpdateResponse {
+    id:number;
+    name:string,
+    driver:UserResponse,
+    surname:string,
+    profilePicture:string,
+    telephoneNumber:string,
+    email:string,
+    address:string,
+    documents:Document[]
+}

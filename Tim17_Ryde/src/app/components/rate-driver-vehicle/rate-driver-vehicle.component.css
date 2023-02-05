@@ -1,0 +1,116 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: fit-content;
+  margin: 40px 0;
+}
+#modal-content-wrapper {
+  background: linear-gradient(
+    174.79deg,
+    #101111 88.31%,
+    rgba(1, 172, 171, 1) 116.35%
+  );
+  border-image: linear-gradient(to top, #01acac 40%, rgba(0, 0, 0, 0)) 1;
+  border-width: 0px 4px 4px 4px;
+  border-style: solid;
+  border-color: #01acac52;
+  box-shadow: 5px 4px 40px 24px rgba(0, 0, 0, 0.4);
+  width: 98.5%;
+  height: 99%;
+  display: grid;
+  grid-template-rows: repeat(1fr, 3);
+}
+
+#modal-title {
+  font-size: 22px;
+  top: 20px;
+  left: 10%;
+  width: 100%;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  letter-spacing: 0.15em;
+  text-transform: capitalize;
+
+  color: #d9d9d9;
+}
+
+#modal-body {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.1em;
+  height: fit-content;
+  color: #d9d9d9;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+#modal-footer {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+#modal-action-button {
+  margin-right: 30px;
+  background-color: #01acac;
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+}
+p {
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+.white-button {
+  color: #101111!important;
+  background-color: #d9d9d9 !important;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.star {
+  --br-font-size: 34px;
+  --br-active-color: #ed7b67;
+  --br-inactive-color: #d2d2d2;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: fit-content;
+  margin: 2vh 0;
+  width: 450px;
+}
+
+h2 {
+  font-family: "Raleway";
+  font-style: normal;
+  font-weight: 500;
+  /* font-size: 24px;
+    line-height: 28px; */
+  text-align: center;
+  letter-spacing: 0.15em;
+  text-transform: capitalize;
+}

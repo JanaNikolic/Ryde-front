@@ -1,0 +1,265 @@
+.container {
+    margin-top: 3%;
+    margin-bottom: 10%;
+    margin: auto;
+    display: flex;
+    float: center;
+    width: 80%;
+    height: 70%;
+    color: #D9D9D9;
+}
+
+h3{
+    margin: 0;
+    margin-top: 4%;
+}
+
+.scrollableReviews::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+
+  select{
+    background-color: #053132;
+    color: white;
+    border-radius: 2%;
+  }
+
+.scrollableReviews{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:130px;
+}
+
+.center{
+    text-align: center;
+}
+
+.inline{
+    display: inline-block;
+    
+    text-align: center;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 19%;
+}
+.inline2{
+    display: inline-block;
+    text-align: center;
+    width: 44%;
+}
+
+.left-container{
+    display:inline-block;
+    width: 30%;
+    height: fit-content;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 18%;
+    margin-left: 5%;
+    background: #161619aa;
+    mix-blend-mode: normal;
+    border-radius: 5px;
+    margin-right: 1%;
+    text-align: center;
+}
+
+.all-rides{
+    margin: auto;
+    margin-top: 10%;
+    color: #053132;
+    width: 98%;
+    text-align: center;
+    background-color: #AFBAA3;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+
+.inlineTop1{
+    margin-left: 5%;
+    text-align: left;
+    width: 24%;
+    display: inline-block;
+    vertical-align: top;
+}
+p{
+    margin: 0;
+    
+}
+.line{
+    display: inline-block;
+    width: 4%;
+    border-left: 6px solid #095356;
+    height: 50px;
+}
+.scrollable{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:520px;
+}
+.inlineTop2{
+    text-align: left;
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.top-div{
+    display: block;
+}
+
+.bottom-div{
+    margin-top: 4%;
+}
+
+.right-container{
+    display:inline-block;
+    width: 45%;
+    height: fit-content;
+    padding: 2%;
+    margin-top: 5%;
+    margin-bottom: 1%;
+    margin-left: 1%;
+    background: #161619aa;
+    mix-blend-mode: normal;
+    border-radius: 5px;
+    margin-right: 3%;
+
+}
+.mapa2{
+    flex: 1;
+    height: 20%;
+    width: 36%;
+    position: absolute;
+    
+    z-index: 0;
+}
+.below-map{
+    
+    margin-top: 160px;
+}
+.map{
+    height: 100%;
+    width: 1%;
+}
+
+h3{
+    text-align: left;
+    margin-bottom: 0;
+    margin-top: 2%;
+}
+.middle-block{
+    text-align: center;
+    display: block;
+}
+
+.new-review{
+    text-align: center;
+}
+.new-driver-review textarea{
+    font-size:large;
+    margin-top: 6%;
+}
+#reviewSubmision{
+    margin: 4%;
+    padding: 6px;
+    border-radius: 10px;
+    background-color: #D9D9D9;
+    width: 40%;
+    margin-top: 10%;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    font-size: 12px;
+    border-width: 0;
+    font-family: 'Roboto';
+    font-style: normal;
+
+}
+.left-side-info{
+    text-align: left;
+    display: inline-block;
+    width: 25%;
+}
+.right-side-info{
+    text-align: left;
+    display: inline-block;
+    line-height: normal;
+    width: 75%;
+}
+.singleReview{
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.scrollableReviews h3{
+    
+    font-family: 'Roboto';
+    letter-spacing: 0.15vh;
+    display: inline-block;
+    text-align: left;
+    color: #D9D9D9;
+    margin-top: 2%;
+    margin-bottom: 0;
+    
+}
+.scrollableReviews p{
+    
+    font-size:x-small;
+    margin: 0;
+    color: #D9D9D9;
+    
+}
+img{
+    height: 100%;
+    width:100%;
+}
+.margin-top{
+    margin-top: 3px;
+}
+#addImg{
+    display:inline-block; /* added */
+    vertical-align:middle;
+    border-radius: 50%;
+    float: right;
+    width: 5%;
+    margin-top: 4%;
+    cursor: pointer; 
+
+}
+#backImg{
+
+    vertical-align:middle;
+    float: left;
+    border-radius: 50%;
+    margin-top: 4%;
+    width: 5%;
+    cursor: pointer;   
+}
+.margin-bottom{
+    margin-bottom: 12%;
+}
+h2{
+    display:inline-block;
+    color: #01ACAB;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    padding: 0px 3px;
+    filter: invert(89%) sepia(9%) saturate(9%) hue-rotate(43deg) brightness(92%) contrast(105%);
+}
+
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.flex-end {
+    display: flex;
+    justify-content: end;
+}

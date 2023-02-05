@@ -1,0 +1,146 @@
+<body>
+    <div class="container">
+        <div class="createDriver">
+            <form [formGroup]="CreateDriverForm" (ngSubmit)="create()">
+                <div class="driverInfoContainer form">
+                    <h1>Driver info</h1>
+                    <p class="textLabel noMargin"><label class="right-margin">First Name</label> <label
+                            id="lastNameLabel">Last Name</label>
+
+
+                    </p>
+                    <p>
+                        <input type="text" formControlName="name" class="shortInfoInput" name="firstName" id="firstName"
+                        [ngClass]="{'red-border-class': name && name.invalid }"  placeholder="First name:">
+                        <input type="text" formControlName="surname" class="shortInfoInput left-margin" name="lastName"
+                        [ngClass]="{'red-border-class': surname && surname.invalid }" id="lastName" placeholder="Last name:">
+                        <span *ngIf="name && name.valid " class="noError left">Invalid input(blank)</span>
+                        <span *ngIf="name && name.invalid " class="error left">Name is required</span>
+                        <span *ngIf="surname && surname.valid " class="noError right">Invalid input(blank)</span>
+                        <span *ngIf="surname && surname.invalid " class="error right">Surname is required</span>
+                    </p>
+                    <p class="textLabel noMargin"><label>Email</label></p>
+                    <p>
+                        <input type="email" formControlName="email" class="infoInput"
+                            [ngClass]="{'red-border-class': email && email.invalid }" name="email" id="email"
+                            placeholder="Email:">
+
+                        <span *ngIf="email && email.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="email && email.errors?.['required'] " class="error">Email is required</span>
+                        <span *ngIf="email && email.errors?.['pattern'] " class="error">Not valid email</span>
+                    </p>
+                    <p class="textLabel noMargin"><label>Phone</label></p>
+                    <p>
+                        <input type="tel" formControlName="telephoneNumber" class="infoInput" name="phoneNumber"
+                        [ngClass]="{'red-border-class': telephoneNumber && telephoneNumber.invalid }"  id="phoneNumber" placeholder="Phone number:">
+                        <span *ngIf="telephoneNumber && telephoneNumber.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="telephoneNumber && telephoneNumber.errors?.['required'] " class="error">Telephone number is required</span>
+                        <span *ngIf="telephoneNumber && telephoneNumber.errors?.['pattern'] " class="error">Valid number is required</span>
+                    </p>
+                    <p class="textLabel noMargin"><label>Address</label></p>
+                    <p>
+                        <input type="text" formControlName="address" class="infoInput" name="address" id="address"
+                        [ngClass]="{'red-border-class': address && address.invalid}" placeholder="Address:">
+                        <span *ngIf="address && address.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="address && address.invalid " class="error">Address is required</span>
+                    </p>
+                    <hr>
+                    <p class="textLabel noMargin"><label>Password</label></p>
+                    <p>
+                        <input type="password" formControlName="password" class="infoInput" name="password"
+                        [ngClass]="{'red-border-class': password && password.invalid}" id="password" placeholder="Password:">
+                        <span *ngIf="password && password.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="password && password.errors?.['minlength'] " class="error">Password must be at least 8 characters long</span>
+                        <span *ngIf="password && password.errors?.['required'] " class="error">Password is required</span>
+                    </p>
+                    <p class="textLabel noMargin"><label>Confirm Password</label></p>
+                    <p>
+                        <input type="password" formControlName="confirmPassword" class="infoInput"
+                        [ngClass]="{'red-border-class': confirmPassword && confirmPassword.invalid}" name="confirmPassword" id="confirmPassword" placeholder="Confirm password:">
+                        <br>
+                        <span *ngIf="confirmPassword && confirmPassword.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="confirmPassword && CreateDriverForm.errors?.['passwordMismatchError'] " class="error">Confirm password must be same as password</span>
+                    </p>
+                    <p class="textLabel noMargin"><label>Insert picture</label></p>
+                    <p>
+                        <input type="file" class="infoInput" name="inputImage" id="inputImage"
+                            (change)="inputImage($event)">
+                    </p>
+
+                </div>
+
+
+                <div class="vehicleInfoContainer form">
+                    <h1>Vehicle info</h1>
+
+                    <p class="textLabel noMargin"><label>Model</label></p>
+                    <p>
+                        <input type="text" formControlName="model" class="infoInput" name="Model" id="Model"
+                        [ngClass]="{'red-border-class': model && model.invalid }" placeholder="Model:">
+                        <span *ngIf="model && model.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="model && model.invalid " class="error">Model is required</span>
+                    </p>
+
+                    <p class="textLabel noMargin"><label>Licence Plate</label></p>
+                    <p>
+                        <input type="text" formControlName="licenceNumber" class="infoInput" name="licencePlate"
+                        [ngClass]="{'red-border-class': licenceNumber && licenceNumber.invalid }" id="licencePlate" placeholder="Licence plate:">
+                        <span *ngIf="licenceNumber && licenceNumber.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="licenceNumber && licenceNumber.errors?.['required'] " class="error">Licence plate is required</span>
+                    </p>
+                    <div class="seatNumbers">
+                        <p class="textLabel" id="seatLabel"><label>Number of seats: </label></p>
+                        <input type="number" formControlName="passengerSeats" class="infoInput" id="numberOfSeats"
+                            name="numberOfSeats" placeholder="0" min="1" max="20">
+                        <span *ngIf="passengerSeats && passengerSeats.valid " class="noError">Invalid input(blank)</span>
+                        <span *ngIf="passengerSeats && passengerSeats.invalid " class="error">Number of seats is required</span>
+                    </div>
+                    <hr id="hrNumSeats">
+                    <h3>Type Of Car</h3>
+                    <div>
+                        <div class="inline">
+                            <input type="radio" formControlName="vehicleType" class="radioBtn" id="standard" 
+                                name="vehicleType" value="STANDARD" [ngModel]="type" checked>
+                            <label class="checkBoxLabel">Standard </label>
+                        </div>
+                        <div class="inline">
+
+                            <input type="radio" formControlName="vehicleType" class="radioBtn" id="lux" 
+                                name="vehicleType" value="LUXURY" [ngModel]="type">
+                            <label class="checkBoxLabel">Lux </label>
+
+                        </div>
+
+                        <div class="inline">
+                            <input type="radio" formControlName="vehicleType" class="radioBtn" id="van" [ngModel]="type"
+                                name="vehicleType" value="VAN">
+                            <label class="checkBoxLabel">Van </label>
+
+                        </div>
+                        
+                    </div>
+                    <hr id="hrCheckBox">
+                    <div>
+                        <div class="inline5">
+                            <input type="checkbox" formControlName="babyTransport" class="checkBox" id="babyFriendly"
+                                name="babyTransport" value="standard">
+                            <label class="checkBoxLabel">Baby friendly </label>
+
+                        </div>
+                        <div class="inline4">
+                            <input type="checkbox" formControlName="petTransport" class="checkBox" id="petFriendly"
+                                name="petTransport">
+                            <label class="checkBoxLabel">Pet friendly </label>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <p>
+                    <button [disabled]="!CreateDriverForm.valid" type="submit" value="CREATE" class="whiteBtn" id="regBtn">CREATE</button>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>

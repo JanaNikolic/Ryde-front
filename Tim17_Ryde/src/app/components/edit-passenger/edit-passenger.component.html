@@ -1,0 +1,32 @@
+
+<div id="modal-content-wrapper">
+    <div id="modal-header">
+        <h1 id="modal-title">Edit Profile</h1>
+    </div>
+    <div id="modal-body" >
+        <form [formGroup]="EditForm"
+            (ngSubmit)="edit()">
+        <p class="textLabel"><label class="right-margin">Name</label>
+        </p>
+            <input type="text" formControlName="name" class="infoInput" name="name" id="name"
+                placeholder="Name">
+        <p class="textLabel"><label class="right-margin">Surname</label></p>
+            <input type="text" formControlName="surname" class="infoInput" name="surname" id="surname" placeholder="Surname">
+        <p class="textLabel"><label>Email</label></p>
+            <input type="email" formControlName="email" class="infoInput" name="email" id="email" placeholder="Email">
+        <p class="textLabel"><label>Phone Number</label></p>
+            <input type="tel" formControlName="telephoneNumber" class="infoInput" name="phoneNumber" id="phoneNumber" placeholder="Phone Number"  required>
+        
+        <p class="textLabel"><label>Address</label></p>
+            <input type="text" formControlName="address" class="infoInput" name="address" id="address" placeholder="Address">
+            </form>
+            <p class="textLabel"><label>Photo</label></p>
+            <input type="file" class="infoInput" name="inputImage" id="inputImage"
+            (change)="inputImage($event)">
+    </div>
+    <p id="password-link" (click)="changePassword()">Change password -></p>
+    <div id="modal-footer">
+        <button type="submit" mat-raised-button id="modal-action-button" (click)="edit()">Edit</button>
+        <button mat-raised-button id="modal-cancel-button" (click)="cancel()">Cancel</button>
+    </div>
+</div>

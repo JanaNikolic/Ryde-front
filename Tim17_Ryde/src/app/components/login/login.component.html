@@ -1,0 +1,36 @@
+<body>
+    <div class="container">
+        <div id="login" class="center">
+            <a id = "home" [routerLink]="['/home']"><h1>RYDE</h1></a>
+            <form [formGroup]="LoginForm"
+             (ngSubmit)="login()">
+             <div *ngIf="hasError" id="login-warning"
+             >Login credentials are not correct!</div>
+                <div  class="text-danger">
+                <p >
+                    <input  type="text" formControlName="Email" [ngClass]="hasError? 'invalid infoInput' : 'infoInput'" class="infoInput" name="Email" id="Email" placeholder="Email:">
+                </p>
+            </div>
+
+                <p>
+                    <input type="Password" formControlName="Password" class="infoInput" name="Password" id="password" placeholder="Password:">
+
+                </p>
+                <p id="forgotPass" (click)="resetPassword()">Forgot password?</p>
+            <p>
+                <button id= "loginBtn" type="submit" value="LOGIN" class="whiteBtn">SIGN IN</button>
+            </p>
+            </form>
+            <p id="or">or</p>
+            <p>
+                <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
+
+                    [routerLink]="['/register']">Sign in with Google</button>
+                <button type="button" value="REGISTER" class="whiteBtn" id="regBtn"
+
+                [routerLink]="['/register']">Sign in with Facebook</button>
+
+            </p>
+        </div>
+    </div>
+</body>

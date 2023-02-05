@@ -1,0 +1,230 @@
+.map {
+    flex: 1;
+    height: 99.7%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 0;
+}
+
+body {
+  overflow: hidden;
+}
+.ping {
+    position: relative;
+    display: flex;
+    width: 2vh;
+    height: 15vh;
+    flex-direction: column;
+    margin-left: 10%;
+    top: 100px;
+}
+
+.smallElipse {
+
+    /* Ellipse 1 */
+    margin-top: 0.3vw;
+    margin-bottom: 0.6vw;
+    margin-left: 2vh;
+    width: 0.6vh;
+    height: 0.6vh;
+    border-radius: 20px;
+
+    background: #D9D9D9;
+}
+
+.pin {
+    margin-top: 0.5vh;
+    width: 3.5vh;
+    height: 3.5vh;
+    margin-left: 0.5vh;
+
+}
+
+.bigElipse {
+
+    margin-top: 1vw;
+    margin-left: 1.6vh;
+    margin-bottom: 0.5vw;
+    border-radius: 20px;
+    width: 1.5vh;
+    height: 1.5vh;
+
+    background: #D9D9D9;
+
+}
+
+#left-container {
+    margin-left: 6vw;
+    height: 80vh;
+    width: 25%;
+    float: left;
+    background: linear-gradient(174.79deg, #101111 88.31%, rgba(1, 172, 171, 1) 116.35%);
+    border-image:
+        linear-gradient(to top,
+            #01acac 40%,
+            rgba(0, 0, 0, 0)) 1;
+    border-width: 0px 4px 4px 4px;
+    border-style: solid;
+    border-color: #01acac52;
+    box-shadow: 5px 4px 40px 24px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+
+.pin {
+    background-blend-mode: color, normal;
+}
+
+h1 {
+    position: relative;
+    height: 25px;
+    top: 60px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+    letter-spacing: 0.15em;
+    text-transform: capitalize;
+
+    color: #D9D9D9;
+}
+
+.locations {
+    background: rgba(217, 217, 217, 0.8);
+    border-radius: 10px;
+    height: 35px;
+    width: 80%;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 2px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+}
+
+.location-info {
+    position: relative;
+    top: -95px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 21%;
+}
+
+.passenger-title {
+    position: relative;
+    top: -80px;
+    margin-left: 21%;
+
+}
+.subtitles {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    font-family: 'Raleway';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+letter-spacing: 0.20em;
+text-transform: capitalize;
+height: 25px;
+color: #D9D9D9;
+}
+
+#profile-pic {
+    width: 80px;
+    height: 80px;
+    top: -50px;
+    border-radius: 50%;
+    margin-left: 20%;
+    margin-right: 5%;
+}
+
+#profile-info {
+    top: -60px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    color: #D9D9D9;
+}
+#passenger-info {
+    position: relative;
+    top: -10%;
+    display: flex;
+    flex-direction: row;
+}
+
+#panic {
+    width: 60%;
+    margin: auto;
+    background: #FF0000;
+    border-radius: 30px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: 0.15em;
+    padding: 10px 0px;
+    text-transform: capitalize;
+
+    color: #D9D9D9;
+}
+
+.button {
+    width: 60%;
+    margin: auto;
+    border: 0;
+    background: #01acac;
+    border-radius: 30px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: 0.15em;
+    padding: 10px 0px;
+    text-transform: capitalize;
+
+    color: #101111;
+}
+
+#buttons {
+    position: relative;
+    top: -5%;
+    display: flex;
+    justify-content: flex-start;
+    height: 200px;
+    flex-direction: column;
+}
+
+#start:hover {
+    cursor: pointer;
+}
+
+#end:hover {
+    cursor: pointer;
+}
+
+#panic:hover {
+    cursor: pointer;
+}
+
+button {
+    border: 0;
+}

@@ -1,0 +1,15 @@
+<div id = "navbar">
+    <span [routerLink]="['/home']" id = "name">
+      <img title="RYDE" src="assets/images/RYDE.png" class="img-fluid">
+    </span>
+    <img title="menu" src="assets/images/main-menu.png" id="menu-icon" (click)="openMenu()">
+    <span id="navigation">
+      <ul>
+        <li><a id = "homeButton" [routerLink]="['/get-ryde']">HOME</a></li>
+        <li><a id = "historyButton" [routerLink]="['/passenger-history', passengerId]">HISTORY</a></li>
+        <li><a id = "profileButton" [routerLink]="['/passenger-profile', passengerId]">PROFILE</a></li>
+        <li><a id = "logoutButton" [routerLink]="['/login']" (click)="logout()">LOGOUT</a></li>
+      </ul>
+    </span>
+</div>
+  

@@ -1,0 +1,97 @@
+:host.map-container {
+  position: absolute;
+  /* margin: 30px; */
+  height: 100%;
+  width: 100%;
+}
+
+.map-container {
+  position: absolute;
+  /* margin: 30px; */
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+:host.map-container-small {
+  position: absolute;
+  height: 90%;
+  width: 65%;
+  z-index: 0;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+
+.map-popup-button,
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  width: 80%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 12px;
+
+  position: relative;
+  margin: 0;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #D9D9D9;
+  border-width: 0;
+
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  color: #000000;
+  cursor: pointer;
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaflet-container button, .button-popup {
+  margin: 5px;
+  padding: 8px;
+  width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0;
+}

@@ -1,0 +1,104 @@
+#navbar {
+    background-color: #101111;
+    width: 100%;
+    position: absolute;
+    height: 60px;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+li {
+    display: inline-block;
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+a {
+    display: inline-block;
+    width: 120px;
+    line-height: 60px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+a:hover {
+    background-color: #0f0f11;
+}
+
+#menu-icon {
+    display: none;
+}
+
+#navigation {
+    display: inline;
+    float: right;
+    padding-right: 10%;
+    height: 100%;
+}
+
+#name {
+    top: 12px;
+    position: relative;
+    height: 36px;
+    overflow: hidden;
+    padding-left: 10%;
+}
+
+@media screen and (max-width: 650px) {
+    #navbar {
+        height: fit-content;
+    }
+    #name {
+        display: inline-block;
+        top: 0;
+        align-items: center;
+        width: max-content;
+        justify-content: center;
+        padding: 20px 0px 12px 20px;
+        margin-top: 0;
+    }
+    #navigation {
+        padding: 0;
+        display: none;
+        width: 100%;
+        justify-content: center;
+        float:none;
+    }
+    #menu-icon {
+        display: inline-block;
+        width: 35px;
+        height: 30px;
+        background: transparent;
+        background-color:transparent;
+        float: right;
+        padding: 21px;
+    }
+    #menu-icon:hover {
+        background-color: #0f0f11;
+    }
+    li {
+        display: block;
+        height: 40px;
+    }
+    a {
+        height: 40px;
+        line-height: 40px;
+        width: 100%;
+    }
+}

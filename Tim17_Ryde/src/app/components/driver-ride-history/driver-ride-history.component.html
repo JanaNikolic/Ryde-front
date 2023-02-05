@@ -1,0 +1,100 @@
+<div class="container">
+    <div class="left-container">
+        <h1>History</h1>
+        Sort by: <select (change)="sortBy()" [(ngModel)] ="sortCriteria">
+            <option value="dateAsc">Date ascending</option>
+            <option value="dateDesc">Date descending</option>
+            <option value="durationAsc">Duration ascending</option>
+            <option value="durationDesc">Duration descending</option>
+            <option value="priceAsc">Price ascending</option>
+            <option value="priceDesc">Price descending</option>
+            
+        </select>
+        <div class="scrollable">
+            <div *ngFor="let ride of rides">
+                <div (click)="showHistoryDetails(ride.id!)" class="all-rides">
+                    <div top-div>
+                        <div class="inlineTop1">
+                            <h3>{{ride.startTime.split("T")[0]}}</h3>
+                        </div>
+                        <div class="line"></div>
+                        <div class="inlineTop2">
+                            <p>{{ride.locations[0].departure.address}}</p>
+                            <p class="center">To</p>
+                            <p>{{ride.locations[0].destination.address}}</p>
+                        </div>
+                    </div>
+                    <div class="bottom-div">
+                        <div class="inline">
+                            <p>Start</p>
+                            <p>{{ride.startTime.split("T")[1].split(":")[0] +':'+
+                                ride.startTime.split("T")[1].split(":")[1]}}</p>
+                        </div>
+                        <div *ngIf="ride.status=='FINISHED'" class="inline">
+                            <p >End</p>
+                            <p >{{ride.endTime.split("T")[1].split(":")[0] +':'+
+                                ride.endTime.split("T")[1].split(":")[1]}}</p>
+                        </div>
+                        
+                        <div [ngClass]="ride.status=='FINISHED' ? 'inline' : 'inline2'">
+                            <p *ngIf="ride.status=='FINISHED'">Duration</p>
+                            <p *ngIf="!(ride.status=='FINISHED')">Estimated duration</p>
+                            <p>{{ride.estimatedTimeInMinutes}} min</p>
+                        </div>
+                        <div class="inline">
+                            <p>Price</p>
+                            <p>{{ride.totalCost}} rsd</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="right-container">
+        <div class="map">
+            <app-map class="mapa2"></app-map>
+        </div>
+        <div class="below-map">
+    
+
+        <h3>Passengers</h3>
+        <div *ngFor="let passenger of passengers">
+            <div class="left-side-info">
+                <p class="margin-top">email: </p>
+            </div>
+            <div class="right-side-info">
+                <p class="margin-top">{{passenger.email}}</p>
+            </div>
+        </div>
+        <hr>
+        <h2>Vehicle reviews:</h2>
+        <div class="scrollableReviews">
+        <div *ngFor="let vehicleReviews of rideReview.vehicleReview">
+            <div class="singleReview">
+                <h3>{{vehicleReviews.passenger.email}}</h3>
+                <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="vehicleReviews.rating"
+                    [max]="5" [color]="'primary'"></ngx-material-rating>
+                <p>
+                    {{vehicleReviews.comment}}
+                </p>
+                </div>
+        </div>
+        </div>
+        <h2>Driver reviews:</h2>
+        <div class="scrollableReviews">
+            <div *ngFor="let driverReviews of rideReview.driverReview">
+                <div class="singleReview">
+                    <h3>{{driverReviews.passenger.email}}</h3>
+                    <ngx-material-rating class="float-right" [readonly]="true" [(ngModel)]="driverReviews.rating"
+                        [max]="5" [color]="'primary'"></ngx-material-rating>
+                    <p>
+                        {{driverReviews.comment}}
+                    </p>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+</div>
