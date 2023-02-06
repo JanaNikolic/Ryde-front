@@ -88,7 +88,8 @@
             
             "include": ["**/register.component.spec.ts", 
           "**/passenger/passenger.service.spec.ts",
-        "**/login.component.spec.ts"],
+          "**/login.component.spec.ts",
+          "**/auth/auth.service.spec.ts"],
             "polyfills": [
               "zone.js",
               "zone.js/testing"

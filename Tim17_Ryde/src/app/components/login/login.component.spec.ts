@@ -6,6 +6,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { mockLogin } from 'src/app/mocks/login.service.mock';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { LoginComponent } from './login.component';
 
@@ -14,6 +17,7 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
   let de: DebugElement;
   let el: HTMLElement;
+  let authService: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -25,11 +29,11 @@ describe('LoginComponent', () => {
         MatDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ]
     })
     .compileComponents();
-
+    authService = TestBed.get(AuthService);
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -91,6 +95,21 @@ describe('LoginComponent', () => {
     el.click();
     
     expect(component.resetPassword).toHaveBeenCalled();
+  });
+
+  it(`should call the login method and not get token if form is valid`,() => {
+    spyOn(component, 'login');
+    
+    component.LoginForm.controls['Email'].setValue('neca@perovic.com');
+    component.LoginForm.controls['Password'].setValue('');
+    fixture.detectChanges();
+    el = fixture.debugElement.query(By.css('button')).nativeElement;
+    el.click();
+    
+    spyOn(authService, 'login').and.returnValue(of(mockLogin));
+    component.login();
+    expect(component.login).toHaveBeenCalled();
+    expect(authService.login).toHaveBeenCalledTimes(0);
   });
 
 });
