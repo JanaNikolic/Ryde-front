@@ -81,6 +81,10 @@ button:hover {
     transform: scale(1.03);
 }
 
+button {
+    border: 0;
+}
+
 #forgotPass{
     text-align: right;
     margin-right: 15%;
