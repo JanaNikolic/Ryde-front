@@ -76,13 +76,13 @@ describe('LoginComponent', () => {
   it(`form should be invalid if password is invalid`, () => {
     component.LoginForm.controls['Email'].setValue('mirkovicka01@gmail.com');
     component.LoginForm.controls['Password'].setValue('Password');
-    expect(component.LoginForm.hasError).toBeTruthy();
+    expect(component.LoginForm.valid).toBeFalsy();
   });
 
   it(`form should be invalid if email is too short`, () => {
     component.LoginForm.controls['Email'].setValue('mi');
     component.LoginForm.controls['Password'].setValue('Password123');
-    expect(component.LoginForm.hasError).toBeTruthy();
+    expect(component.LoginForm.valid).toBeFalsy();
   });
 
   it(`should open forgot password dialog`, () => {
