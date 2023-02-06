@@ -45,19 +45,4 @@ describe('AuthService', () => {
 
     req.flush(mockLogin);
   });
-
-  // it('should call login and the API should return bad request', () => {
-  //   const user: JwtAuthenticationRequest = {email: "", password: ""};
-  //   service.login(user).subscribe((data) => {
-  //     console.log(data)
-  //     expect(data).toBeUndefined();
-  //   });
-
-  //   const req = httpController.expectOne({
-  //     method: 'POST',
-  //     url: `${url}/user/login`,
-  //   });
-    
-  //   req.flush('', { status: 400, statusText: 'Wrong username or password!' });
-  // });
 });

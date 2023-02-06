@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule, By } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { mockLogin } from 'src/app/mocks/login.service.mock';
@@ -18,6 +18,7 @@ describe('LoginComponent', () => {
   let de: DebugElement;
   let el: HTMLElement;
   let authService: AuthService;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,10 +31,12 @@ describe('LoginComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
+        RouterTestingModule
       ]
     })
     .compileComponents();
-    authService = TestBed.get(AuthService);
+    router = TestBed.inject(Router);
+    authService = TestBed.inject(AuthService);
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -97,19 +100,30 @@ describe('LoginComponent', () => {
     expect(component.resetPassword).toHaveBeenCalled();
   });
 
-  it(`should call the login method and not get token if form is valid`,() => {
-    spyOn(component, 'login');
-    
+  it(`should call the login method and not get token with invalid form`,() => {
+    spyOn(component, 'login').and.callThrough();
     component.LoginForm.controls['Email'].setValue('neca@perovic.com');
     component.LoginForm.controls['Password'].setValue('');
     fixture.detectChanges();
-    el = fixture.debugElement.query(By.css('button')).nativeElement;
-    el.click();
     
-    spyOn(authService, 'login').and.returnValue(of(mockLogin));
+    spyOn(authService, 'login');//.and.returnValue(of(mockLogin));
     component.login();
+
     expect(component.login).toHaveBeenCalled();
     expect(authService.login).toHaveBeenCalledTimes(0);
   });
 
+  it(`should call the login method and get token with valid form`,() => {
+    spyOn(component, 'login').and.callThrough();
+    spyOn(router,'navigate');
+    component.LoginForm.controls['Email'].setValue('neca@perovic.com');
+    component.LoginForm.controls['Password'].setValue('Pasword123');
+    fixture.detectChanges();
+    
+    spyOn(authService, 'login').and.returnValue(of(mockLogin));
+    component.login();
+
+    expect(component.login).toHaveBeenCalled();
+    expect(authService.login).toHaveBeenCalled();
+  });
 });
