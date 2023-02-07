@@ -43,7 +43,7 @@ import { Driver } from 'src/app/model/Driver';
   templateUrl: './create-ride.component.html',
   styleUrls: ['./create-ride.component.css'],
 })
-export class CreateRideComponent implements OnInit, OnDestroy {
+export class CreateRideComponent implements OnInit {
   CreateRideForm!: FormGroup;
   date: Date = new Date();
   hour: number = DateTime.local().hour;
@@ -135,9 +135,6 @@ export class CreateRideComponent implements OnInit, OnDestroy {
     public snackBar: MatSnackBar,
     public matDialog: MatDialog
   ) {}
-  ngOnDestroy(): void {
-    this.stompClient.unsubscribe('/topic/ride/' + this.rideId);
-  }
 
   imageStandard: any = 'assets/images/standard.png';
   imageLuxry: any = 'assets/images/luxury.png';
@@ -558,7 +555,7 @@ export class CreateRideComponent implements OnInit, OnDestroy {
               },
               error: (error) => {
                 this.snackBar.open('No available drivers!', '', {
-                  duration: 2000,
+                  duration: 600000,
                 });
                 this.dialogRef.closeAll();
               },
