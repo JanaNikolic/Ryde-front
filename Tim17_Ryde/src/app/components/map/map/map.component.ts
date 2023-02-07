@@ -71,8 +71,6 @@ export class MapComponent implements OnInit {
   toLat: number = 0;
   toLng: number = 0;
 
-  currentLocation: any;
-
   currentRoute: any;
 
   planOptions: Object = { addWaypoints: false, draggableWaypoints: false };
@@ -304,48 +302,6 @@ export class MapComponent implements OnInit {
         })
       )
       .subscribe();
-  }
-
-  private addCurrentLocation(): void {
-    this.map
-      .locate({
-        setView: true,
-        maxZoom: 25,
-        minZoom: 15,
-        enableHighAccuracy: true,
-      })
-      .on('locationerror', function () {
-        alert('Location access has been denied.');
-      })
-      .on('locationfound', (e: { latlng: L.LatLng }) => {
-        this.fromLat = e.latlng.lat;
-        this.fromLng = e.latlng.lng;
-
-        this.currentLocation = L.marker([this.fromLat, this.fromLng]);
-
-        this.map.addLayer(this.currentLocation);
-        this.currentLocation
-          .bindPopup('Trenutno se nalazite ovde.')
-          .openPopup();
-
-        this.mapService
-          .reverseSearch(e.latlng.lat, e.latlng.lng)
-          .subscribe((result) => {
-            this.mapService.setFromAddress(result);
-          });
-      });
-
-    // this.map.addControl(
-    //   L.control.locate({
-    //     locateOptions: {
-    //       enableHighAccuracy: true
-    //     }
-    //   })
-    // );
-
-    // const lc: any = L.control.locate().addTo(this.map);
-    // L.Control.Locate().addTo(this.map);
-    // L.control.Locate.addTo(this.map);
   }
 
   private createButton(
