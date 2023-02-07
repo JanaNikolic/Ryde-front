@@ -148,19 +148,6 @@ export class CreateRideComponent implements OnInit, OnDestroy {
 
     this.getActiveRide();
 
-    const today = new Date();
-    this.date.setHours(this.date.getHours() + 5);
-    // console.log(this.date);
-    // console.log(this.date.getDate());
-    // console.log(today.getDate());
-    this.maxDate = this.date;
-    if (today.getDate() == this.date.getDate()) {
-      this.CreateRideForm.controls['date'].disable();
-    }
-
-    console.log(this.maxTime);
-    console.log(this.minTime);
-
     this.CreateRideForm = this.formBuilder.group({
       departure: new FormControl('', {
         validators: [Validators.required, Validators.minLength(5)],
@@ -176,6 +163,21 @@ export class CreateRideComponent implements OnInit, OnDestroy {
       date: new FormControl(new Date()),
       selectedTime: new FormControl(),
     });
+
+    const today = new Date();
+    this.date.setHours(this.date.getHours() + 5);
+    // console.log(this.date);
+    // console.log(this.date.getDate());
+    // console.log(today.getDate());
+    this.maxDate = this.date;
+    if (today.getDate() == this.date.getDate()) {
+      this.CreateRideForm.controls['date'].disable();
+    }
+
+    console.log(this.maxTime);
+    console.log(this.minTime);
+
+    
 
     this.CreateRideForm.get("date")?.valueChanges.subscribe(x => {
       console.log(x);
@@ -344,7 +346,7 @@ export class CreateRideComponent implements OnInit, OnDestroy {
             this.snackBar.open('Your ride has finished!', '', {
               duration: 2000,
             });
-            this.dialogRef.closeAll();
+            // this.dialogRef.closeAll();
             this.currentActiveRide = false;
             this.openReviewDialog();
           } else if (this.currentRide.status === 'CANCELED') {
@@ -402,14 +404,16 @@ export class CreateRideComponent implements OnInit, OnDestroy {
   }
 
   openPopup() {
+    
     const popup = document.getElementById('popup') as HTMLElement | null;
     if (popup != null) {
-      if (popup.style.display === 'none') {
+      const display = popup.style.display;
+      if (popup.style.display == 'none' || popup.style.display == '') {
         popup.style.display = 'initial';
       } else {
         popup.style.display = 'none';
       }
-    }
+    }    
   }
 
   addFriend() {

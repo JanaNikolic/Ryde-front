@@ -200,7 +200,7 @@ export class PassengerHistoryComponent {
       }
       
       
-      this.reviewService.postVehicleReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
+      this.reviewService.postVehicleReview(this.currentRideId, ReviewCreate).subscribe((res) => {
         alert("Created vehicle review!");
       });
        //TO DO ReviewCreate.Passenger?
@@ -218,7 +218,7 @@ export class PassengerHistoryComponent {
         rating: this.driverRating,
         
       }
-      this.reviewService.postDriverReview(this.currentRideId, ReviewCreate).subscribe((res: any) => {
+      this.reviewService.postDriverReview(this.currentRideId, ReviewCreate).subscribe((res) => {
         alert("Created driver review!");
       });
       
