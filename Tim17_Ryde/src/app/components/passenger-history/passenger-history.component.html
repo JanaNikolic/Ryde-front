@@ -16,7 +16,7 @@
                     <div top-div>
                         <div class="inlineTop1">
                             <h3 *ngIf="ride.startTime != null">{{ride.startTime.split("T")[0]}}</h3>
-                            <h3 *ngIf="ride.startTime == null"></h3>
+                            <h3 *ngIf="ride.startTime == null">Rejected</h3>
                         </div>
                         <div class="line"></div>
                         <div class="inlineTop2">
