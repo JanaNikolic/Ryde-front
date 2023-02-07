@@ -15,7 +15,8 @@
                 <div (click)="showHistoryDetails(ride.id!)" class="all-rides">
                     <div top-div>
                         <div class="inlineTop1">
-                            <h3>{{ride.startTime.split("T")[0]}}</h3>
+                            <h3 *ngIf="ride.startTime != null">{{ride.startTime.split("T")[0]}}</h3>
+                            <h3 *ngIf="ride.startTime == null"></h3>
                         </div>
                         <div class="line"></div>
                         <div class="inlineTop2">
@@ -27,13 +28,15 @@
                     <div class="bottom-div">
                         <div class="inline">
                             <p>Start</p>
-                            <p>{{ride.startTime.split("T")[1].split(":")[0] +':'+
+                            <p *ngIf="ride.startTime != null">{{ride.startTime.split("T")[1].split(":")[0] +':'+
                                 ride.startTime.split("T")[1].split(":")[1]}}</p>
+                            <p *ngIf="ride.startTime == null">Not Started</p>
                         </div>
                         <div *ngIf="ride.status=='FINISHED'" class="inline">
                             <p>End</p>
-                            <p>{{ride.endTime.split("T")[1].split(":")[0] +':'+
+                            <p *ngIf="ride.endTime != null">{{ride.endTime.split("T")[1].split(":")[0] +':'+
                                 ride.endTime.split("T")[1].split(":")[1]}}</p>
+                            <p *ngIf="ride.endTime == null">Not Ended</p>
                         </div>
 
                         <div [ngClass]="ride.status=='FINISHED' ? 'inline' : 'inline2'">
