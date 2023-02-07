@@ -80,7 +80,7 @@ const routes: Routes = [
   loadChildren: () =>
   import('../app/services/auth/auth.module').then((m) => m.AuthModule)},
   {path: 'get-ryde', component:CreateRideComponent, 
-  canActivate: [PassengerGuard]}
+  canActivate: [PassengerGuard, NotLoggedInGuard]}
 
 ];
 

@@ -404,14 +404,16 @@ export class CreateRideComponent implements OnInit, OnDestroy {
   }
 
   openPopup() {
+    
     const popup = document.getElementById('popup') as HTMLElement | null;
     if (popup != null) {
-      if (popup.style.display === 'none') {
+      const display = popup.style.display;
+      if (popup.style.display == 'none' || popup.style.display == '') {
         popup.style.display = 'initial';
       } else {
         popup.style.display = 'none';
       }
-    }
+    }    
   }
 
   addFriend() {

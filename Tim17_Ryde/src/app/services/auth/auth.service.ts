@@ -23,7 +23,7 @@ export class AuthService {
     this.user$.next(this.getRole());
   }
 
-  login(auth: any): Observable<TokenResponse> {
+  login(auth: JwtAuthenticationRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(environment.apiHost + '/api/user/login', auth, {
       headers: this.headers,
     });
