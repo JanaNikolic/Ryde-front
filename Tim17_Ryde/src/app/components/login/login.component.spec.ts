@@ -82,7 +82,7 @@ describe('LoginComponent', () => {
 
   it(`form should be invalid if password is invalid`, () => {
     component.LoginForm.controls['Email'].setValue('mirkovicka01@gmail.com');
-    component.LoginForm.controls['Password'].setValue('Password');
+    component.LoginForm.controls['Password'].setValue('Pass');
     expect(component.LoginForm.valid).toBeFalsy();
   });
 
