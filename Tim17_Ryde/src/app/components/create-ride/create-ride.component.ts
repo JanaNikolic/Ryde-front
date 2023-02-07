@@ -555,7 +555,7 @@ export class CreateRideComponent implements OnInit {
               },
               error: (error) => {
                 this.snackBar.open('No available drivers!', '', {
-                  duration: 600000,
+                  duration: 2000,
                 });
                 this.dialogRef.closeAll();
               },
